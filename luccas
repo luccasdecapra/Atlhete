@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Luccas Atleta">
+<meta name="theme-color" content="#0d0f0e">
+<title>Luccas Atleta</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #0c0e0d;
+  --surface: #131614;
+  --surface2: #191c1a;
+  --border: #222522;
+  --border2: #2d312c;
+  --orange: #e8834a;
+  --orange-glow: rgba(232,131,74,0.15);
+  --green: #7ec47a;
+  --blue: #6ab3d4;
+  --gold: #d4a843;
+  --purple: #a87fd4;
+  --red: #d46a6a;
+  --text: #e4e2dd;
+  --text-dim: #8a8e8b;
+  --text-muted: #4e524f;
+  --safe: env(safe-area-inset-bottom, 0px);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── SPLASH ── */
+#splash {
+  position: fixed; inset: 0;
+  background: var(--bg);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  z-index: 999;
+  transition: opacity 0.5s ease;
+}
+#splash.hide { opacity: 0; pointer-events: none; }
+.splash-icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+.splash-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 28px; font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.5px;
+}
+.splash-title span { color: var(--orange); }
+.splash-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; color: var(--text-muted);
+  letter-spacing: 0.2em; margin-top: 8px;
+}
+.splash-bar {
+  width: 120px; height: 2px;
+  background: var(--border2);
+  border-radius: 2px;
+  margin-top: 32px; overflow: hidden;
+}
+.splash-fill {
+  height: 100%; width: 0;
+  background: var(--orange);
+  border-radius: 2px;
+  animation: load 1.2s ease forwards;
+}
+@keyframes load { to { width: 100%; } }
+
+/* ── APP SHELL ── */
+#app {
+  display: flex; flex-direction: column;
+  height: 100%; height: 100dvh;
+}
+
+/* ── HEADER ── */
+.header {
+  padding: 16px 20px 12px;
+  padding-top: calc(16px + env(safe-area-inset-top, 0px));
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0;
+  background: var(--bg);
+}
+.header-left { display: flex; align-items: center; gap: 10px; }
+.header-icon {
+  width: 34px; height: 34px;
+  background: var(--orange-glow);
+  border: 1px solid rgba(232,131,74,0.3);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+.header-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 17px; font-weight: 800;
+  letter-spacing: -0.3px;
+}
+.header-title span { color: var(--orange); }
+.header-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; color: var(--text-muted);
+  letter-spacing: 0.1em;
+}
+.progress-pill {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; color: var(--orange);
+  font-weight: 500;
+}
+
+/* ── TAB BAR ── */
+.tabbar {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  background: var(--bg);
+}
+.tabbar::-webkit-scrollbar { display: none; }
+.tab {
+  flex: 0 0 auto;
+  padding: 10px 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.12em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: all 0.2s;
+  display: flex; align-items: center; gap: 6px;
+  user-select: none;
+}
+.tab.active {
+  color: var(--orange);
+  border-bottom-color: var(--orange);
+}
+.tab-emoji { font-size: 13px; }
+
+/* ── PAGES ── */
+.pages { flex: 1; overflow: hidden; position: relative; }
+.page {
+  position: absolute; inset: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 0 calc(20px + var(--safe));
+  display: none;
+}
+.page.active { display: block; }
+
+/* ── SECTION ── */
+.section-head {
+  position: sticky; top: 0; z-index: 10;
+  background: var(--bg);
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px;
+}
+.section-emoji { font-size: 18px; }
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px; font-weight: 700;
+  letter-spacing: -0.2px;
+}
+.section-count {
+  margin-left: auto;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; color: var(--text-muted);
+}
+
+/* ── ITEMS ── */
+.item-list { padding: 0 16px; }
+.item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 13px 4px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.15s;
+  border-radius: 8px;
+  margin: 2px 0;
+}
+.item:active { background: var(--surface); }
+.item.checked .item-name { text-decoration: line-through; color: var(--text-muted); }
+.item.checked .item-detail { color: var(--text-muted); opacity: 0.5; }
+.checkbox {
+  width: 22px; height: 22px; flex-shrink: 0;
+  border: 1.5px solid var(--border2);
+  border-radius: 6px;
+  margin-top: 1px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.item.checked .checkbox {
+  background: var(--orange);
+  border-color: var(--orange);
+}
+.check-mark {
+  color: white; font-size: 13px; font-weight: 700;
+  opacity: 0; transform: scale(0.5);
+  transition: all 0.15s;
+}
+.item.checked .check-mark { opacity: 1; transform: scale(1); }
+.item-body { flex: 1; }
+.item-name { font-size: 14px; font-weight: 500; transition: all 0.2s; }
+.item-detail { font-size: 12px; color: var(--text-dim); margin-top: 2px; line-height: 1.4; }
+.tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 0.06em;
+  padding: 2px 7px; border-radius: 4px;
+  white-space: nowrap; flex-shrink: 0; margin-top: 4px;
+  align-self: flex-start;
+}
+.t-p { background: rgba(232,131,74,0.12); color: var(--orange); }
+.t-c { background: rgba(212,168,67,0.12); color: var(--gold); }
+.t-f { background: rgba(126,196,122,0.12); color: var(--green); }
+.t-r { background: rgba(106,179,212,0.12); color: var(--blue); }
+.t-m { background: rgba(168,127,212,0.12); color: var(--purple); }
+.t-n { background: rgba(168,127,212,0.15); color: var(--purple); }
+.t-s { background: rgba(212,100,100,0.12); color: var(--red); }
+.t-e { background: rgba(212,168,67,0.15); color: var(--gold); }
+
+/* ── RESET BTN ── */
+.reset-wrap { padding: 16px 20px 0; }
+.reset-btn {
+  width: 100%; padding: 11px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  color: var(--text-muted);
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.reset-btn:active { background: var(--surface2); color: var(--text); }
+
+/* ── DIETA CARDS ── */
+.meal-wrap { padding: 12px 16px; display: flex; flex-direction: column; gap: 10px; }
+.meal-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.meal-card-head {
+  padding: 13px 16px;
+  display: flex; align-items: center; gap: 10px;
+  cursor: pointer;
+}
+.meal-card-head:active { background: var(--surface2); }
+.meal-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; color: var(--orange);
+  letter-spacing: 0.05em;
+}
+.meal-name { font-size: 14px; font-weight: 600; }
+.meal-arrow {
+  margin-left: auto; color: var(--text-muted);
+  transition: transform 0.2s; font-size: 12px;
+}
+.meal-card.open .meal-arrow { transform: rotate(90deg); }
+.meal-body {
+  display: none;
+  padding: 0 16px 14px;
+  border-top: 1px solid var(--border);
+}
+.meal-card.open .meal-body { display: block; }
+.meal-line {
+  display: flex; gap: 8px;
+  font-size: 13px; color: var(--text-dim);
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(34,37,34,0.5);
+}
+.meal-line:last-child { border-bottom: none; }
+.meal-line::before { content: '—'; color: var(--text-muted); flex-shrink: 0; }
+.macro-row {
+  display: flex; gap: 12px;
+  margin-top: 10px; padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+.macro { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-muted); }
+.macro span { color: var(--orange); font-weight: 500; }
+
+/* ── SUPLEMENTOS ── */
+.supp-wrap { padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
+.supp-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.supp-top { display: flex; align-items: center; gap: 8px; }
+.supp-name { font-size: 14px; font-weight: 600; flex: 1; }
+.supp-dose {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; color: var(--green);
+}
+.supp-why { font-size: 12px; color: var(--text-muted); }
+.supp-timing {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.08em;
+  color: var(--blue);
+  margin-top: 2px;
+}
+
+/* ── PROTOCOLO ── */
+.proto-wrap { padding: 12px 16px; }
+.proto-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.proto-line {
+  display: flex; gap: 14px;
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--border);
+  align-items: flex-start;
+}
+.proto-line:last-child { border-bottom: none; }
+.proto-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; color: var(--orange);
+  min-width: 52px; flex-shrink: 0;
+  padding-top: 1px;
+}
+.proto-text { font-size: 13px; line-height: 1.5; }
+
+/* ── GENES ── */
+.gene-wrap { padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
+.gene-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+.gene-top { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.gene-id {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; color: var(--orange);
+  background: var(--orange-glow);
+  padding: 2px 8px; border-radius: 4px;
+}
+.gene-geno { font-size: 13px; font-weight: 600; flex: 1; }
+.gene-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; padding: 2px 7px; border-radius: 4px;
+}
+.g-warn { background: rgba(212,100,100,0.1); color: var(--red); }
+.g-ok { background: rgba(126,196,122,0.1); color: var(--green); }
+.g-adapt { background: rgba(212,168,67,0.1); color: var(--gold); }
+.g-care { background: rgba(106,179,212,0.1); color: var(--blue); }
+.gene-desc { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
+
+/* ── ALERTAS ── */
+.alert-wrap { padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
+.alert-box {
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+.alert-red { background: rgba(212,100,100,0.07); border: 1px solid rgba(212,100,100,0.2); }
+.alert-gold { background: rgba(212,168,67,0.07); border: 1px solid rgba(212,168,67,0.2); }
+.alert-green { background: rgba(126,196,122,0.07); border: 1px solid rgba(126,196,122,0.2); }
+.alert-head { display: flex; gap: 8px; align-items: center; margin-bottom: 6px; }
+.alert-emoji { font-size: 16px; }
+.alert-title { font-size: 13px; font-weight: 600; }
+.alert-body { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
+.alert-items { margin-top: 8px; display: flex; flex-direction: column; gap: 4px; }
+.alert-item {
+  display: flex; gap: 8px;
+  font-size: 12px; color: var(--text-dim);
+}
+.alert-item::before { content: '•'; color: var(--text-muted); }
+
+/* ── BOTTOM NAV ── */
+.bottom-nav {
+  display: flex;
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+  padding-bottom: var(--safe);
+  flex-shrink: 0;
+}
+.nav-btn {
+  flex: 1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 10px 4px 8px;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: color 0.2s;
+  user-select: none;
+}
+.nav-btn.active { color: var(--orange); }
+.nav-icon { font-size: 20px; line-height: 1; }
+.nav-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 0.08em;
+  margin-top: 3px; text-transform: uppercase;
+}
+
+/* ── EMPTY ── */
+.empty {
+  text-align: center; padding: 60px 20px;
+  color: var(--text-muted);
+  font-family: 'DM Mono', monospace; font-size: 12px;
+  letter-spacing: 0.1em;
+}
+.empty-icon { font-size: 36px; margin-bottom: 12px; }
+
+/* ── INFO HEADER CARD ── */
+.info-card {
+  margin: 12px 16px;
+  background: linear-gradient(135deg, rgba(232,131,74,0.08), rgba(126,196,122,0.04));
+  border: 1px solid rgba(232,131,74,0.2);
+  border-radius: 14px;
+  padding: 16px;
+}
+.info-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.info-stat { text-align: center; }
+.info-val {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px; font-weight: 800;
+  color: var(--orange);
+}
+.info-lbl {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; color: var(--text-muted);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  margin-top: 2px;
+}
+</style>
+
+</head>
+<body>
+
+<!-- SPLASH -->
+
+<div id="splash">
+  <div class="splash-icon">🏃</div>
+  <div class="splash-title">Luccas <span>Atleta</span></div>
+  <div class="splash-sub">21KM → 42KM · TURNO NOTURNO</div>
+  <div class="splash-bar"><div class="splash-fill"></div></div>
+</div>
+
+<!-- APP -->
+
+<div id="app">
+
+  <!-- HEADER -->
+
+  <div class="header">
+    <div class="header-left">
+      <div class="header-icon">🏃</div>
+      <div>
+        <div class="header-title">Luccas <span>Atleta</span></div>
+        <div class="header-badge">21km → 42km · Milão</div>
+      </div>
+    </div>
+    <div class="progress-pill" id="progress-pill">0/37</div>
+  </div>
+
+  <!-- TAB BAR -->
+
+  <div class="tabbar">
+    <div class="tab active" data-page="compras" onclick="switchPage('compras',this)"><span class="tab-emoji">🛒</span>Compras</div>
+    <div class="tab" data-page="dieta" onclick="switchPage('dieta',this)"><span class="tab-emoji">🥗</span>Dieta</div>
+    <div class="tab" data-page="suplem" onclick="switchPage('suplem',this)"><span class="tab-emoji">💊</span>Suplem.</div>
+    <div class="tab" data-page="protocolo" onclick="switchPage('protocolo',this)"><span class="tab-emoji">🌙</span>Protocolo</div>
+    <div class="tab" data-page="genes" onclick="switchPage('genes',this)"><span class="tab-emoji">🧬</span>DNA</div>
+    <div class="tab" data-page="alertas" onclick="switchPage('alertas',this)"><span class="tab-emoji">🚫</span>Alertas</div>
+  </div>
+
+  <!-- PAGES -->
+
+  <div class="pages">
+
+```
+<!-- ── COMPRAS ── -->
+<div class="page active" id="page-compras">
+  <div class="reset-wrap">
+    <button class="reset-btn" onclick="resetAll()">↺ LIMPAR TODOS OS ITENS MARCADOS</button>
+  </div>
+
+  <!-- Proteínas -->
+  <div class="section-head">
+    <span class="section-emoji">🥩</span>
+    <span class="section-title">Proteínas</span>
+    <span class="section-count" id="cnt-p"></span>
+  </div>
+  <div class="item-list" id="list-proteinas"></div>
+
+  <!-- Carboidratos -->
+  <div class="section-head">
+    <span class="section-emoji">🌾</span>
+    <span class="section-title">Carboidratos</span>
+    <span class="section-count" id="cnt-c"></span>
+  </div>
+  <div class="item-list" id="list-carbos"></div>
+
+  <!-- Gorduras -->
+  <div class="section-head">
+    <span class="section-emoji">🥑</span>
+    <span class="section-title">Gorduras de Qualidade</span>
+    <span class="section-count" id="cnt-g"></span>
+  </div>
+  <div class="item-list" id="list-gorduras"></div>
+
+  <!-- Recuperação -->
+  <div class="section-head">
+    <span class="section-emoji">💙</span>
+    <span class="section-title">Recuperação & Antiinflamatório</span>
+    <span class="section-count" id="cnt-r"></span>
+  </div>
+  <div class="item-list" id="list-recuperacao"></div>
+
+  <!-- Vegetais -->
+  <div class="section-head">
+    <span class="section-emoji">🥦</span>
+    <span class="section-title">Vegetais & Micronutrientes</span>
+    <span class="section-count" id="cnt-v"></span>
+  </div>
+  <div class="item-list" id="list-vegetais"></div>
+
+  <!-- Hidratação -->
+  <div class="section-head">
+    <span class="section-emoji">💧</span>
+    <span class="section-title">Hidratação & Eletrólitos</span>
+    <span class="section-count" id="cnt-h"></span>
+  </div>
+  <div class="item-list" id="list-hidratacao"></div>
+
+  <!-- Praticidade -->
+  <div class="section-head">
+    <span class="section-emoji">🌙</span>
+    <span class="section-title">Praticidade · Turno Noturno</span>
+    <span class="section-count" id="cnt-pr"></span>
+  </div>
+  <div class="item-list" id="list-praticidade"></div>
+</div>
+
+<!-- ── DIETA ── -->
+<div class="page" id="page-dieta">
+  <div class="info-card">
+    <div class="info-grid">
+      <div class="info-stat"><div class="info-val">~3.2k</div><div class="info-lbl">kcal/dia</div></div>
+      <div class="info-stat"><div class="info-val">170g</div><div class="info-lbl">proteína</div></div>
+      <div class="info-stat"><div class="info-val">420g</div><div class="info-lbl">carbos</div></div>
+      <div class="info-stat"><div class="info-val">90g</div><div class="info-lbl">gordura</div></div>
+    </div>
+  </div>
+  <div class="meal-wrap" id="meal-wrap"></div>
+</div>
+
+<!-- ── SUPLEMENTOS ── -->
+<div class="page" id="page-suplem">
+  <div class="supp-wrap" id="supp-wrap"></div>
+</div>
+
+<!-- ── PROTOCOLO ── -->
+<div class="page" id="page-protocolo">
+  <div class="proto-wrap">
+    <div class="proto-card" id="proto-card"></div>
+  </div>
+</div>
+
+<!-- ── GENES ── -->
+<div class="page" id="page-genes">
+  <div class="gene-wrap" id="gene-wrap"></div>
+</div>
+
+<!-- ── ALERTAS ── -->
+<div class="page" id="page-alertas">
+  <div class="alert-wrap" id="alert-wrap"></div>
+</div>
+```
+
+  </div>
+
+  <!-- BOTTOM NAV -->
+
+  <div class="bottom-nav">
+    <div class="nav-btn active" onclick="switchBottom('compras',this)">
+      <div class="nav-icon">🛒</div>
+      <div class="nav-label">Compras</div>
+    </div>
+    <div class="nav-btn" onclick="switchBottom('dieta',this)">
+      <div class="nav-icon">🥗</div>
+      <div class="nav-label">Dieta</div>
+    </div>
+    <div class="nav-btn" onclick="switchBottom('suplem',this)">
+      <div class="nav-icon">💊</div>
+      <div class="nav-label">Suplem.</div>
+    </div>
+    <div class="nav-btn" onclick="switchBottom('protocolo',this)">
+      <div class="nav-icon">🌙</div>
+      <div class="nav-label">Noturno</div>
+    </div>
+    <div class="nav-btn" onclick="switchBottom('genes',this)">
+      <div class="nav-icon">🧬</div>
+      <div class="nav-label">DNA</div>
+    </div>
+    <div class="nav-btn" onclick="switchBottom('alertas',this)">
+      <div class="nav-icon">🚫</div>
+      <div class="nav-label">Alertas</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────
+const LISTS = {
+  proteinas: [
+    {name:'Peito de frango', detail:'~1,5–2kg · proteína magra, base da semana', qty:'1,5–2kg', tag:'t-p', label:'proteína'},
+    {name:'Ovos caipiras', detail:'2 dúzias · proteína completa + colina + gordura boa', qty:'2 dúzias', tag:'t-p', label:'proteína'},
+    {name:'Atum em água (lata)', detail:'Rápido, barato, alta proteína · lanche no turno', qty:'8 latas', tag:'t-p', label:'proteína'},
+    {name:'Salmão fresco', detail:'Ômega-3 antiinflamatório · SOD2/IL6 · 2–3x semana', qty:'600g', tag:'t-p', label:'proteína'},
+    {name:'Sardinha fresca ou lata', detail:'Alternativa ao salmão · ômega-3 + vitamina D', qty:'4 latas', tag:'t-p', label:'proteína'},
+    {name:'Iogurte grego natural integral', detail:'Caseína antes de dormir · pré-sono · probiótico', qty:'6 potes', tag:'t-n', label:'noturno'},
+    {name:'Cottage ou ricota', detail:'Lanche rápido pós-turno · alta proteína', qty:'2 potes', tag:'t-p', label:'proteína'},
+    {name:'Whey protein', detail:'Conveniência pós-treino quando tempo é curto', qty:'1kg', tag:'t-s', label:'suplemento'},
+  ],
+  carbos: [
+    {name:'Arroz integral ou parboilizado', detail:'Base energética diária · índice glicêmico médio', qty:'2kg', tag:'t-c', label:'carbo'},
+    {name:'Arroz branco', detail:'Carboload e pré-prova · digestão rápida, sem fibra', qty:'1kg', tag:'t-c', label:'carbo'},
+    {name:'Batata-doce', detail:'IG médio · pré e pós-treino ideal · antioxidante', qty:'2kg', tag:'t-c', label:'carbo'},
+    {name:'Aveia em flocos grossos', detail:'Café/desjejum · fibra + liberação lenta · beta-glucana', qty:'500g', tag:'t-c', label:'carbo'},
+    {name:'Banana prata ou nanica', detail:'Pré-treino rápido · potássio · anti-câimbra', qty:'3 pencas', tag:'t-c', label:'carbo'},
+    {name:'Tâmaras ou uva-passa', detail:'Energia rápida antes do longão · Z4-Z5 · no bolso', qty:'300g', tag:'t-c', label:'carbo'},
+    {name:'Macarrão de sêmola (Barilla/Voiello/De Cecco)', detail:'✅ Sem ácido fólico · jantar pré-longão · carboload', qty:'1kg', tag:'t-c', label:'carbo'},
+    {name:'Pão integral fermentação natural', detail:'Lanches noturnos no trabalho · melhor digestão', qty:'1 un', tag:'t-n', label:'noturno'},
+    {name:'Mel puro', detail:'Energia rápida · pré-treino em jejum · adoçar iogurte', qty:'350g', tag:'t-c', label:'carbo'},
+    {name:'Maltodextrina D.E. 19', detail:'A que você já usa · carboload + pós-treino longo', qty:'1kg', tag:'t-s', label:'suplemento'},
+  ],
+  gorduras: [
+    {name:'Abacate', detail:'Oleico + potássio · câimbras · SOD2/IL6 antiinflamatório', qty:'4–5 un', tag:'t-f', label:'gordura boa'},
+    {name:'Azeite extra virgem', detail:'Antiinflamatório principal · oleocanthal · usar a frio', qty:'500ml', tag:'t-f', label:'gordura boa'},
+    {name:'Mix de castanhas (pará, nozes, amêndoas)', detail:'Lanche noturno · selênio (SOD2) + magnésio + ômega-3', qty:'400g', tag:'t-n', label:'noturno'},
+    {name:'Pasta de amendoim integral (sem açúcar)', detail:'Rápido, calórico, saboroso · proteína + gordura', qty:'1 pote', tag:'t-f', label:'gordura boa'},
+    {name:'Semente de chia ou linhaça', detail:'Ômega-3 vegetal + fibra · adicionar no iogurte', qty:'200g', tag:'t-f', label:'gordura boa'},
+  ],
+  recuperacao: [
+    {name:'Mirtilo / blueberry (fresco ou congelado)', detail:'Antioxidante top · reduz dor muscular · BDNF', qty:'500g', tag:'t-r', label:'recuperação'},
+    {name:'Cereja ácida (suco concentrado)', detail:'Melatonina natural + antiinflamatório · pré-sono', qty:'1 garrafa', tag:'t-n', label:'noturno'},
+    {name:'Gengibre fresco', detail:'Chá pós-treino · gingerol antiinflamatório', qty:'200g', tag:'t-r', label:'recuperação'},
+    {name:'Cúrcuma em pó', detail:'Curcumina · articulações + músculos · com pimenta preta', qty:'1 pote', tag:'t-r', label:'recuperação'},
+    {name:'Beterraba', detail:'Nitrato → VO2max · tomar 2–3h antes do longão · ACE', qty:'600g', tag:'t-r', label:'recuperação'},
+    {name:'Melancia (em temporada)', detail:'Citrulina natural · recuperação pós Z4-Z5', qty:'1 un', tag:'t-r', label:'recuperação'},
+  ],
+  vegetais: [
+    {name:'Espinafre ou rúcula', detail:'Ferro não-heme + folato + nitrato · MTHFR — folato natural', qty:'300g', tag:'t-m', label:'micro'},
+    {name:'Brócolis ou couve-flor', detail:'Sulforafano · suporte hormonal + imunidade', qty:'500g', tag:'t-m', label:'micro'},
+    {name:'Cenoura', detail:'Beta-caroteno · visão + imunidade', qty:'500g', tag:'t-m', label:'micro'},
+    {name:'Limão siciliano ou taiti', detail:'Vitamina C · absorção de ferro não-heme', qty:'8 un', tag:'t-m', label:'micro'},
+    {name:'Alho fresco', detail:'Alicina · imunidade + pressão arterial · ADRB2', qty:'2 cabeças', tag:'t-m', label:'micro'},
+    {name:'Tomate', detail:'Licopeno antioxidante · fácil em todas refeições', qty:'500g', tag:'t-m', label:'micro'},
+  ],
+  hidratacao: [
+    {name:'Água de coco (caixinha ou natural)', detail:'Potássio + sódio · reposição pós-treino natural', qty:'10 un', tag:'t-r', label:'eletrólito'},
+    {name:'Sal rosa do Himalaia ou sal marinho', detail:'Eletrólito barato · sódio pré-longão', qty:'250g', tag:'t-r', label:'eletrólito'},
+    {name:'Chá de camomila ou melissa', detail:'Sono pós-turno · GABA natural · GABRA2', qty:'1 caixa', tag:'t-n', label:'noturno'},
+    {name:'Café de qualidade (grão ou moído)', detail:'Cafeína pré-treino · 3–4mg/kg · tomar até 15h', qty:'250g', tag:'t-e', label:'energia'},
+    {name:'Chá de gengibre com limão', detail:'Antiinflamatório + digestivo · pós-turno', qty:'sachês', tag:'t-r', label:'recuperação'},
+  ],
+  praticidade: [
+    {name:'Barrinhas de proteína (sem açúcar)', detail:'Lanche no meio do turno · bolso do avental · ler rótulo', qty:'8 un', tag:'t-n', label:'noturno'},
+    {name:'Lentilha ou grão-de-bico (enlatado)', detail:'Proteína vegetal + fibra + ferro · meal prep rápido', qty:'2 latas', tag:'t-p', label:'proteína'},
+    {name:'Géis SiS Beta Fuel', detail:'Longões Z3+ e prova · ratio glicose/frutose ideal', qty:'6–8 un', tag:'t-s', label:'suplemento'},
+  ],
+};
+
+const MEALS = [
+  {time:'12:30', name:'Despertar — Refeição 1', items:['3 ovos caipiras mexidos', 'Arroz integral 150g ou batata-doce', 'Espinafre/rúcula refogado com azeite', '½ abacate ou pasta de amendoim', 'Café + mel'], macros:{p:35,c:55,g:20}},
+  {time:'14:30', name:'Pré-treino — Refeição 2', items:['Banana prata + mel', 'Aveia 40g com leite', 'Colágeno 10g + vitamina C', 'Café (45 min antes)', 'Água 500ml'], macros:{p:20,c:65,g:5}},
+  {time:'16:00', name:'Durante o Treino', items:['Água de coco ou isotônico caseiro', 'Gel SiS Beta Fuel (longões Z3+)', 'Tâmaras ou uva-passa (Z2)', 'Sal rosa se treino > 75 min em calor'], macros:{c:'30–60g/h'}},
+  {time:'18:00', name:'⚡ Pós-treino — Janela 30 min', items:['Whey 25–30g OU frango', 'Maltodextrina 36g OU banana + mel', 'Creatina 5g', 'Mirtilo/blueberry', 'Água de coco'], macros:{p:30,c:60,g:3}},
+  {time:'19:00', name:'Pré-turno — Refeição 3', items:['Frango, salmão ou atum 200g', 'Arroz integral + feijão ou lentilha', 'Brócolis ou couve-flor ao vapor', 'Azeite + limão + alho', 'Cenoura e beterraba crua'], macros:{p:45,c:70,g:15}},
+  {time:'22:00', name:'Lanche Noturno 1', items:['Barrinha de proteína sem açúcar', 'Mix de castanhas 30g', 'Cottage + pão integral', 'Chá de gengibre ou água'], macros:{p:20,c:25,g:12}},
+  {time:'02:00', name:'Lanche Noturno 2', items:['Atum 1 lata + pão integral', 'Tomate, cenoura ou pepino cru', 'Água'], macros:{p:25,c:20,g:3}},
+  {time:'04:30', name:'🌙 Protocolo Pré-sono', items:['Iogurte grego integral 200g — caseína', 'Mix de castanhas 20g — magnésio + selênio', 'Cereja ácida — melatonina natural', 'Magnésio bisglicinato 300mg', 'Ashwagandha KSM-66 600mg'], macros:{p:22,c:15,sleep:'7–8h'}},
+];
+
+const SUPPS = [
+  {name:'Metilfolato 5-MTHF', why:'MTHFR TT — essencial, não opcional. Nunca ácido fólico comum.', dose:'400–800 mcg/dia', timing:'Manhã com refeição'},
+  {name:'Metilcobalamina (B12)', why:'MTHFR TT — cofator indispensável. Nunca cianocobalamina.', dose:'500–1000 mcg/dia', timing:'Junto com metilfolato'},
+  {name:'Vitamina D3 + K2', why:'VDR + turno noturno = sem sol. Força muscular, imunidade, sono.', dose:'3000–5000 UI D3 + 100 mcg K2', timing:'Com refeição gordurosa'},
+  {name:'Ômega-3 EPA+DHA', why:'IL6/TNF pró-inflamatório + BDNF. Antiinflamatório sistêmico.', dose:'2–3 g/dia', timing:'Com refeição, qualquer hora'},
+  {name:'Magnésio Bisglicinato', why:'GABRA2 + sono + câimbras. Melhor forma de magnésio.', dose:'300–400 mg', timing:'30 min antes de dormir'},
+  {name:'Creatina Monohidratada', why:'ACTN3 CT — híbrido força/endurance. Massa muscular + recuperação.', dose:'3–5 g/dia', timing:'Pós-treino ou qualquer hora'},
+  {name:'Maltodextrina D.E. 19 ✓', why:'A que você já usa é perfeita. Carboload e pós-treino longo.', dose:'36–72g por dose', timing:'Pós-treino / pré-longão'},
+  {name:'Géis SiS Beta Fuel ✓', why:'Ratio 1:0.8 glicose:frutose, menor estresse GI em prova.', dose:'2–3 géis por prova', timing:'Km 5, 10 e 15–17'},
+  {name:'Ashwagandha KSM-66', why:'Cortisol crônico + turno noturno. Adaptógeno validado.', dose:'600 mg/dia', timing:'Antes de dormir'},
+  {name:'Cúrcuma + Piperina', why:'IL6/TNF — absorção 20x maior com piperina. Articulações.', dose:'500–800 mg curcumina', timing:'Com refeição gordurosa'},
+  {name:'Colágeno Hidrolisado + Vit C', why:'Volume alto = stress tendinoso. Tendões e cartilagens.', dose:'10–15g + 200 mg Vit C', timing:'30 min pré-treino'},
+  {name:'Whey Protein', why:'Praticidade no turno noturno. Janela pós-treino em até 30 min.', dose:'25–30 g', timing:'Pós-treino em até 30 min'},
+];
+
+const PROTO = [
+  {time:'12:30', text:'Acordar. Luz natural imediata (janela/sacada). Suplementos matinais: D3, ômega-3, complexo B metilado.'},
+  {time:'12:45', text:'Refeição 1 completa — proteína + carbo complexo + gordura boa.'},
+  {time:'14:30', text:'Refeição 2 — pré-treino. Colágeno + vit C 30 min antes de calçar o tênis.'},
+  {time:'15:15', text:'Café / cafeína 3–4mg/kg. Para treino às 16h, tomar agora.'},
+  {time:'16:00', text:'Treino. Hidratação 500ml/h. Gel SiS se > 60 min de corrida.'},
+  {time:'18:00', text:'⚡ Janela pós-treino (30 min máximo). Whey + malto + creatina + mirtilo.'},
+  {time:'18:30', text:'Banho frio/contraste: 3 min frio + 1 min quente. Reduz inflamação pós-treino.'},
+  {time:'19:00', text:'Refeição 3 completa — jantar pré-turno. A maior refeição do dia.'},
+  {time:'22:00', text:'Lanche noturno 1 no trabalho — barrinha + castanhas.'},
+  {time:'02:00', text:'Lanche noturno 2 — atum + pão. Água. Manter hidratação.'},
+  {time:'04:30', text:'🌙 Protocolo pré-sono: iogurte grego + castanhas + cereja ácida + magnésio + ashwagandha.'},
+  {time:'05:00', text:'Dormir. Quarto escuro total. 7–8h de sono sem interrupção. Telefone no modo avião.'},
+];
+
+const GENES = [
+  {id:'MTHFR rs1801131', geno:'Genótipo TT — Atenção máxima', badge:'g-warn', label:'Monitorar homocisteína', desc:'Eficiência reduzida na conversão de folato em metilfolato (5-MTHF). Impacta glóbulos vermelhos, reparação de DNA e homocisteína. Usar sempre metilfolato 5-MTHF, nunca ácido fólico sintético.'},
+  {id:'ACTN3 rs1815739', geno:'Genótipo CT — Híbrido funcional', badge:'g-ok', label:'Vantagem para maratona', desc:'Expressão parcial de alfa-actinina-3 (fibras rápidas). Perfil ideal para meia e maratona — boa resistência aeróbica com capacidade de sprint final. Creatina e treinos mistos são seus aliados.'},
+  {id:'VDR (Vitamina D)', geno:'Necessidade funcional aumentada', badge:'g-care', label:'Suplementar D3+K2', desc:'Menor eficiência na sinalização de vitamina D. Com turno noturno e exposição solar mínima: risco real de deficiência. Impacta força muscular, imunidade, sono e absorção de cálcio.'},
+  {id:'BDNF Val/Val', geno:'Expressão normal — proteger', badge:'g-ok', label:'Corrida como neuroproteção', desc:'Fator neurotrófico em nível adequado. Corrida aeróbica é a intervenção mais potente para manter BDNF elevado. Literalmente protege seu cérebro do desgaste do turno noturno.'},
+  {id:'ADRB2 rs1042713 AA', geno:'Atenção em alta intensidade', badge:'g-adapt', label:'Evitar poluição + Z5', desc:'Menor eficiência de broncodilatação em Z4-Z5. Em Milão (PM2.5 elevado), evitar treinos intensos no pico de tráfego. Preferir parques. Pode sentir aperto no peito em ritmos altos.'},
+  {id:'SOD2 GG + IL6/TNF', geno:'Perfil inflamatório — gerenciar', badge:'g-warn', label:'Antiinflamatórios essenciais', desc:'Menor defesa antioxidante mitocondrial + tendência pró-inflamatória. Com 10h em pé + treino intenso, inflamação acumula rápido. Ômega-3, cúrcuma e cerejas são não negociáveis para você.'},
+  {id:'CLOCK AG + MAOA', geno:'Ritmo circadiano comprometido', badge:'g-care', label:'Protocolo sono estrito', desc:'Relógio biológico mais sensível à disrupção. Álcool piora significativamente (MAOA hemizigoto). Magnésio + camomila + rotina fixa são cruciais. Evitar cafeína após 15h.'},
+  {id:'ACE / VO2max', geno:'Adaptação aeróbica boa', badge:'g-ok', label:'Beterraba = arma secreta', desc:'Perfil favorável para adaptações cardiovasculares com treino consistente. Beterraba (nitrato) potencializa VO2max — especialmente eficaz para o seu genótipo. Tomar 2–3h antes do longão.'},
+];
+
+const ALERTAS = [
+  {emoji:'🔴', title:'PROIBIDO — Álcool', type:'alert-red', body:'MAOA hemizigoto: metabolismo alterado. Depleta magnésio, destrói sono, eleva cortisol, aumenta inflamação (IL6/TNF). Compromete recuperação muscular em até 40%. Anula qualquer ganho do treino.'},
+  {emoji:'🔴', title:'PROIBIDO — Ácido Fólico Sintético em Suplementos', type:'alert-red', body:'MTHFR TT: acúmulo de folato não metabolizado (UMFA). Nunca usar multivitamínicos genéricos, complexo B comum ou suplementos com "folic acid" ou "ácido fólico" na lista de ingredientes.'},
+  {emoji:'🔴', title:'PROIBIDO — Bebidas Energéticas', type:'alert-red', body:'Red Bull, Monster: cafeína alta + ácido fólico sintético + B12 cianocobalamina (errada para MTHFR) + ADRB2 sensível. Triplo problema para o seu DNA.'},
+  {emoji:'🔴', title:'PROIBIDO — Gordura Trans', type:'alert-red', body:'Margarina, gordura vegetal hidrogenada, biscoitos recheados industriais. IL6/TNF: potente indutor de inflamação sistêmica. Interfere com absorção do ômega-3 que você suplementa.'},
+  {emoji:'✅', title:'Pasta Italiana — SEGURA para você', type:'alert-green', body:'Barilla, Voiello, De Cecco, La Molisana (linha clássica): na Itália e na UE o enriquecimento com ácido fólico é VOLUNTÁRIO, não obrigatório. Ingredientes: semola di grano duro + acqua = sem ácido fólico. Seguro para MTHFR TT.', items:['Se nos ingredientes aparecer "acido folico" → não comprar', 'Linha clássica (semola + acqua) → comprar sem problema', 'Versões "arricchita con vitamine" → evitar']},
+  {emoji:'⚠️', title:'Evitar — Óleos Vegetais (soja, canola, girassol)', type:'alert-gold', body:'Ômega-6 em excesso → inflamação crônica. Pior para SOD2/IL6. Preferir azeite extra virgem e manteiga ghee para cozinhar.'},
+  {emoji:'⚠️', title:'Evitar — Cafeína após 15h', type:'alert-gold', body:'Meia-vida de 5–7h. CLOCK AG sensível à disrupção circadiana. Café às 15h ainda está no sistema às 22h — quando você começa o turno.'},
+  {emoji:'⚠️', title:'Evitar — Alimentos Enriquecidos com Vitaminas', type:'alert-gold', body:'Corn flakes, pão industrial, biscoitos, macarrão instantâneo, leite enriquecido, achocolatados. Procurar no rótulo: "ácido fólico", "folic acid", "enriquecido com..." → deixar na prateleira.'},
+  {emoji:'⚠️', title:'Pré-prova — Evitar 48h antes', type:'alert-gold', body:'', items:['Leguminosas com casca (feijão, grão-de-bico) → flatulência', 'Brócolis cru, repolho → distensão', 'Gordura em excesso → retarda esvaziamento gástrico', 'Fibra em excesso → trânsito instável', 'Qualquer alimento novo que não testou antes']},
+];
+
+// ── STORAGE ──────────────────────────────────────────
+const STORAGE_KEY = 'luccas_checked_v2';
+let checked = {};
+
+function loadChecked() {
+  try { checked = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) { checked = {}; }
+}
+function saveChecked() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(checked)); } catch(e) {}
+}
+
+// ── RENDER ────────────────────────────────────────────
+function renderItem(section, idx, item) {
+  const key = section + '_' + idx;
+  const isChecked = !!checked[key];
+  const div = document.createElement('div');
+  div.className = 'item' + (isChecked ? ' checked' : '');
+  div.innerHTML = `
+    <div class="checkbox"><span class="check-mark">✓</span></div>
+    <div class="item-body">
+      <div class="item-name">${item.name}</div>
+      <div class="item-detail">${item.qty ? '<b style="color:var(--text-dim)">' + item.qty + '</b> · ' : ''}${item.detail}</div>
+    </div>
+    <div class="tag ${item.tag}">${item.label}</div>
+  `;
+  div.addEventListener('click', () => toggleItem(key, div, section));
+  return div;
+}
+
+function toggleItem(key, el, section) {
+  if (checked[key]) { delete checked[key]; el.classList.remove('checked'); }
+  else { checked[key] = true; el.classList.add('checked'); }
+  saveChecked();
+  updateProgress();
+  updateSectionCount(section);
+}
+
+function updateProgress() {
+  const total = Object.values(LISTS).reduce((a,l) => a + l.length, 0);
+  const done = Object.keys(checked).length;
+  document.getElementById('progress-pill').textContent = done + '/' + total;
+}
+
+function updateSectionCount(section) {
+  const map = {proteinas:'cnt-p', carbos:'cnt-c', gorduras:'cnt-g', recuperacao:'cnt-r', vegetais:'cnt-v', hidratacao:'cnt-h', praticidade:'cnt-pr'};
+  const el = document.getElementById(map[section]);
+  if (!el) return;
+  const total = LISTS[section].length;
+  const done = LISTS[section].filter((_,i) => !!checked[section+'_'+i]).length;
+  el.textContent = done + '/' + total;
+}
+
+function renderAll() {
+  Object.entries(LISTS).forEach(([section, items]) => {
+    const container = document.getElementById('list-' + section);
+    if (!container) return;
+    container.innerHTML = '';
+    items.forEach((item, idx) => container.appendChild(renderItem(section, idx, item)));
+    updateSectionCount(section);
+  });
+  updateProgress();
+}
+
+function resetAll() {
+  if (!confirm('Limpar todos os itens marcados?')) return;
+  checked = {};
+  saveChecked();
+  renderAll();
+}
+
+// ── MEALS ─────────────────────────────────────────────
+function renderMeals() {
+  const wrap = document.getElementById('meal-wrap');
+  MEALS.forEach((meal, i) => {
+    const card = document.createElement('div');
+    card.className = 'meal-card';
+    const macroHtml = Object.entries(meal.macros).map(([k,v]) => {
+      const labels = {p:'Prot',c:'Carbo',g:'Gord',sleep:'Sono'};
+      return `<div class="macro">${labels[k]||k}: <span>${v}${typeof v==='number'?'g':''}</span></div>`;
+    }).join('');
+    card.innerHTML = `
+      <div class="meal-card-head" onclick="toggleMeal(this)">
+        <div>
+          <div class="meal-time">${meal.time}</div>
+          <div class="meal-name">${meal.name}</div>
+        </div>
+        <div class="meal-arrow">▶</div>
+      </div>
+      <div class="meal-body">
+        ${meal.items.map(it => `<div class="meal-line">${it}</div>`).join('')}
+        <div class="macro-row">${macroHtml}</div>
+      </div>
+    `;
+    wrap.appendChild(card);
+  });
+}
+
+function toggleMeal(head) {
+  head.parentElement.classList.toggle('open');
+}
+
+// ── SUPPS ─────────────────────────────────────────────
+function renderSupps() {
+  const wrap = document.getElementById('supp-wrap');
+  SUPPS.forEach(s => {
+    const card = document.createElement('div');
+    card.className = 'supp-card';
+    card.innerHTML = `
+      <div class="supp-top">
+        <div class="supp-name">${s.name}</div>
+        <div class="supp-dose">${s.dose}</div>
+      </div>
+      <div class="supp-why">${s.why}</div>
+      <div class="supp-timing">🕐 ${s.timing}</div>
+    `;
+    wrap.appendChild(card);
+  });
+}
+
+// ── PROTOCOLO ─────────────────────────────────────────
+function renderProto() {
+  const card = document.getElementById('proto-card');
+  PROTO.forEach(p => {
+    const line = document.createElement('div');
+    line.className = 'proto-line';
+    line.innerHTML = `<div class="proto-time">${p.time}</div><div class="proto-text">${p.text}</div>`;
+    card.appendChild(line);
+  });
+}
+
+// ── GENES ─────────────────────────────────────────────
+function renderGenes() {
+  const wrap = document.getElementById('gene-wrap');
+  GENES.forEach(g => {
+    const card = document.createElement('div');
+    card.className = 'gene-card';
+    card.innerHTML = `
+      <div class="gene-top">
+        <div class="gene-id">${g.id}</div>
+        <div class="gene-geno">${g.geno}</div>
+        <div class="gene-badge ${g.badge}">${g.label}</div>
+      </div>
+      <div class="gene-desc">${g.desc}</div>
+    `;
+    wrap.appendChild(card);
+  });
+}
+
+// ── ALERTAS ───────────────────────────────────────────
+function renderAlertas() {
+  const wrap = document.getElementById('alert-wrap');
+  ALERTAS.forEach(a => {
+    const box = document.createElement('div');
+    box.className = 'alert-box ' + a.type;
+    const itemsHtml = a.items ? `<div class="alert-items">${a.items.map(it => `<div class="alert-item">${it}</div>`).join('')}</div>` : '';
+    box.innerHTML = `
+      <div class="alert-head">
+        <div class="alert-emoji">${a.emoji}</div>
+        <div class="alert-title">${a.title}</div>
+      </div>
+      ${a.body ? `<div class="alert-body">${a.body}</div>` : ''}
+      ${itemsHtml}
+    `;
+    wrap.appendChild(box);
+  });
+}
+
+// ── NAVIGATION ────────────────────────────────────────
+function switchPage(id, tabEl) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  if (tabEl) tabEl.classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + id + "'")) b.classList.add('active');
+  });
+}
+
+function switchBottom(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  btn.classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => {
+    if (t.getAttribute('data-page') === id) t.classList.add('active');
+  });
+}
+
+// ── INIT ──────────────────────────────────────────────
+loadChecked();
+renderAll();
+renderMeals();
+renderSupps();
+renderProto();
+renderGenes();
+renderAlertas();
+
+setTimeout(() => {
+  document.getElementById('splash').classList.add('hide');
+  setTimeout(() => document.getElementById('splash').remove(), 500);
+}, 1400);
+</script>
+
+</body>
+</html>
