@@ -1082,7 +1082,7 @@ function switchBottom(id, el) {
   document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
   el.classList.add('active');
-  document.querySelectorAll('.tab').forEach(t=>{ if ((t.getAttribute('data-tab')||')===id') t.classList.add('active'); });
+  document.querySelectorAll('.tab').forEach(t=>{ if ((t.getAttribute('data-tab')||'')===id) t.classList.add('active'); });
   if (id==='historico') renderHistory();
   if (id==='treino') renderTreino();
 }
