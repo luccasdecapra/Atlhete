@@ -255,6 +255,23 @@ i[class^="ph-"]{line-height:1}
 .nb i[class^="ph-"]{font-size:20px;line-height:1;display:block}
 .nb-lbl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.06em;margin-top:2px;text-transform:uppercase}
 
+/* SELECTED CHIPS */
+.fsg-sel-names{display:none;flex-wrap:wrap;gap:4px;padding:6px 13px 8px;background:rgba(232,131,74,.04);border-top:1px solid var(--border)}
+.sel-chip{font-family:'DM Mono',monospace;font-size:10px;background:rgba(232,131,74,.12);color:var(--orange);border:1px solid rgba(232,131,74,.25);border-radius:12px;padding:2px 9px;white-space:nowrap}
+
+/* SUPP NOTIFICATION */
+.supp-notif{position:fixed;bottom:calc(76px + var(--safe-bot) + 8px);left:50%;transform:translateX(-50%);z-index:90;background:var(--s1);border:1px solid rgba(232,131,74,.4);border-radius:14px;padding:12px 16px;min-width:280px;max-width:calc(100vw - 28px);box-shadow:0 8px 32px rgba(0,0,0,.5);animation:slideUp .3s ease}
+@keyframes slideUp{from{transform:translateX(-50%) translateY(20px);opacity:0}to{transform:translateX(-50%) translateY(0);opacity:1}}
+.sn-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.sn-icon{width:32px;height:32px;background:var(--og);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--orange)}
+.sn-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;flex:1}
+.sn-close{color:var(--muted);cursor:pointer;font-size:16px;padding:0 4px}
+.sn-items{display:flex;flex-direction:column;gap:4px}
+.sn-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dim)}
+.sn-item::before{content:'•';color:var(--orange)}
+.sn-dose{font-family:'DM Mono',monospace;font-size:10px;color:var(--green);margin-left:auto}
+.sn-btn{width:100%;margin-top:10px;padding:9px;background:var(--orange);color:#fff;border:none;border-radius:9px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;cursor:pointer}
+
 /* MODAL */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
 .modal-bg.show{opacity:1;pointer-events:all}
@@ -483,6 +500,9 @@ i[class^="ph-"]{line-height:1}
   </div>
 </div>
 
+<!-- SUPP NOTIFICATION -->
+<div id="supp-notif" style="display:none"></div>
+
 <div class="modal-bg" id="modal-bg">
   <div class="modal">
     <div class="modal-title">Fechar o dia <svg style="color:var(--orange)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M208,80H176V56a48,48,0,0,0-96,0V80H48A16,16,0,0,0,32,96V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM104,56a24,24,0,0,1,48,0V80H104ZM208,208H48V96H208ZM128,120a28,28,0,0,0-8,54.82V192a8,8,0,0,0,16,0V174.82A28,28,0,0,0,128,120Zm0,32a4,4,0,1,1,4-4A4,4,0,0,1,128,152Z"/></svg></div>
@@ -508,9 +528,6 @@ const DAY_TYPES = {
 // Each section = meal slot. Each group = food category with selectable items.
 function getFoodSections(dt) {
   const all = true;
-  const hasTreino = ['longao','z45','z23','z1','forca'].includes(dt);
-  const lowCarbo = ['z1','descanso'].includes(dt);
-  const highAnti = ['z45','z1','descanso'].includes(dt);
 
   const PROTEINS_ANIMAL = [
     {id:'salmao',name:'Salmão fresco/congelado',detail:'Ômega-3 EPA+DHA · vitamina D natural · IL6/TNF',qty:'150–200g',tags:['ft-anti','ft-mthfr'],tl:['antiinflamatório','MTHFR']},
@@ -655,37 +672,108 @@ function getFoodSections(dt) {
     {id:'suco_beterraba',name:'Suco de beterraba + maçã + gengibre',detail:'Nitrato → VO2max · tomar 2–3h antes do longão',qty:'200ml',tags:['ft-vo2'],tl:['VO2max']},
   ];
 
-  // Build sections based on day type
+  // Build sections based on day type - properly organized by meal
+  const hasTreino = ['longao','z45','z23','z1','forca'].includes(dt);
+  const lowCarbo = ['z1','descanso'].includes(dt);
+  const highAnti = ['z45','z1','descanso'].includes(dt);
+
+  // ── CAFÉ DA MANHÃ SPECIFIC ITEMS ──
+  const CAFE_PROTEINAS = [
+    {id:'ovos_cafe',name:'Ovos caipiras (mexido, omelete, cozido)',detail:'Proteína completa + colina MTHFR + B12 · base do café',qty:'2–3 un',tags:['ft-mthfr'],tl:['colina']},
+    {id:'iogurte_cafe',name:'Iogurte grego natural integral 15g proteína',detail:'Caseína + probiótico · sem ácido fólico adicionado',qty:'200g',tags:['ft-ferment'],tl:['15g prot']},
+    {id:'cottage_cafe',name:'Cottage cheese',detail:'Proteína rápida · leve · fácil de preparar',qty:'150g',tags:[],tl:[]},
+    {id:'ricota_cafe',name:'Ricota fresca',detail:'Proteína + cálcio · digestão fácil · italiana',qty:'100g',tags:[],tl:[]},
+    {id:'kefir_cafe',name:'Kefir natural',detail:'Probiótico potente · microbioma · MTHFR',qty:'200ml',tags:['ft-mthfr','ft-ferment'],tl:['microbioma']},
+  ];
+
+  const CAFE_CARBOS = [
+    {id:'aveia_cafe',name:'Aveia em flocos grossos (pura)',detail:'Beta-glucana · fibra + liberação lenta · base do café',qty:'60g',tags:[],tl:[]},
+    {id:'pao_cafe',name:'Pão de fermentação natural (sourdough)',detail:'Menor IG · probiótico leve · verificar ingredientes',qty:'2 fatias',tags:['ft-ferment'],tl:['fermentado']},
+    {id:'batata_cafe',name:'Batata-doce cozida',detail:'IG médio · beta-caroteno · energia sustentada',qty:'100–150g',tags:['ft-anti'],tl:['antioxidante']},
+    {id:'granola_cafe',name:'Granola sem açúcar (verificar rótulo)',detail:'Sem ácido fólico adicionado · com aveia + castanhas',qty:'40g',tags:[],tl:[]},
+  ];
+
+  const CAFE_FRUTAS = [
+    {id:'banana_cafe',name:'Banana prata ou nanica',detail:'Potássio · energia rápida · anti-câimbra',qty:'1 un',tags:[],tl:[]},
+    {id:'mirtilo_cafe',name:'Mirtilo / Blueberry',detail:'Antioxidante top · BDNF · reduz dor muscular',qty:'80g',tags:['ft-anti','ft-mthfr'],tl:['antioxidante','BDNF']},
+    {id:'morango_cafe',name:'Morango (fragole)',detail:'Vitamina C + folato natural + antioxidante',qty:'150g',tags:['ft-mthfr','ft-anti'],tl:['folato natural']},
+    {id:'kiwi_cafe',name:'Kiwi',detail:'Vitamina C alta · absorção de ferro · sono',qty:'2 un',tags:['ft-mthfr'],tl:['vit C']},
+    {id:'manga_cafe',name:'Manga',detail:'Beta-caroteno + vitamina C · energia',qty:'150g',tags:['ft-anti'],tl:['antioxidante']},
+    {id:'maca_cafe',name:'Maçã com casca',detail:'Fibra solúvel · quercetina antiinflamatória',qty:'1 un',tags:['ft-anti'],tl:['quercetina']},
+    {id:'laranja_cafe',name:'Laranja / tangerina',detail:'Vitamina C · absorção ferro não-heme',qty:'1–2 un',tags:['ft-mthfr'],tl:['vit C']},
+    {id:'papaia_cafe',name:'Papaia (mamão)',detail:'Papaína digestiva · vitamina C · leve',qty:'150g',tags:['ft-anti'],tl:['digestivo']},
+    {id:'framboesa_cafe',name:'Framboesa e amora',detail:'Altíssimo antioxidante · fibra · IG baixo',qty:'100g',tags:['ft-anti'],tl:['antioxidante']},
+  ];
+
+  const CAFE_GORDURAS = [
+    {id:'pasta_amend_cafe',name:'Pasta de amendoim integral (sem açúcar)',detail:'Proteína + gordura boa · calórico · saboroso',qty:'1–2 col',tags:[],tl:[]},
+    {id:'abacate_cafe',name:'Abacate',detail:'Oleico + potássio + folato natural',qty:'¼–½ un',tags:['ft-mthfr','ft-anti'],tl:['folato natural']},
+    {id:'amendoas_cafe',name:'Amêndoas',detail:'Vitamina E + magnésio · lanche rápido',qty:'20–25g',tags:[],tl:[]},
+    {id:'nozes_cafe',name:'Nozes',detail:'ALA ômega-3 + magnésio',qty:'20–25g',tags:['ft-anti'],tl:['ômega-3']},
+    {id:'chia_cafe',name:'Semente de chia',detail:'ALA ômega-3 + cálcio + fibra · adicionar ao iogurte',qty:'1 col',tags:['ft-anti'],tl:['ômega-3']},
+    {id:'mel_cafe',name:'Mel puro',detail:'Energia rápida · adoçar iogurte/aveia',qty:'1 col',tags:[],tl:[]},
+    {id:'coco_cafe',name:'Coco ralado sem açúcar',detail:'Gordura MCT · fibra · sabor',qty:'1 col',tags:[],tl:[]},
+  ];
+
+  const CAFE_BEBIDAS = [
+    {id:'cafe_exp',name:'Café espresso de qualidade',detail:'Tomar ATÉ 15h · 3–4mg/kg pré-treino',qty:'1–2 xíc.',tags:[],tl:[]},
+    {id:'suco_beter_cafe',name:'Suco de beterraba + maçã + gengibre',detail:'Nitrato → VO2max · tomar 2–3h antes do longão',qty:'200ml',tags:['ft-vo2'],tl:['VO2max']},
+    {id:'leite_amend',name:'Leite de amêndoas (sem açúcar)',detail:'Alternativa vegetal · vitamina E',qty:'200ml',tags:[],tl:[]},
+    {id:'cha_verde_cafe',name:'Chá verde',detail:'EGCG antioxidante · cafeína leve + L-teanina',qty:'250ml',tags:['ft-anti'],tl:['EGCG']},
+    {id:'cha_geng_cafe',name:'Chá de gengibre com limão',detail:'Antiinflamatório · digestivo · desperta',qty:'250ml',tags:['ft-anti'],tl:['antiinflamatório']},
+    {id:'kefir_drink',name:'Kefir de água',detail:'Probiótico leve · microbioma · refrescante',qty:'200ml',tags:['ft-ferment','ft-mthfr'],tl:['probiótico']},
+    {id:'agua_limao',name:'Água com limão',detail:'Vitamina C + alcalinizante · hidratar ao acordar',qty:'300ml',tags:['ft-mthfr'],tl:['vit C']},
+  ];
+
+  // ── LANCHE ESPECÍFICO ──
+  const LANCHE_ITEMS = [
+    {id:'sanduiche_atum',name:'Sanduíche de atum (pão sourdough)',detail:'Proteína + carbo · fácil de levar ao trabalho',qty:'1 un',tags:[],tl:[]},
+    {id:'sanduiche_frango',name:'Sanduíche de frango grelhado',detail:'Proteína magra + pão sourdough',qty:'1 un',tags:[],tl:[]},
+    {id:'sanduiche_ricota',name:'Sanduíche de ricota + tomate',detail:'Proteína + antioxidante · leve',qty:'1 un',tags:['ft-anti'],tl:['licopeno']},
+    {id:'sanduiche_peru',name:'Sanduíche de peru (tacchino) sem nitrato',detail:'Triptofano → sono · verificar ingredientes',qty:'1 un',tags:['ft-night'],tl:['sono']},
+    {id:'pao_cottage',name:'Pão sourdough + cottage',detail:'Proteína + carbo lento · fácil',qty:'2 fatias + 100g',tags:[],tl:[]},
+    {id:'ovo_cozido',name:'Ovos cozidos (meal prep)',detail:'2–3 ovos · preparar 6 de uma vez · fácil de levar',qty:'2–3 un',tags:['ft-mthfr'],tl:['colina']},
+    {id:'pao_amendoim',name:'Pão sourdough + pasta de amendoim',detail:'Carbo + gordura boa · calórico',qty:'2 fatias',tags:[],tl:[]},
+    {id:'iogurte_lanche',name:'Iogurte grego + frutas',detail:'Proteína + antioxidante · fácil de levar',qty:'200g',tags:['ft-ferment'],tl:['proteína']},
+    {id:'barrinha_l',name:'Barrinha de proteína (sem açúcar)',detail:'Verificar: sem ácido fólico no rótulo',qty:'1 un',tags:[],tl:[]},
+    {id:'castanhas_l',name:'Mix de castanhas',detail:'Selênio + magnésio + ômega-3',qty:'30g',tags:['ft-anti'],tl:['selênio SOD2']},
+    {id:'banana_l',name:'Banana',detail:'Potássio · energia rápida · fácil de levar',qty:'1 un',tags:[],tl:[]},
+    {id:'pepino_cenoura',name:'Pepino + cenoura + tomate',detail:'Micronutrientes · leve · fácil de levar ao trabalho',qty:'à vontade',tags:['ft-anti'],tl:['antioxidante']},
+    {id:'agua_coco_l',name:'Água de coco',detail:'Eletrólitos naturais · hidratação no turno',qty:'300ml',tags:['ft-anti'],tl:['eletrólito']},
+  ];
+
   return [
+    // ── CAFÉ DA MANHÃ ──
     {
       id:'r1', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M20,180H36.23A96,96,0,0,1,220,152a12,12,0,0,0,0,24,72,72,0,0,0-143.79,4H236a12,12,0,0,1,0,24H20a12,12,0,0,1,0-24Zm108-76a12,12,0,0,0,12-12V64a12,12,0,0,0-24,0V92A12,12,0,0,0,128,104Zm67.88,21.37a12,12,0,0,0,8.49-3.51l20-20a12,12,0,0,0-17-17l-20,20a12,12,0,0,0,8.49,20.49ZM51.63,121.86a12,12,0,0,0,17-17l-20-20a12,12,0,0,0-17,17Z"/></svg>', title:'Café da Manhã', time:'12:45',
       groups:[
-        {id:'g_prot_animal', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236,128v8a28,28,0,0,1-28,28H48a28,28,0,0,1-28-28v-8a12,12,0,0,1,12-12H224A12,12,0,0,1,236,128ZM48,100H208a84,84,0,0,0-160,0ZM222,180H34a12,12,0,0,0-9.43,19.43C35.89,214.22,58.92,228,80,228h96c21.08,0,44.11-13.78,55.43-28.57A12,12,0,0,0,222,180Z"/></svg>', title:'Proteína animal', note:'Marque o que comeu', multi:true, items:PROTEINS_ANIMAL},
-        {id:'g_ovos', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M204,144c0,41.36-34.3,76-76,76s-76-34.64-76-76C52,93.12,96.36,36,128,36S204,93.12,204,144Zm-76,52a52.06,52.06,0,0,0,52-52,12,12,0,0,0-24,0,28,28,0,0,1-28,28,12,12,0,0,0,0,24Z"/></svg>', title:'Ovos & Laticínios', note:'Marque o que comeu', multi:true, items:EGGS_DAIRY},
-        {id:'g_carbo1', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M220,100a92,92,0,0,0-84,54.18V88a68,68,0,0,0-68-68,12,12,0,0,0-12,12c0,48.6,34.72,88.75,80,95.52V232a12,12,0,0,0,24,0V188.65A92,92,0,0,0,232,100,12,12,0,0,0,220,100ZM60,51.76A44.09,44.09,0,0,1,100.24,92,44.1,44.1,0,0,1,60,51.76ZM128,163.47V148a68.12,68.12,0,0,1,68-68,68.12,68.12,0,0,1-68,83.47Z"/></svg>', title:'Carbo complexo', note:'Marque o que comeu', multi:true, items:CARBOS},
-        {id:'g_fat1', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M176,136a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,136Zm-72,0a24,24,0,1,1,24,24A24,24,0,0,1,104,136ZM128,20c-44.18,0-80,43-80,96a80,80,0,0,0,160,0C208,63,172.18,20,128,20Zm0,152a56.06,56.06,0,0,1-56-56c0-41.74,26.34-72,56-72s56,30.26,56,72A56.06,56.06,0,0,1,128,172Z"/></svg>', title:'Gordura boa', note:'Marque o que comeu', multi:true, items:FATS},
-        {id:'g_anti1', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M208,40H48A16,16,0,0,0,32,56V120c0,88,88,120,88,120s88-32,88-120V56A16,16,0,0,0,208,40Zm0,80c0,65.74-60.58,98.18-80,104.93C108.55,218.14,48,185.65,48,120V56H208ZM152,112H140V100a12,12,0,0,0-24,0v12H104a12,12,0,0,0,0,24h12v12a12,12,0,0,0,24,0V136h12a12,12,0,0,0,0-24Z"/></svg>', title:'Vegetal antiinflamatório', note:'Marque o que usou', multi:true, items:ANTI_VEGS},
-        {id:'g_folato1', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M215.35,40.65a12,12,0,0,0-11.25-3.15C119.78,60.39,80,128.06,80,176a76,76,0,0,0,63.65,74.94A12,12,0,0,0,156,240c0-24.83,16.71-47.58,34.46-71.71C208.78,143.24,228,117.38,228,88A88.1,88.1,0,0,0,215.35,40.65ZM141.48,222.72A52.06,52.06,0,0,1,104,172c0-35.12,24.19-87.37,90.29-115.24A64.11,64.11,0,0,1,204,88c0,22-16.35,44.6-32.64,67.06C157.13,175.38,144.52,199,141.48,222.72ZM68,172a76.22,76.22,0,0,0,5.41,28.13A60,60,0,0,1,24,144C24,99.34,55.71,43.14,112.22,17.17a12,12,0,0,1,10,21.88C76.87,60.59,52,102.84,52,144a36,36,0,0,0,16,30A76.6,76.6,0,0,0,68,172Z"/></svg>', title:'Folato natural (MTHFR TT)', note:'Marque o que comeu', multi:true, items:FOLATO_VEGS},
-        {id:'g_bev1', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M240,100a40,40,0,0,1-40,40H192v20a80.09,80.09,0,0,1-80,80H88a80.09,80.09,0,0,1-80-80V68A12,12,0,0,1,20,56H192a12,12,0,0,1,0,24H32v80a56.06,56.06,0,0,0,56,56h24a56.06,56.06,0,0,0,56-56V140H200a16,16,0,0,0,0,32,12,12,0,0,1,0,24,40,40,0,0,1,0-80V100A40,40,0,0,1,240,100Zm-16,0a16,16,0,0,0-16-16v32A16,16,0,0,0,224,100Z"/></svg>', title:'Bebida / Chá', note:'Marque o que bebeu', multi:true, items:DRINKS},
+        {id:'g_cafe_prot', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M204,144c0,41.36-34.3,76-76,76s-76-34.64-76-76C52,93.12,96.36,36,128,36S204,93.12,204,144Zm-76,52a52.06,52.06,0,0,0,52-52,12,12,0,0,0-24,0,28,28,0,0,1-28,28,12,12,0,0,0,0,24Z"/></svg>', title:'Proteína', note:'Marque o que comeu', multi:true, items:CAFE_PROTEINAS},
+        {id:'g_cafe_carbo', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M220,100a92,92,0,0,0-84,54.18V88a68,68,0,0,0-68-68,12,12,0,0,0-12,12c0,48.6,34.72,88.75,80,95.52V232a12,12,0,0,0,24,0V188.65A92,92,0,0,0,232,100,12,12,0,0,0,220,100ZM60,51.76A44.09,44.09,0,0,1,100.24,92,44.1,44.1,0,0,1,60,51.76ZM128,163.47V148a68.12,68.12,0,0,1,68-68,68.12,68.12,0,0,1-68,83.47Z"/></svg>', title:'Carbo / Base', note:'Marque o que comeu', multi:true, items:CAFE_CARBOS},
+        {id:'g_cafe_fruta', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20ZM44,128a84.19,84.19,0,0,1,3-22.39L116,164H55.41A83.48,83.48,0,0,1,44,128Zm95.36,56H116.64L68,135.31V120.69ZM128,44a84.19,84.19,0,0,1,52.57,18.52L81.38,164a84,84,0,0,1,0-120Zm0,168a83.5,83.5,0,0,1-19.08-2.21L155,164h45.67A83.87,83.87,0,0,1,128,212Zm24-47.86V92.69L200.55,142A84.18,84.18,0,0,1,152,164.14Z"/></svg>', title:'Frutas', note:'Marque o que comeu', multi:true, items:CAFE_FRUTAS},
+        {id:'g_cafe_gordura', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M176,136a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,136Zm-72,0a24,24,0,1,1,24,24A24,24,0,0,1,104,136ZM128,20c-44.18,0-80,43-80,96a80,80,0,0,0,160,0C208,63,172.18,20,128,20Zm0,152a56.06,56.06,0,0,1-56-56c0-41.74,26.34-72,56-72s56,30.26,56,72A56.06,56.06,0,0,1,128,172Z"/></svg>', title:'Gordura boa / Complemento', note:'Marque o que comeu', multi:true, items:CAFE_GORDURAS},
+        {id:'g_cafe_bev', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M240,100a40,40,0,0,1-40,40H192v20a80.09,80.09,0,0,1-80,80H88a80.09,80.09,0,0,1-80-80V68A12,12,0,0,1,20,56H192a12,12,0,0,1,0,24H32v80a56.06,56.06,0,0,0,56,56h24a56.06,56.06,0,0,0,56-56V140H200a16,16,0,0,0,0,32,12,12,0,0,1,0,24,40,40,0,0,1,0-80V100A40,40,0,0,1,240,100Zm-16,0a16,16,0,0,0-16-16v32A16,16,0,0,0,224,100Z"/></svg>', title:'Bebida', note:'Marque o que bebeu', multi:true, items:CAFE_BEBIDAS},
       ]
     },
+    // ── PRÉ-TREINO ──
     ...(hasTreino ? [{
       id:'r2', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M213.85,125.46l-112,120a12,12,0,0,1-20.71-10.81L107.21,148H48a12,12,0,0,1-9.18-19.73l96-112a12,12,0,0,1,20.59,11.06L138.6,108H208a12,12,0,0,1,5.25,22.81Z"/></svg>', title:'Pré-treino', time:'14:00–14:30',
       groups:[
         {id:'g_carbo_pre', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20ZM44,128a84.19,84.19,0,0,1,3-22.39L116,164H55.41A83.48,83.48,0,0,1,44,128Zm95.36,56H116.64L68,135.31V120.69ZM128,44a84.19,84.19,0,0,1,52.57,18.52L81.38,164a84,84,0,0,1,0-120Zm0,168a83.5,83.5,0,0,1-19.08-2.21L155,164h45.67A83.87,83.87,0,0,1,128,212Zm24-47.86V92.69L200.55,142A84.18,84.18,0,0,1,152,164.14Z"/></svg>', title:'Carbo rápido pré-treino', note:'Marque o que comeu', multi:true, items:[
           ...FRUITS.filter(f=>['banana','tamara','uva_passa'].includes(f.id)),
-          ...(dt==='longao'?[{id:'malto_pre',name:'Maltodextrina 36g pré-longão',detail:'Carboload',qty:'36g',tags:[],tl:[]}]:[]),
+          {id:'malto_pre',name:'Maltodextrina 36g',detail:'Carboload · especialmente no Longão',qty:'36g',tags:[],tl:[]},
+          {id:'mel_pre',name:'Mel puro',detail:'Energia imediata · pré-treino em jejum',qty:'1 col',tags:[],tl:[]},
         ]},
-        {id:'g_drink_pre', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M174,48c-28.14-28.14-43.78-35.89-46-37a12,12,0,0,0-4-1,11.86,11.86,0,0,0-4,1c-2.26,1.14-17.9,8.89-46,37C50.39,71.42,28,107,28,152a100,100,0,0,0,200,0C228,107,205.61,71.42,174,48Zm-46,176a76.08,76.08,0,0,1-76-76c0-36.64,17.7-66.49,38.4-87.37Q101.44,49.44,128,32.94q26.58,16.52,37.6,27.69C186.3,81.51,204,111.36,204,148A76.08,76.08,0,0,1,128,224Z"/></svg>', title:'Hidratação pré-treino', note:'Marque', multi:true, items:[
+        {id:'g_drink_pre', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M174,48c-28.14-28.14-43.78-35.89-46-37a12,12,0,0,0-4-1,11.86,11.86,0,0,0-4,1c-2.26,1.14-17.9,8.89-46,37C50.39,71.42,28,107,28,152a100,100,0,0,0,200,0C228,107,205.61,71.42,174,48Zm-46,176a76.08,76.08,0,0,1-76-76c0-36.64,17.7-66.49,38.4-87.37Q101.44,49.44,128,32.94q26.58,16.52,37.6,27.69C186.3,81.51,204,111.36,204,148A76.08,76.08,0,0,1,128,224Z"/></svg>', title:'Hidratação pré-treino', note:'Marque o que bebeu', multi:true, items:[
           {id:'agua_pre',name:'Água 500ml',detail:'Pré-hidratação · 30 min antes',qty:'500ml',tags:[],tl:[]},
-          ...DRINKS.filter(d=>['agua_coco','suco_beterraba'].includes(d.id)),
+          ...DRINKS.filter(d=>['agua_coco','suco_beterraba','cafe'].includes(d.id)),
         ]},
       ]
     }] : []),
+    // ── PÓS-TREINO ──
     ...(hasTreino ? [{
       id:'r3', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M181.23,172.17C168.42,193.28,146.6,208,124,208S79.58,193.28,66.77,172.17c-13.07-21.38-13-46.9,0-68.41L104.32,41.4a24,24,0,0,1,47.36,0l37.55,62.36C202.27,125.27,202.3,150.79,181.23,172.17ZM128,124a44,44,0,0,0-44,44,44,44,0,0,0,88,0A44,44,0,0,0,128,124Z"/></svg>', title:'Pós-treino', time:'15:30',
       groups:[
-        {id:'g_prot_pos', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236,128v8a28,28,0,0,1-28,28H48a28,28,0,0,1-28-28v-8a12,12,0,0,1,12-12H224A12,12,0,0,1,236,128ZM48,100H208a84,84,0,0,0-160,0ZM222,180H34a12,12,0,0,0-9.43,19.43C35.89,214.22,58.92,228,80,228h96c21.08,0,44.11-13.78,55.43-28.57A12,12,0,0,0,222,180Z"/></svg>', title:'Proteína pós-treino', note:'Marque o que comeu', multi:true, items:[
+        {id:'g_prot_pos', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M204,144c0,41.36-34.3,76-76,76s-76-34.64-76-76C52,93.12,96.36,36,128,36S204,93.12,204,144Zm-76,52a52.06,52.06,0,0,0,52-52,12,12,0,0,0-24,0,28,28,0,0,1-28,28,12,12,0,0,0,0,24Z"/></svg>', title:'Proteína pós-treino', note:'Marque o que comeu', multi:true, items:[
           {id:'whey',name:'Whey protein 25–30g',detail:'Absorção rápida · janela de 30 min',qty:'25–30g',tags:[],tl:[]},
           ...PROTEINS_ANIMAL.filter(p=>['frango_peito','atum','salmao'].includes(p.id)),
         ]},
@@ -694,68 +782,63 @@ function getFoodSections(dt) {
           ...FRUITS.filter(f=>['banana','uva_passa'].includes(f.id)),
           ...CARBOS.filter(c=>['arroz_br'].includes(c.id)),
         ]},
-        {id:'g_anti_pos', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M240,94c0,70-103.79,126.66-108.21,129a12,12,0,0,1-11.58,0C115.79,220.66,16,164,16,94A62.07,62.07,0,0,1,78,32a61.35,61.35,0,0,1,50,25.56A61.35,61.35,0,0,1,178,32,62.07,62.07,0,0,1,240,94ZM128,207c13.06-7.53,65.06-40.11,86.35-80H128Zm0-104v24h86.35C218.66,115.15,210.11,101,200,89.4L128,103Z"/></svg>', title:'Antiinflamatório pós-treino', note:'Marque o que usou', multi:true, items:[
+        {id:'g_anti_pos', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M200,116a44,44,0,1,0,44,44A44.05,44.05,0,0,0,200,116Zm0,64a20,20,0,1,1,20-20A20,20,0,0,1,200,180ZM56,116a44,44,0,1,0,44,44A44.05,44.05,0,0,0,56,116Zm0,64a20,20,0,1,1,20-20A20,20,0,0,1,56,180Zm152-80a12,12,0,0,1-12,12,60.07,60.07,0,0,1-60-60V56L119.43,72.57a12,12,0,0,1-17-17l24-24A12,12,0,0,1,144,40V92a36,36,0,0,0,36,36A12,12,0,0,1,208,140ZM88,104a12,12,0,0,0-12,12,36,36,0,0,1-36,36,12,12,0,0,0,0,24,60.07,60.07,0,0,0,60-60A12,12,0,0,0,88,104Z"/></svg>', title:'Antiinflamatório pós-treino', note:'Marque o que comeu', multi:true, items:[
           ...FRUITS.filter(f=>['mirtilo','cereja','romã'].includes(f.id)),
           ...DRINKS.filter(d=>['agua_coco'].includes(d.id)),
-          ...(highAnti?[{id:'suco_cereja',name:'Suco cereja ácida concentrado',detail:'Z4/Z5: antiinflamatório extra · reforço',qty:'50ml',tags:['ft-anti'],tl:['antiinflamatório extra']}]:[]),
+          ...(highAnti?[{id:'suco_cereja',name:'Suco cereja ácida concentrado',detail:'Z4/Z5: antiinflamatório extra',qty:'50ml',tags:['ft-anti'],tl:['extra']}]:[]),
         ]},
       ]
     }] : []),
+    // ── ALMOÇO ──
     {
       id:'r4', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M80,48V128a48.05,48.05,0,0,0,40,47.23V224a12,12,0,0,0,24,0V175.23A48.05,48.05,0,0,0,184,128V48a12,12,0,0,0-24,0v60H100V48A12,12,0,0,0,80,48Zm96,80a24,24,0,0,1-48,0V132h48ZM68,24A12,12,0,0,0,56,36V224a12,12,0,0,0,24,0V164a12,12,0,0,0,0-24V100a12,12,0,0,0,0-24V36A12,12,0,0,0,68,24Z"/></svg>', title:'Almoço', time:'16:30',
       groups:[
-        {id:'g_prot_jan', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236,128v8a28,28,0,0,1-28,28H48a28,28,0,0,1-28-28v-8a12,12,0,0,1,12-12H224A12,12,0,0,1,236,128ZM48,100H208a84,84,0,0,0-160,0ZM222,180H34a12,12,0,0,0-9.43,19.43C35.89,214.22,58.92,228,80,228h96c21.08,0,44.11-13.78,55.43-28.57A12,12,0,0,0,222,180Z"/></svg>', title:'Proteína principal', note:'Marque o que comeu', multi:true, items:[...PROTEINS_ANIMAL,...PROTEINS_VEG.filter(p=>['tofu','tempeh','lentilha'].includes(p.id))]},
+        {id:'g_prot_jan', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M204,144c0,41.36-34.3,76-76,76s-76-34.64-76-76C52,93.12,96.36,36,128,36S204,93.12,204,144Zm-76,52a52.06,52.06,0,0,0,52-52,12,12,0,0,0-24,0,28,28,0,0,1-28,28,12,12,0,0,0,0,24Z"/></svg>', title:'Proteína principal', note:'Marque o que comeu', multi:true, items:[...PROTEINS_ANIMAL,...PROTEINS_VEG.filter(p=>['tofu','tempeh','lentilha','grao_bico'].includes(p.id))]},
         {id:'g_carbo_jan', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M220,100a92,92,0,0,0-84,54.18V88a68,68,0,0,0-68-68,12,12,0,0,0-12,12c0,48.6,34.72,88.75,80,95.52V232a12,12,0,0,0,24,0V188.65A92,92,0,0,0,232,100,12,12,0,0,0,220,100ZM60,51.76A44.09,44.09,0,0,1,100.24,92,44.1,44.1,0,0,1,60,51.76ZM128,163.47V148a68.12,68.12,0,0,1,68-68,68.12,68.12,0,0,1-68,83.47Z"/></svg>', title:'Carbo', note:'Marque o que comeu', multi:true, items:lowCarbo
-          ? [...CARBOS.filter(c=>['arroz_int','batata_doce','batata_ing'].includes(c.id)).map(c=>({...c,detail:c.detail+' · porção reduzida descanso/Z1',qty:'80g'}))]
+          ? CARBOS.filter(c=>['arroz_int','batata_doce','batata_ing'].includes(c.id)).map(c=>({...c,qty:'80g'}))
           : CARBOS},
         {id:'g_legume_jan', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M215.35,40.65a12,12,0,0,0-11.25-3.15C119.78,60.39,80,128.06,80,176a76,76,0,0,0,63.65,74.94A12,12,0,0,0,156,240c0-24.83,16.71-47.58,34.46-71.71C208.78,143.24,228,117.38,228,88A88.1,88.1,0,0,0,215.35,40.65ZM141.48,222.72A52.06,52.06,0,0,1,104,172c0-35.12,24.19-87.37,90.29-115.24A64.11,64.11,0,0,1,204,88c0,22-16.35,44.6-32.64,67.06C157.13,175.38,144.52,199,141.48,222.72ZM68,172a76.22,76.22,0,0,0,5.41,28.13A60,60,0,0,1,24,144C24,99.34,55.71,43.14,112.22,17.17a12,12,0,0,1,10,21.88C76.87,60.59,52,102.84,52,144a36,36,0,0,0,16,30A76.6,76.6,0,0,0,68,172Z"/></svg>', title:'Vegetais (obrigatório)', note:'Marque o que comeu', multi:true, items:[...FOLATO_VEGS,...NITRATO_VEGS,...ANTI_VEGS]},
         {id:'g_ferment_jan', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M200,76.53V56a20,20,0,0,0-20-20H76A20,20,0,0,0,56,56V76.53A28,28,0,0,0,36,104v96a20,20,0,0,0,20,20H200a20,20,0,0,0,20-20V104A28,28,0,0,0,200,76.53ZM80,60H176V76H80Zm116,140H60V104a4,4,0,0,1,4-4H192a4,4,0,0,1,4,4ZM104,128a12,12,0,0,1,12-12h24a12,12,0,0,1,0,24H116A12,12,0,0,1,104,128Z"/></svg>', title:'Fermentado (gut health)', note:'Marque o que comeu', multi:true, items:FERMENTED},
       ]
     },
+    // ── JANTA ──
     {
       id:'r5', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M240,96a12,12,0,0,1-12,12H216v12a12,12,0,0,1-24,0V108H180a12,12,0,0,1,0-24h12V72a12,12,0,0,1,24,0V84h12A12,12,0,0,1,240,96ZM193.09,151.46A104,104,0,0,1,64.54,62.91a12,12,0,0,0-15.8-14.72A116,116,0,1,0,207.81,207.26a12,12,0,0,0-14.72-15.8ZM128,220A92,92,0,0,1,86.11,45.56a128.09,128.09,0,0,0,124.33,124.33A92.24,92.24,0,0,1,128,220Z"/></svg>', title:'Janta', time:'20:30',
       groups:[
-        {id:'g_prot_n1', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236,128v8a28,28,0,0,1-28,28H48a28,28,0,0,1-28-28v-8a12,12,0,0,1,12-12H224A12,12,0,0,1,236,128ZM48,100H208a84,84,0,0,0-160,0ZM222,180H34a12,12,0,0,0-9.43,19.43C35.89,214.22,58.92,228,80,228h96c21.08,0,44.11-13.78,55.43-28.57A12,12,0,0,0,222,180Z"/></svg>', title:'Proteína', note:'Marque o que comeu', multi:true, items:[
-          ...EGGS_DAIRY.filter(e=>['cottage','iogurte','ovos'].includes(e.id)),
-          ...PROTEINS_ANIMAL.filter(p=>['atum'].includes(p.id)),
-          {id:'barrinha',name:'Barrinha de proteína (sem açúcar)',detail:'Verificar: sem ácido fólico no rótulo',qty:'1 un',tags:[],tl:[]},
-        ]},
-        {id:'g_fat_n1', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M233.55,78.27l-96-56a16,16,0,0,0-15.1,0l-96,56A16,16,0,0,0,18,92v72a16,16,0,0,0,8.45,14.13l96,56a16,16,0,0,0,15.1,0l96-56A16,16,0,0,0,238,164V92A16,16,0,0,0,233.55,78.27ZM128,40l80,46.67L128,133.33,48,86.67Zm-96,56,80,46.67V218.67L32,172Zm96,120V142l80-46.67V172Z"/></svg>', title:'Gordura noturna', note:'Sempre incluir', multi:true, items:FATS.filter(f=>['castanha_para','nozes','amendoas','amendoim','chocolate85'].includes(f.id))},
-        {id:'g_fruit_n1', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M214.75,211.71a12,12,0,1,1-20.5-12.42c9.55-15.77,14.25-34.9,14.25-52.29a80,80,0,0,0-80-80c-19.6,0-39,7.4-51,21.29A12,12,0,1,1,60,72.71C76.06,54.47,101.27,44,128,44a104.11,104.11,0,0,1,104,104C232,169.75,226.4,192.15,214.75,211.71ZM44,108a12,12,0,0,0-12,12c0,22.77,7.92,52.05,27.3,78a12,12,0,1,0,19.4-14.08C61.92,160.28,56,138.37,56,120A12,12,0,0,0,44,108ZM156,32a12,12,0,0,0-12-12H112a12,12,0,0,0,0,24h32A12,12,0,0,0,156,32Z"/></svg>', title:'Fruta', note:'Marque o que comeu', multi:true, items:FRUITS.filter(f=>['maca','mirtilo','cereja'].includes(f.id))},
+        {id:'g_prot_janta', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M204,144c0,41.36-34.3,76-76,76s-76-34.64-76-76C52,93.12,96.36,36,128,36S204,93.12,204,144Zm-76,52a52.06,52.06,0,0,0,52-52,12,12,0,0,0-24,0,28,28,0,0,1-28,28,12,12,0,0,0,0,24Z"/></svg>', title:'Proteína', note:'Marque o que comeu', multi:true, items:[...PROTEINS_ANIMAL,...PROTEINS_VEG.filter(p=>['tofu','tempeh','lentilha','grao_bico'].includes(p.id))]},
+        {id:'g_carbo_janta', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M220,100a92,92,0,0,0-84,54.18V88a68,68,0,0,0-68-68,12,12,0,0,0-12,12c0,48.6,34.72,88.75,80,95.52V232a12,12,0,0,0,24,0V188.65A92,92,0,0,0,232,100,12,12,0,0,0,220,100ZM60,51.76A44.09,44.09,0,0,1,100.24,92,44.1,44.1,0,0,1,60,51.76ZM128,163.47V148a68.12,68.12,0,0,1,68-68,68.12,68.12,0,0,1-68,83.47Z"/></svg>', title:'Carbo', note:'Marque o que comeu', multi:true, items:lowCarbo
+          ? CARBOS.filter(c=>['arroz_int','batata_doce'].includes(c.id)).map(c=>({...c,qty:'80g'}))
+          : CARBOS},
+        {id:'g_veg_janta', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M215.35,40.65a12,12,0,0,0-11.25-3.15C119.78,60.39,80,128.06,80,176a76,76,0,0,0,63.65,74.94A12,12,0,0,0,156,240c0-24.83,16.71-47.58,34.46-71.71C208.78,143.24,228,117.38,228,88A88.1,88.1,0,0,0,215.35,40.65ZM141.48,222.72A52.06,52.06,0,0,1,104,172c0-35.12,24.19-87.37,90.29-115.24A64.11,64.11,0,0,1,204,88c0,22-16.35,44.6-32.64,67.06C157.13,175.38,144.52,199,141.48,222.72ZM68,172a76.22,76.22,0,0,0,5.41,28.13A60,60,0,0,1,24,144C24,99.34,55.71,43.14,112.22,17.17a12,12,0,0,1,10,21.88C76.87,60.59,52,102.84,52,144a36,36,0,0,0,16,30A76.6,76.6,0,0,0,68,172Z"/></svg>', title:'Vegetais', note:'Marque o que comeu', multi:true, items:[...FOLATO_VEGS,...ANTI_VEGS]},
+        {id:'g_fat_janta', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M233.55,78.27l-96-56a16,16,0,0,0-15.1,0l-96,56A16,16,0,0,0,18,92v72a16,16,0,0,0,8.45,14.13l96,56a16,16,0,0,0,15.1,0l96-56A16,16,0,0,0,238,164V92A16,16,0,0,0,233.55,78.27ZM128,40l80,46.67L128,133.33,48,86.67Zm-96,56,80,46.67V218.67L32,172Zm96,120V142l80-46.67V172Z"/></svg>', title:'Gordura boa', note:'Marque o que comeu', multi:true, items:FATS.filter(f=>['abacate','azeite','castanha_para','nozes','amendoim','chia'].includes(f.id))},
       ]
     },
+    // ── LANCHE 1 ──
     {
       id:'r6', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236,96a12,12,0,0,1-12,12H212v12a12,12,0,0,1-24,0V108H176a12,12,0,0,1,0-24h12V72a12,12,0,0,1,24,0V84h12A12,12,0,0,1,236,96ZM144,60h8v8a12,12,0,0,0,24,0V60h8a12,12,0,0,0,0-24h-8V28a12,12,0,0,0-24,0v8h-8a12,12,0,0,0,0,24Zm49.09,91.46A104,104,0,0,1,64.54,62.91a12,12,0,0,0-15.8-14.72A116,116,0,1,0,207.81,207.26a12,12,0,0,0-14.72-15.8ZM128,220A92,92,0,0,1,86.11,45.56a128.09,128.09,0,0,0,124.33,124.33A92.24,92.24,0,0,1,128,220Z"/></svg>', title:'Lanche 1', time:'00:00',
       groups:[
-        {id:'g_lanche_n1', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M223.68,66.15,135.68,18a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,34.2,214.43,80,177.35,99.78l-86.43-45.8ZM128,125.8,41.57,80,80,58.78l86.43,45.79ZM32,94.57,116,139.42v95.1L32,189.63Zm104,139.86V139.42l84-45.78v94.94Z"/></svg>', title:'O que comeu', note:'Marque o que comeu', multi:true, items:[
-          ...PROTEINS_ANIMAL.filter(p=>['atum','frango_peito'].includes(p.id)),
-          ...EGGS_DAIRY.filter(e=>['cottage','ovos'].includes(e.id)),
-          ...CARBOS.filter(c=>['pao_sourdough'].includes(c.id)),
-          {id:'pepino',name:'Pepino / cenoura / tomate cru',detail:'Micronutrientes · leve · fácil de levar',qty:'à vontade',tags:[],tl:[]},
-          ...FATS.filter(f=>['castanha_para','nozes','amendoas','amendoim'].includes(f.id)),
-          ...FRUITS.filter(f=>['banana','mirtilo','maca'].includes(f.id)),
-          {id:'barrinha_l1',name:'Barrinha de proteína (sem açúcar)',detail:'Verificar: sem ácido fólico no rótulo',qty:'1 un',tags:[],tl:[]},
-        ]},
+        {id:'g_lanche_n1', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M223.68,66.15,135.68,18a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,34.2,214.43,80,177.35,99.78l-86.43-45.8ZM128,125.8,41.57,80,80,58.78l86.43,45.79ZM32,94.57,116,139.42v95.1L32,189.63Zm104,139.86V139.42l84-45.78v94.94Z"/></svg>', title:'O que comeu', note:'Marque o que comeu', multi:true, items:LANCHE_ITEMS},
       ]
     },
+    // ── LANCHE 2 ──
     {
       id:'r6b', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,36A92,92,0,1,0,220,128,92.1,92.1,0,0,0,128,36Zm0,160a68,68,0,1,1,68-68A68.07,68.07,0,0,1,128,196Zm40-68a12,12,0,0,1-12,12H128a12,12,0,0,1-12-12V88a12,12,0,0,1,24,0v28h28A12,12,0,0,1,168,128ZM72,24A12,12,0,0,1,60,12H36A12,12,0,0,1,24,24V48a12,12,0,0,0,24,0V35.31L72.69,60A12,12,0,0,0,90,42.69Z"/></svg>', title:'Lanche 2', time:'02:00',
       groups:[
         {id:'g_lanche_n2', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M223.68,66.15,135.68,18a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,34.2,214.43,80,177.35,99.78l-86.43-45.8ZM128,125.8,41.57,80,80,58.78l86.43,45.79ZM32,94.57,116,139.42v95.1L32,189.63Zm104,139.86V139.42l84-45.78v94.94Z"/></svg>', title:'O que comeu', note:'Marque o que comeu', multi:true, items:[
-          ...PROTEINS_ANIMAL.filter(p=>['atum'].includes(p.id)),
-          ...CARBOS.filter(c=>['pao_sourdough'].includes(c.id)),
-          {id:'pepino2',name:'Pepino / cenoura / tomate cru',detail:'Micronutrientes · leve',qty:'à vontade',tags:[],tl:[]},
+          ...LANCHE_ITEMS.filter(l=>['sanduiche_atum','ovo_cozido','barrinha_l','castanhas_l','banana_l','pepino_cenoura','agua_coco_l'].includes(l.id)),
           {id:'agua_lanche2',name:'Água 250ml',detail:'Manter hidratação no turno',qty:'250ml',tags:[],tl:[]},
-          ...FATS.filter(f=>['amendoim','amendoas'].includes(f.id)),
-          ...FRUITS.filter(f=>['banana','maca'].includes(f.id)),
         ]},
       ]
     },
+    // ── PRÉ-SONO ──
     {
-      id:'r7', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236,96a12,12,0,0,1-12,12H212v12a12,12,0,0,1-24,0V108H176a12,12,0,0,1,0-24h12V72a12,12,0,0,1,24,0V84h12A12,12,0,0,1,236,96ZM144,60h8v8a12,12,0,0,0,24,0V60h8a12,12,0,0,0,0-24h-8V28a12,12,0,0,0-24,0v8h-8a12,12,0,0,0,0,24Zm49.09,91.46A104,104,0,0,1,64.54,62.91a12,12,0,0,0-15.8-14.72A116,116,0,1,0,207.81,207.26a12,12,0,0,0-14.72-15.8ZM128,220A92,92,0,0,1,86.11,45.56a128.09,128.09,0,0,0,124.33,124.33A92.24,92.24,0,0,1,128,220Z"/></svg>', title:'Pré-sono', time:'04:30',
+      id:'r7', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236,112H216V72a20,20,0,0,0-20-20H60A20,20,0,0,0,40,72v40H20A12,12,0,0,0,8,124v72a12,12,0,0,0,24,0v-4H224v4a12,12,0,0,0,24,0V124A12,12,0,0,0,236,112ZM64,76H192v36H152V104a12,12,0,0,0-12-12H116a12,12,0,0,0-12,12v8H64ZM224,168H32V136H224Z"/></svg>', title:'Pré-sono', time:'04:30',
       groups:[
-        {id:'g_caseina', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M216,52H40A12,12,0,0,0,28,64V176a28,28,0,0,0,28,28H200a28,28,0,0,0,28-28V64A12,12,0,0,0,216,52Zm-12,124a4,4,0,0,1-4,4H56a4,4,0,0,1-4-4V76H204Z"/></svg>', title:'Caseína pré-sono', note:'Marque o que comeu', multi:true, items:EGGS_DAIRY.filter(e=>['iogurte','cottage'].includes(e.id))},
-        {id:'g_magnesio', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M233.55,78.27l-96-56a16,16,0,0,0-15.1,0l-96,56A16,16,0,0,0,18,92v72a16,16,0,0,0,8.45,14.13l96,56a16,16,0,0,0,15.1,0l96-56A16,16,0,0,0,238,164V92A16,16,0,0,0,233.55,78.27ZM128,40l80,46.67L128,133.33,48,86.67Zm-96,56,80,46.67V218.67L32,172Zm96,120V142l80-46.67V172Z"/></svg>', title:'Magnésio + selênio', note:'Marque o que comeu', multi:true, items:FATS.filter(f=>['castanha_para','nozes','amendoas','amendoim'].includes(f.id))},
+        {id:'g_caseina', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M216,52H40A12,12,0,0,0,28,64V176a28,28,0,0,0,28,28H200a28,28,0,0,0,28-28V64A12,12,0,0,0,216,52Zm-12,124a4,4,0,0,1-4,4H56a4,4,0,0,1-4-4V76H204Z"/></svg>', title:'Caseína pré-sono', note:'Marque o que comeu', multi:true, items:[
+          ...EGGS_DAIRY.filter(e=>['iogurte','cottage'].includes(e.id)),
+          {id:'iog15',name:'Iogurte grego 15g proteína',detail:'Caseína · síntese proteica durante o sono',qty:'200g',tags:['ft-ferment'],tl:['caseína']},
+        ]},
+        {id:'g_magnesio_sono', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M233.55,78.27l-96-56a16,16,0,0,0-15.1,0l-96,56A16,16,0,0,0,18,92v72a16,16,0,0,0,8.45,14.13l96,56a16,16,0,0,0,15.1,0l96-56A16,16,0,0,0,238,164V92A16,16,0,0,0,233.55,78.27ZM128,40l80,46.67L128,133.33,48,86.67Zm-96,56,80,46.67V218.67L32,172Zm96,120V142l80-46.67V172Z"/></svg>', title:'Magnésio + selênio', note:'Marque o que comeu', multi:true, items:FATS.filter(f=>['castanha_para','nozes','amendoas'].includes(f.id))},
         {id:'g_melatonina', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M200,116a44,44,0,1,0,44,44A44.05,44.05,0,0,0,200,116Zm0,64a20,20,0,1,1,20-20A20,20,0,0,1,200,180ZM56,116a44,44,0,1,0,44,44A44.05,44.05,0,0,0,56,116Zm0,64a20,20,0,1,1,20-20A20,20,0,0,1,56,180Zm152-80a12,12,0,0,1-12,12,60.07,60.07,0,0,1-60-60V56L119.43,72.57a12,12,0,0,1-17-17l24-24A12,12,0,0,1,144,40V92a36,36,0,0,0,36,36A12,12,0,0,1,208,140ZM88,104a12,12,0,0,0-12,12,36,36,0,0,1-36,36,12,12,0,0,0,0,24,60.07,60.07,0,0,0,60-60A12,12,0,0,0,88,104Z"/></svg>', title:'Melatonina natural + relaxamento', note:'Marque o que tomou', multi:true, items:[
           ...FRUITS.filter(f=>['cereja','mirtilo'].includes(f.id)),
           ...DRINKS.filter(d=>['cha_camomila','cha_melissa','cha_lavanda','golden_milk'].includes(d.id)),
@@ -822,18 +905,26 @@ function getSupplements(dt) {
   const hasPos = ['longao','z45','z23','z1','forca'].includes(dt);
   const highAnti = ['z45','z1','descanso'].includes(dt);
   return [
-    {id:'s_nac',name:'NAC 600mg',dose:'1 cápsula · em jejum',time:'12:30 — Ao acordar · esperar 15–20 min antes de comer',hl:'ok',hlLabel:'SEMPRE'},
-    {id:'s_d3',name:'Vitamina D3 Bandini 2000UI',dose:'2 cápsulas = 4000 UI',time:'12:45 — Com gordura da refeição (azeite/abacate)',hl:'ok',hlLabel:'SEMPRE'},
-    {id:'s_omega3',name:'Ômega-3 EPA+DHA',dose:'2 cápsulas (2–3g)',time:'12:45 — Com refeição',hl:highAnti?'boost':'ok',hlLabel:highAnti?'⬆ REFORÇAR HOJE':'SEMPRE'},
-    {id:'s_complexob',name:'Complexo B Metilado (5-MTHF + Metilcobalamina)',dose:'1 cápsula',time:'12:45 — NUNCA ácido fólico sintético · MTHFR TT',hl:'ok',hlLabel:'SEMPRE'},
-    {id:'s_colageno',name:'Colágeno Hidrolisado + Vitamina C',dose:'10–15g + 200mg Vit C',time:'14:30 — 30 min antes do treino · tendões',hl:hasPos?'ok':'skip',hlLabel:hasPos?'PRÉ-TREINO':'PULAR HOJE'},
-    {id:'s_creatina',name:'Creatina Monohidratada',dose:'5g',time:'18:00 — Pós-treino · síntese e recuperação',hl:hasPos?'ok':'skip',hlLabel:hasPos?'PÓS-TREINO':'PULAR'},
-    {id:'s_curcuma',name:'Cúrcuma + Piperina',dose:'500–800mg curcumina',time:'19:00 — Com jantar gorduroso',hl:highAnti?'boost':'ok',hlLabel:highAnti?'⬆ REFORÇAR HOJE':'NORMAL'},
-    {id:'s_magnesio',name:'Magnésio Bisglicinato',dose:'2 cápsulas (300–400mg)',time:'04:30 — 30 min antes de dormir',hl:highAnti?'boost':'ok',hlLabel:highAnti?'⬆ PRIORIDADE':'SEMPRE'},
-    {id:'s_ashwa',name:'Ashwagandha KSM-66',dose:'600mg',time:'04:30 — Reduz cortisol acumulado do turno',hl:'ok',hlLabel:'SEMPRE'},
+    // 12:30
+    {id:'s_nac',name:'NAC 600mg',dose:'1 cápsula · em jejum',time:'12:30 — Em jejum · esperar 15–20 min antes de comer',hl:'ok',hlLabel:'SEMPRE',notifHour:12,notifMin:30},
+    // 12:45
+    {id:'s_d3',name:'Vitamina D3 Bandini 2000UI',dose:'2 cápsulas = 4000 UI',time:'12:45 — Com gordura da refeição',hl:'ok',hlLabel:'SEMPRE',notifHour:12,notifMin:45},
+    {id:'s_omega3',name:'Ômega-3 EPA+DHA',dose:'2 cápsulas (2–3g)',time:'12:45 — Com refeição',hl:highAnti?'boost':'ok',hlLabel:highAnti?'⬆ REFORÇAR HOJE':'SEMPRE',notifHour:12,notifMin:45},
+    {id:'s_complexob',name:'Complexo B Metilado (5-MTHF + Metilcobalamina)',dose:'1 cápsula',time:'12:45 — NUNCA ácido fólico sintético · MTHFR TT',hl:'ok',hlLabel:'SEMPRE',notifHour:12,notifMin:45},
+    // 14:30
+    {id:'s_colageno',name:'Colágeno Hidrolisado + Vitamina C',dose:'10–15g + 200mg Vit C',time:'14:30 — 30 min antes do treino · tendões',hl:hasPos?'ok':'skip',hlLabel:hasPos?'PRÉ-TREINO':'PULAR HOJE',notifHour:14,notifMin:30},
+    // 16:30 (almoço) - magnésio do almoço
+    {id:'s_magnesio_almoco',name:'Magnésio Bisglicinato (dose do almoço)',dose:'1 cápsula',time:'16:30 — Com o almoço',hl:'ok',hlLabel:'ALMOÇO',notifHour:16,notifMin:30},
+    // 15:30 pós-treino
+    {id:'s_creatina',name:'Creatina Monohidratada',dose:'5g',time:'15:30 — Pós-treino · síntese e recuperação',hl:hasPos?'ok':'skip',hlLabel:hasPos?'PÓS-TREINO':'PULAR',notifHour:15,notifMin:30},
+    // 19:00
+    {id:'s_curcuma',name:'Cúrcuma + Piperina',dose:'500–800mg curcumina',time:'20:30 — Com a janta (com gordura)',hl:highAnti?'boost':'ok',hlLabel:highAnti?'⬆ REFORÇAR HOJE':'NORMAL',notifHour:20,notifMin:30},
+    // 04:30
+    {id:'s_magnesio',name:'Magnésio Bisglicinato (dose da noite)',dose:'1 cápsula (restante da dose)',time:'04:30 — Antes de dormir · câimbras + sono',hl:highAnti?'boost':'ok',hlLabel:highAnti?'⬆ PRIORIDADE':'SEMPRE',notifHour:4,notifMin:30},
+    {id:'s_ashwa',name:'Ashwagandha KSM-66',dose:'600mg',time:'04:30 — Reduz cortisol acumulado do turno',hl:'ok',hlLabel:'SEMPRE',notifHour:4,notifMin:30},
     ...(dt==='longao'?[
-      {id:'s_eletrolito',name:'Eletrólito completo (Na + K + Mg)',dose:'1 sachê antes + 1 durante',time:'⭐ LONGÃO — antes e durante a corrida',hl:'boost',hlLabel:'LONGÃO ESSENCIAL'},
-      {id:'s_gel',name:'Géis SiS Beta Fuel (3 un)',dose:'1 gel a cada 5–6 km',time:'⭐ LONGÃO — km 5 · km 10 · km 15–17',hl:'boost',hlLabel:'OBRIGATÓRIO'},
+      {id:'s_eletrolito',name:'Eletrólito completo (Na + K + Mg)',dose:'1 sachê antes + 1 durante',time:'Longão — antes e durante a corrida',hl:'boost',hlLabel:'LONGÃO ESSENCIAL',notifHour:null,notifMin:null},
+      {id:'s_gel',name:'Géis SiS Beta Fuel (3 un)',dose:'1 gel a cada 5–6 km',time:'Longão — km 5 · km 10 · km 15–17',hl:'boost',hlLabel:'OBRIGATÓRIO',notifHour:null,notifMin:null},
     ]:[]),
   ];
 }
@@ -873,13 +964,27 @@ function renderBanner(){
 }
 
 function updateGroupBadge(fsg,group,key_prefix){
-  const selCount=group.items.filter((_,i)=>!!state.checked[key_prefix+'_'+i]).length;
-  const customCount=(state.customItems[key_prefix]||[]).filter((_,i)=>!!state.checked[key_prefix+'_custom_'+i]).length;
-  const total=selCount+customCount;
+  const selItems=group.items.filter((_,i)=>!!state.checked[key_prefix+'_'+i]);
+  const customs=(state.customItems[key_prefix]||[]).filter((_,i)=>!!state.checked[key_prefix+'_custom_'+i]);
+  const total=selItems.length+customs.length;
   const badge=fsg.querySelector('.fsg-badge');
   if(badge){
     badge.className='fsg-badge '+(total>0?'badge-ok':'badge-none');
     badge.textContent=total>0?total+' selecionado'+(total>1?'s':''):'Nenhum';
+  }
+  // Show selected names below header when group is closed
+  let selWrap=fsg.querySelector('.fsg-sel-names');
+  if(!selWrap){
+    selWrap=document.createElement('div');
+    selWrap.className='fsg-sel-names';
+    fsg.querySelector('.fsg-head').after(selWrap);
+  }
+  if(total>0){
+    const names=[...selItems.map(it=>it.name),...customs];
+    selWrap.innerHTML=names.map(n=>`<span class="sel-chip">${n}</span>`).join('');
+    selWrap.style.display='flex';
+  } else {
+    selWrap.style.display='none';
   }
 }
 
@@ -1487,6 +1592,89 @@ function clearAllData(){
 }
 
 // ═══════════════ RENDER ALL (updated) ═══════════════
+// ═══════════════ SUPPLEMENT NOTIFICATIONS ═══════════════
+let lastNotifKey = null;
+let notifDismissed = {};
+
+function checkSuppNotif(){
+  const now = new Date();
+  const h = now.getHours();
+  const m = now.getMinutes();
+  const supps = getSupplements(state.dayType);
+
+  // Group supplements by time
+  const timeGroups = {};
+  supps.forEach(s => {
+    if(s.notifHour === null || s.hl === 'skip') return;
+    // Notify in a 5-min window after the time
+    if(h === s.notifHour && m >= s.notifMin && m < s.notifMin + 6) {
+      const key = `${s.notifHour}:${String(s.notifMin).padStart(2,'0')}`;
+      if(!timeGroups[key]) timeGroups[key] = [];
+      timeGroups[key].push(s);
+    }
+  });
+
+  const keys = Object.keys(timeGroups);
+  if(keys.length === 0) { hideNotif(); return; }
+
+  const key = keys[0];
+  const dayKey = getDayId() + '_' + key;
+
+  // Don't show if dismissed today or all already checked
+  if(notifDismissed[dayKey]) return;
+  const items = timeGroups[key];
+  const allDone = items.every(s => !!state.checked['sup_'+s.id]);
+  if(allDone) return;
+
+  // Don't re-render if same notification already showing
+  if(lastNotifKey === dayKey) return;
+  lastNotifKey = dayKey;
+  showNotif(key, items, dayKey);
+}
+
+function showNotif(time, items, dayKey){
+  const el = document.getElementById('supp-notif');
+  const pending = items.filter(s => !state.checked['sup_'+s.id]);
+  if(pending.length === 0) { el.style.display='none'; return; }
+
+  el.style.display = 'block';
+  el.className = 'supp-notif';
+  el.innerHTML = `
+    <div class="sn-top">
+      <div class="sn-icon"><svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M224,152a8,8,0,0,1-8-8V56a8,8,0,0,0-16,0v88a24,24,0,0,0,48,0V56a40,40,0,0,0-80,0v96a8,8,0,0,1-16,0V56a24,24,0,0,0-48,0v88a8,8,0,0,0,16,0V56a8,8,0,0,1,16,0v88a24,24,0,0,0,48,0V56a8,8,0,0,1,16,0v88a24,24,0,0,0,48,0V56a8,8,0,0,1,16,0"/></svg></div>
+      <div class="sn-title">Hora dos suplementos — ${time}</div>
+      <div class="sn-close" onclick="dismissNotif('${dayKey}')">✕</div>
+    </div>
+    <div class="sn-items">
+      ${pending.map(s=>`<div class="sn-item">${s.name}<span class="sn-dose">${s.dose}</span></div>`).join('')}
+    </div>
+    <button class="sn-btn" onclick="markNotifDone(${JSON.stringify(pending.map(s=>s.id))}, '${dayKey}')">✓ MARCAR COMO TOMADOS</button>
+  `;
+}
+
+function hideNotif(){
+  const el = document.getElementById('supp-notif');
+  if(el) el.style.display = 'none';
+  lastNotifKey = null;
+}
+
+function dismissNotif(dayKey){
+  notifDismissed[dayKey] = true;
+  hideNotif();
+}
+
+function markNotifDone(ids, dayKey){
+  ids.forEach(id => { state.checked['sup_'+id] = true; });
+  saveState(); updateScore();
+  notifDismissed[dayKey] = true;
+  hideNotif();
+  // Re-render suplem tab if visible
+  if(document.getElementById('page-suplem').classList.contains('active')) renderSuplem();
+}
+
+// Check every 30 seconds
+setInterval(checkSuppNotif, 30000);
+
 function renderAll(){
   updateHeaderDate();renderDtype();renderBanner();renderFood();renderAvoid();renderSuplem();renderWater();updateScore();checkNacAlert();
 }
@@ -1660,6 +1848,8 @@ setInterval(()=>{
 },8000);
 
 loadState();history=loadHistory();loadStock();renderAll();
+// Start supplement notification check
+setTimeout(checkSuppNotif, 3000);
 setTimeout(()=>{document.getElementById('splash').classList.add('hide');setTimeout(()=>document.getElementById('splash').remove(),500);},1000);
 </script>
 </body>
