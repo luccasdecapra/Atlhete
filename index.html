@@ -908,16 +908,17 @@ function getSupplements(dt) {
     // 12:30
     {id:'s_nac',name:'NAC 600mg',dose:'1 cápsula · em jejum',time:'12:30 — Em jejum · esperar 15–20 min antes de comer',hl:'ok',hlLabel:'SEMPRE',notifHour:12,notifMin:30},
     // 12:45
-    {id:'s_d3',name:'Vitamina D3 Bandini 2000UI',dose:'2 cápsulas = 4000 UI',time:'12:45 — Com gordura da refeição',hl:'ok',hlLabel:'SEMPRE',notifHour:12,notifMin:45},
+    {id:'s_d3_manha',name:'Vitamina D3 Bandini — Dose manhã',dose:'1 cápsula = 2000 UI',time:'12:45 — Com gordura da refeição (ovo, abacate ou pasta amendoim)',hl:'ok',hlLabel:'MANHÃ',notifHour:12,notifMin:45},
     {id:'s_omega3',name:'Ômega-3 EPA+DHA',dose:'2 cápsulas (2–3g)',time:'12:45 — Com refeição',hl:highAnti?'boost':'ok',hlLabel:highAnti?'⬆ REFORÇAR HOJE':'SEMPRE',notifHour:12,notifMin:45},
     {id:'s_complexob',name:'Complexo B Metilado (5-MTHF + Metilcobalamina)',dose:'1 cápsula',time:'12:45 — NUNCA ácido fólico sintético · MTHFR TT',hl:'ok',hlLabel:'SEMPRE',notifHour:12,notifMin:45},
     // 14:30
     {id:'s_colageno',name:'Colágeno Hidrolisado + Vitamina C',dose:'10–15g + 200mg Vit C',time:'14:30 — 30 min antes do treino · tendões',hl:hasPos?'ok':'skip',hlLabel:hasPos?'PRÉ-TREINO':'PULAR HOJE',notifHour:14,notifMin:30},
-    // 16:30 (almoço) - magnésio do almoço
+    // 16:30 almoço
+    {id:'s_d3_almoco',name:'Vitamina D3 Bandini — Dose almoço',dose:'1 cápsula = 2000 UI',time:'16:30 — Com o almoço (com gordura) · total 4000 UI/dia',hl:'ok',hlLabel:'ALMOÇO',notifHour:16,notifMin:30},
     {id:'s_magnesio_almoco',name:'Magnésio Bisglicinato (dose do almoço)',dose:'1 cápsula',time:'16:30 — Com o almoço',hl:'ok',hlLabel:'ALMOÇO',notifHour:16,notifMin:30},
     // 15:30 pós-treino
     {id:'s_creatina',name:'Creatina Monohidratada',dose:'5g',time:'15:30 — Pós-treino · síntese e recuperação',hl:hasPos?'ok':'skip',hlLabel:hasPos?'PÓS-TREINO':'PULAR',notifHour:15,notifMin:30},
-    // 19:00
+    // 20:30
     {id:'s_curcuma',name:'Cúrcuma + Piperina',dose:'500–800mg curcumina',time:'20:30 — Com a janta (com gordura)',hl:highAnti?'boost':'ok',hlLabel:highAnti?'⬆ REFORÇAR HOJE':'NORMAL',notifHour:20,notifMin:30},
     // 04:30
     {id:'s_magnesio',name:'Magnésio Bisglicinato (dose da noite)',dose:'1 cápsula (restante da dose)',time:'04:30 — Antes de dormir · câimbras + sono',hl:highAnti?'boost':'ok',hlLabel:highAnti?'⬆ PRIORIDADE':'SEMPRE',notifHour:4,notifMin:30},
@@ -1596,6 +1597,38 @@ function clearAllData(){
 let lastNotifKey = null;
 let notifDismissed = {};
 
+// ── ALARM SOUND (Web Audio API - no external files needed) ──
+function playAlarm(){
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const playBeep = (startTime, freq, dur) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, startTime);
+      gain.gain.setValueAtTime(0, startTime);
+      gain.gain.linearRampToValueAtTime(0.4, startTime + 0.02);
+      gain.gain.linearRampToValueAtTime(0.4, startTime + dur - 0.05);
+      gain.gain.linearRampToValueAtTime(0, startTime + dur);
+      osc.start(startTime);
+      osc.stop(startTime + dur);
+    };
+    // Three ascending beeps — pleasant but attention-grabbing
+    const t = ctx.currentTime;
+    playBeep(t,       880, 0.18);
+    playBeep(t + 0.22, 1046, 0.18);
+    playBeep(t + 0.44, 1318, 0.28);
+    // Repeat once after 0.9s
+    playBeep(t + 0.9,  880, 0.18);
+    playBeep(t + 1.12, 1046, 0.18);
+    playBeep(t + 1.34, 1318, 0.28);
+  } catch(e) {
+    console.log('Audio not available:', e);
+  }
+}
+
 function checkSuppNotif(){
   const now = new Date();
   const h = now.getHours();
@@ -1630,6 +1663,7 @@ function checkSuppNotif(){
   if(lastNotifKey === dayKey) return;
   lastNotifKey = dayKey;
   showNotif(key, items, dayKey);
+  playAlarm();
 }
 
 function showNotif(time, items, dayKey){
@@ -1643,6 +1677,7 @@ function showNotif(time, items, dayKey){
     <div class="sn-top">
       <div class="sn-icon"><svg width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M224,152a8,8,0,0,1-8-8V56a8,8,0,0,0-16,0v88a24,24,0,0,0,48,0V56a40,40,0,0,0-80,0v96a8,8,0,0,1-16,0V56a24,24,0,0,0-48,0v88a8,8,0,0,0,16,0V56a8,8,0,0,1,16,0v88a24,24,0,0,0,48,0V56a8,8,0,0,1,16,0v88a24,24,0,0,0,48,0V56a8,8,0,0,1,16,0"/></svg></div>
       <div class="sn-title">Hora dos suplementos — ${time}</div>
+      <div style="cursor:pointer;color:var(--orange);padding:0 4px;font-size:14px" onclick="playAlarm()" title="Tocar alarme">🔔</div>
       <div class="sn-close" onclick="dismissNotif('${dayKey}')">✕</div>
     </div>
     <div class="sn-items">
