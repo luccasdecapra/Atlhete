@@ -44,6 +44,27 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 /* HEADER */
 .hdr{padding:12px 16px 10px;padding-top:calc(12px + var(--safe-top));border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-shrink:0;background:var(--bg)}
 .hdr-icon{width:34px;height:34px;background:var(--og);border:1px solid rgba(232,131,74,.25);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+/* ── PHOSPHOR ICONS ── */
+.ph-icon{display:inline-flex;align-items:center;justify-content:center;line-height:1}
+.ph-icon i{font-style:normal}
+.hdr-icon .ph-icon{font-size:18px;color:var(--orange)}
+.dt-em .ph-icon,.dt-em i[class^="ph-"]{font-size:20px}
+.sh-em .ph-icon,.sh-em i[class^="ph-"]{font-size:16px}
+.fsg-em .ph-icon,.fsg-em i[class^="ph-"]{font-size:17px}
+.nb-icon i[class^="ph-"]{font-size:20px}
+.wc-icon i[class^="ph-"]{font-size:20px}
+.tc-icon i[class^="ph-"]{font-size:20px;color:var(--orange)}
+i[class^="ph-"]{line-height:1}
+
+/* day type icon colors */
+.dtype-btn.active .dt-em i{color:var(--day-color,var(--orange))}
+.dtype-btn .dt-em i{color:var(--muted);transition:color .2s;font-size:22px}
+
+/* section icon color */
+.sh i[class^="ph-"]{color:var(--orange)}
+.fsg-em i[class^="ph-"]{color:var(--dim)}
+.fsg.open .fsg-em i[class^="ph-"]{color:var(--orange)}
 .hdr-info{flex:1;min-width:0}
 .hdr-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;letter-spacing:-.3px}
 .hdr-title em{color:var(--orange);font-style:normal}
@@ -231,6 +252,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .nb{flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 4px 6px;cursor:pointer;color:var(--muted);transition:color .2s;user-select:none}
 .nb.active{color:var(--orange)}
 .nb-icon{font-size:18px;line-height:1}
+.nb i[class^="ph-"]{font-size:20px;line-height:1;display:block}
 .nb-lbl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.06em;margin-top:2px;text-transform:uppercase}
 
 /* MODAL */
@@ -324,7 +346,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 
 <div id="app">
   <div class="hdr">
-    <div class="hdr-icon">🏃</div>
+    <div class="hdr-icon"><svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M176,48a20,20,0,1,1-20-20A20,20,0,0,1,176,48Zm-8.57,37.4-28.41,23.34-16.41-19.69A12,12,0,0,0,112,84H72a12,12,0,0,0,0,24h34.42l22.66,27.19-27.35,50.15L68,165.49a12,12,0,0,0-12.94,20.27l40,25.56a12,12,0,0,0,16-2.76l28.05-38.72,14.71,17.65A12,12,0,0,0,163,191l36-23a12,12,0,1,0-12.64-20.42l-25.79,16.48-17.2-20.63,29.61-24.33A12,12,0,0,0,176,108a11.85,11.85,0,0,0-8.57-22.6Z"/></svg></div>
     <div class="hdr-info">
       <div class="hdr-title">Luccas <em>Track</em></div>
       <div class="hdr-date" id="hdr-date">—</div>
@@ -339,12 +361,12 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   <div class="day-banner" id="day-banner"></div>
 
   <div class="tabs">
-    <div class="tab active" data-tab="food" onclick="switchTab('food',this)">🥗 Alimentação</div>
-    <div class="tab" data-tab="avoid" onclick="switchTab('avoid',this)">🚫 Evitar</div>
-    <div class="tab" data-tab="suplem" onclick="switchTab('suplem',this)">💊 Suplem.</div>
-    <div class="tab" data-tab="treino" onclick="switchTab('treino',this)">🏃 Treino</div>
-    <div class="tab" data-tab="agua" onclick="switchTab('agua',this)">💧 Água</div>
-    <div class="tab" data-tab="hist" onclick="switchTab('hist',this)">📅 Histórico</div>
+    <div class="tab active" data-tab="food" onclick="switchTab('food',this)"><svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236,112H208.83A80,80,0,0,1,208,128a80.08,80.08,0,0,1-80,80H128a80.08,80.08,0,0,1-80-80,80,80,0,0,1-.83-16H20a12,12,0,0,1,0-24H236a12,12,0,0,1,0,24Zm-108,72a56.06,56.06,0,0,0,56-56H72A56.06,56.06,0,0,0,128,184Zm0-152a44,44,0,0,0-43.56,38.4A12,12,0,0,0,96,68a44,44,0,0,0,64,0,12,12,0,0,0,11.56-1.6A44,44,0,0,0,128,32Z"/></svg> Alimentação</div>
+    <div class="tab" data-tab="avoid" onclick="switchTab('avoid',this)"><svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20ZM44,128a84.18,84.18,0,0,1,13.35-44.74l115.39,115.39A84,84,0,0,1,44,128Zm155.4,28.69L83.31,40.9A84,84,0,0,1,199.4,156.69Z"/></svg> Evitar</div>
+    <div class="tab" data-tab="suplem" onclick="switchTab('suplem',this)"><svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M224,72a56.06,56.06,0,0,0-56-56H88A56.06,56.06,0,0,0,32,72V184a56.06,56.06,0,0,0,56,56h80a56.06,56.06,0,0,0,56-56ZM88,40h80a32.09,32.09,0,0,1,31.6,27.2A32.06,32.06,0,0,1,168,56H88a32.06,32.06,0,0,1-31.6,11.2A32.09,32.09,0,0,1,88,40Zm80,176H88a32,32,0,0,1-32-32V112H200v72A32,32,0,0,1,168,216Z"/></svg> Suplem.</div>
+    <div class="tab" data-tab="treino" onclick="switchTab('treino',this)"><svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M176,48a20,20,0,1,1-20-20A20,20,0,0,1,176,48Zm-8.57,37.4-28.41,23.34-16.41-19.69A12,12,0,0,0,112,84H72a12,12,0,0,0,0,24h34.42l22.66,27.19-27.35,50.15L68,165.49a12,12,0,0,0-12.94,20.27l40,25.56a12,12,0,0,0,16-2.76l28.05-38.72,14.71,17.65A12,12,0,0,0,163,191l36-23a12,12,0,1,0-12.64-20.42l-25.79,16.48-17.2-20.63,29.61-24.33A12,12,0,0,0,176,108a11.85,11.85,0,0,0-8.57-22.6Z"/></svg> Treino</div>
+    <div class="tab" data-tab="agua" onclick="switchTab('agua',this)"><svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M174,48c-28.14-28.14-43.78-35.89-46-37a12,12,0,0,0-4-1,11.86,11.86,0,0,0-4,1c-2.26,1.14-17.9,8.89-46,37C50.39,71.42,28,107,28,152a100,100,0,0,0,200,0C228,107,205.61,71.42,174,48Zm-46,176a76.08,76.08,0,0,1-76-76c0-36.64,17.7-66.49,38.4-87.37Q101.44,49.44,128,32.94q26.58,16.52,37.6,27.69C186.3,81.51,204,111.36,204,148A76.08,76.08,0,0,1,128,224Z"/></svg> Água</div>
+    <div class="tab" data-tab="hist" onclick="switchTab('hist',this)"><svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M208,28H188V24a12,12,0,0,0-24,0v4H92V24a12,12,0,0,0-24,0v4H48A20,20,0,0,0,28,48V208a20,20,0,0,0,20,20H208a20,20,0,0,0,20-20V48A20,20,0,0,0,208,28ZM68,52v4a12,12,0,0,0,24,0V52h72v4a12,12,0,0,0,24,0V52h16V80H52V52ZM52,204V104H204V204ZM100,152a12,12,0,1,1-12-12A12,12,0,0,1,100,152Zm80,0a12,12,0,1,1-12-12A12,12,0,0,1,180,152Zm-40,40a12,12,0,1,1-12-12A12,12,0,0,1,140,192Z"/></svg> Histórico</div>
   </div>
 
   <div class="pages">
@@ -353,12 +375,12 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     <div class="page active" id="page-food">
       <!-- NAC ALERT -->
       <div class="nac-alert" id="nac-alert">
-        <div style="font-size:18px">⏰</div>
+        <div style="font-size:18px"><svg style="color:var(--red)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,36A92,92,0,1,0,220,128,92.1,92.1,0,0,0,128,36Zm0,160a68,68,0,1,1,68-68A68.07,68.07,0,0,1,128,196Zm40-68a12,12,0,0,1-12,12H128a12,12,0,0,1-12-12V96a12,12,0,0,1,24,0v20h16A12,12,0,0,1,168,128ZM228.07,61.48l-40-32a12,12,0,0,0-15,18.72l40,32a12,12,0,1,0,15-18.72Zm-145.14-.72a12,12,0,0,0-16.86-1.85l-40,32a12,12,0,1,0,15,18.72l40-32A12,12,0,0,0,82.93,60.76Z"/></svg></div>
         <div class="nac-alert-text"><strong style="color:var(--red)">Hora do NAC!</strong> Tomou o NAC 600mg em jejum? Espere 15–20 min antes de comer.</div>
         <div class="nac-dismiss" onclick="document.getElementById('nac-alert').classList.remove('show')">OK</div>
       </div>
       <div class="close-banner">
-        <div style="font-size:20px">🔐</div>
+        <div style="font-size:20px"><svg style="color:var(--orange)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M208,80H176V56a48,48,0,0,0-96,0V80H48A16,16,0,0,0,32,96V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM104,56a24,24,0,0,1,48,0V80H104ZM208,208H48V96H208ZM128,120a28,28,0,0,0-8,54.82V192a8,8,0,0,0,16,0V174.82A28,28,0,0,0,128,120Zm0,32a4,4,0,1,1,4-4A4,4,0,0,1,128,152Z"/></svg></div>
         <div class="cb-t"><div class="cb-title">Fechar o dia</div><div class="cb-sub">Salva relatório e zera para amanhã</div></div>
         <button class="cb-btn" onclick="showModal()">FECHAR DIA</button>
       </div>
@@ -383,7 +405,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     <!-- ÁGUA -->
     <div class="page" id="page-agua">
       <div class="water-card" style="margin-top:10px">
-        <div class="wc-top"><span style="font-size:18px">💧</span><div class="wc-title">Hidratação diária</div><div class="wc-val" id="wv">0 ml</div></div>
+        <div class="wc-top"><svg style="font-size:20px;color:var(--blue)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M174,48c-28.14-28.14-43.78-35.89-46-37a12,12,0,0,0-4-1,11.86,11.86,0,0,0-4,1c-2.26,1.14-17.9,8.89-46,37C50.39,71.42,28,107,28,152a100,100,0,0,0,200,0C228,107,205.61,71.42,174,48Zm-46,176a76.08,76.08,0,0,1-76-76c0-36.64,17.7-66.49,38.4-87.37Q101.44,49.44,128,32.94q26.58,16.52,37.6,27.69C186.3,81.51,204,111.36,204,148A76.08,76.08,0,0,1,128,224Z"/></svg><div class="wc-title">Hidratação diária</div><div class="wc-val" id="wv">0 ml</div></div>
         <div class="wc-bar"><div class="wc-fill" id="wf" style="width:0%"></div></div>
         <div class="wc-meta"><span>0</span><span id="wp">0% · meta 3L</span><span>3L</span></div>
         <div class="wc-btns">
@@ -395,7 +417,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
         <button class="wc-reset" onclick="resetW()">↺ Zerar água</button>
       </div>
       <div style="margin:0 14px;background:var(--s1);border:1px solid var(--border);border-radius:12px;overflow:hidden">
-        <div class="sh" style="position:relative"><span class="sh-em">💡</span><span class="sh-title">Lembretes</span></div>
+        <div class="sh" style="position:relative"><span class="sh-em"><svg style="color:var(--orange)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M176,232a8,8,0,0,1-8,8H88a8,8,0,0,1,0-16h80A8,8,0,0,1,176,232Zm40-128a88,88,0,0,1-32.64,68.21A16.24,16.24,0,0,0,176,184v8a16,16,0,0,1-16,16H96a16,16,0,0,1-16-16v-8a16,16,0,0,0-7.36-12.79A88,88,0,0,1,128,16,88.1,88.1,0,0,1,216,104Zm-24,0a64,64,0,1,0-64,64A64.07,64.07,0,0,0,192,104Z"/></svg></span><span class="sh-title">Lembretes</span></div>
         <div style="padding:4px 0">
           <div style="padding:8px 14px;border-bottom:1px solid rgba(34,38,34,.4);font-size:12px;color:var(--dim)">12:30 — 500ml ao acordar, antes de comer</div>
           <div style="padding:8px 14px;border-bottom:1px solid rgba(34,38,34,.4);font-size:12px;color:var(--dim)">15:30 — 500ml pré-treino (30 min antes)</div>
@@ -416,9 +438,9 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
         <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:16px">Proteja seu histórico · Export / Import JSON</div>
       </div>
       <div class="backup-wrap">
-        <button class="backup-btn btn-export" onclick="exportData()">📤 Exportar dados (JSON)</button>
+        <button class="backup-btn btn-export" onclick="exportData()"><svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M220,152v56a12,12,0,0,1-12,12H48a12,12,0,0,1-12-12V152a12,12,0,0,1,24,0v44H196V152a12,12,0,0,1,24,0ZM92.49,84.49l23.51-23.5V144a12,12,0,0,0,24,0V61l23.51,23.52a12,12,0,0,0,17-17l-44-44a12,12,0,0,0-17,0l-44,44a12,12,0,1,0,17,17Z"/></svg> Exportar dados (JSON)</button>
         <label class="backup-btn btn-import" style="cursor:pointer">
-          📥 Importar dados (JSON)
+          <svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M220,152v56a12,12,0,0,1-12,12H48a12,12,0,0,1-12-12V152a12,12,0,0,1,24,0v44H196V152a12,12,0,0,1,24,0Zm-101.66,5.66a12,12,0,0,0,17,0l44-44a12,12,0,0,0-17-17L140,120V32a12,12,0,0,0-24,0v88L92.49,96.49a12,12,0,0,0-17,17Z"/></svg> Importar dados (JSON)
           <input type="file" accept=".json" style="display:none" onchange="importData(this)">
         </label>
         <div class="backup-info">
@@ -426,27 +448,27 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
           Use para migrar de celular ou fazer backup semanal.<br>
           Arquivo: luccas_track_backup.json
         </div>
-        <button class="backup-btn btn-clear" onclick="clearAllData()">🗑️ Apagar todos os dados</button>
+        <button class="backup-btn btn-clear" onclick="clearAllData()"><svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a12,12,0,0,0,0,24h8V208a20,20,0,0,0,20,20H188a20,20,0,0,0,20-20V72h8a12,12,0,0,0,0-24ZM104,40h48v8H104Zm80,164H72V72H184ZM112,164V104a12,12,0,0,1,24,0v60a12,12,0,0,1-24,0Zm48,0V104a12,12,0,0,1,24,0v60a12,12,0,0,1-24,0Z"/></svg> Apagar todos os dados</button>
         <div id="backup-status" style="font-family:'DM Mono',monospace;font-size:11px;text-align:center;color:var(--green);display:none"></div>
       </div>
 
       <div style="padding:0 14px;margin-top:4px">
-        <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin:16px 0 8px">📊 Estoque de Suplementos</div>
+        <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin:16px 0 8px"><svg style="color:var(--orange)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M223.68,66.15,135.68,18a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,34.2,214.43,80,177.35,99.78l-86.43-45.8ZM128,125.8,41.57,80,80,58.78l86.43,45.79ZM32,94.57,116,139.42v95.1L32,189.63Zm104,139.86V139.42l84-45.78v94.94Z"/></svg> Estoque de Suplementos</div>
       </div>
       <div id="stock-content"></div>
     </div>
   </div>
 
   <!-- QUICK DESVIO -->
-  <div class="quick-desvio-btn" onclick="showQuickDesvio()" title="Registrar desvio">⚠️</div>
+  <div class="quick-desvio-btn" onclick="showQuickDesvio()" title="Registrar desvio"><svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236.8,188.09,149.35,36.22a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"/></svg></div>
 
   <div class="bnav">
-    <div class="nb active" onclick="switchBottom('food',this)"><div class="nb-icon">🥗</div><div class="nb-lbl">Comida</div></div>
-    <div class="nb" onclick="switchBottom('avoid',this)"><div class="nb-icon">🚫</div><div class="nb-lbl">Evitar</div></div>
-    <div class="nb" onclick="switchBottom('suplem',this)"><div class="nb-icon">💊</div><div class="nb-lbl">Suplem.</div></div>
-    <div class="nb" onclick="switchBottom('treino',this)"><div class="nb-icon">🏃</div><div class="nb-lbl">Treino</div></div>
-    <div class="nb" onclick="switchBottom('hist',this)"><div class="nb-icon">📅</div><div class="nb-lbl">Histórico</div></div>
-    <div class="nb" onclick="switchBottom('backup',this)"><div class="nb-icon">💾</div><div class="nb-lbl">Backup</div></div>
+    <div class="nb active" onclick="switchBottom('food',this)"><div class="nb-icon"><svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236,112H208.83A80,80,0,0,1,208,128a80.08,80.08,0,0,1-80,80H128a80.08,80.08,0,0,1-80-80,80,80,0,0,1-.83-16H20a12,12,0,0,1,0-24H236a12,12,0,0,1,0,24Zm-108,72a56.06,56.06,0,0,0,56-56H72A56.06,56.06,0,0,0,128,184Zm0-152a44,44,0,0,0-43.56,38.4A12,12,0,0,0,96,68a44,44,0,0,0,64,0,12,12,0,0,0,11.56-1.6A44,44,0,0,0,128,32Z"/></svg></div><div class="nb-lbl">Comida</div></div>
+    <div class="nb" onclick="switchBottom('avoid',this)"><div class="nb-icon"><svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20ZM44,128a84.18,84.18,0,0,1,13.35-44.74l115.39,115.39A84,84,0,0,1,44,128Zm155.4,28.69L83.31,40.9A84,84,0,0,1,199.4,156.69Z"/></svg></div><div class="nb-lbl">Evitar</div></div>
+    <div class="nb" onclick="switchBottom('suplem',this)"><div class="nb-icon"><svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M224,72a56.06,56.06,0,0,0-56-56H88A56.06,56.06,0,0,0,32,72V184a56.06,56.06,0,0,0,56,56h80a56.06,56.06,0,0,0,56-56ZM88,40h80a32.09,32.09,0,0,1,31.6,27.2A32.06,32.06,0,0,1,168,56H88a32.06,32.06,0,0,1-31.6,11.2A32.09,32.09,0,0,1,88,40Zm80,176H88a32,32,0,0,1-32-32V112H200v72A32,32,0,0,1,168,216Z"/></svg></div><div class="nb-lbl">Suplem.</div></div>
+    <div class="nb" onclick="switchBottom('treino',this)"><div class="nb-icon"><svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M176,48a20,20,0,1,1-20-20A20,20,0,0,1,176,48Zm-8.57,37.4-28.41,23.34-16.41-19.69A12,12,0,0,0,112,84H72a12,12,0,0,0,0,24h34.42l22.66,27.19-27.35,50.15L68,165.49a12,12,0,0,0-12.94,20.27l40,25.56a12,12,0,0,0,16-2.76l28.05-38.72,14.71,17.65A12,12,0,0,0,163,191l36-23a12,12,0,1,0-12.64-20.42l-25.79,16.48-17.2-20.63,29.61-24.33A12,12,0,0,0,176,108a11.85,11.85,0,0,0-8.57-22.6Z"/></svg></div><div class="nb-lbl">Treino</div></div>
+    <div class="nb" onclick="switchBottom('hist',this)"><div class="nb-icon"><svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M208,28H188V24a12,12,0,0,0-24,0v4H92V24a12,12,0,0,0-24,0v4H48A20,20,0,0,0,28,48V208a20,20,0,0,0,20,20H208a20,20,0,0,0,20-20V48A20,20,0,0,0,208,28ZM68,52v4a12,12,0,0,0,24,0V52h72v4a12,12,0,0,0,24,0V52h16V80H52V52ZM52,204V104H204V204ZM100,152a12,12,0,1,1-12-12A12,12,0,0,1,100,152Zm80,0a12,12,0,1,1-12-12A12,12,0,0,1,180,152Zm-40,40a12,12,0,1,1-12-12A12,12,0,0,1,140,192Z"/></svg></div><div class="nb-lbl">Histórico</div></div>
+    <div class="nb" onclick="switchBottom('backup',this)"><div class="nb-icon"><svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M219.31,48l-11.31,0L208,48H176V24a8,8,0,0,0-8-8H40A24,24,0,0,0,16,40V216a24,24,0,0,0,24,24H216a24,24,0,0,0,24-24V88ZM96,40h64V72H96Zm0,176V168h64v48Zm112,0a0,0,0,0,1,0,0H184V160a8,8,0,0,0-8-8H80a8,8,0,0,0-8,8v56H40a0,0,0,0,1,0,0V40a0,0,0,0,1,0,0H72V80a8,8,0,0,0,8,8h80a8,8,0,0,0,8-8V53.66L218.34,88H208V200Z"/></svg></div><div class="nb-lbl">Backup</div></div>
   </div>
 </div>
 
@@ -463,7 +485,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 
 <div class="modal-bg" id="modal-bg">
   <div class="modal">
-    <div class="modal-title">Fechar o dia 🔐</div>
+    <div class="modal-title">Fechar o dia <svg style="color:var(--orange)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M208,80H176V56a48,48,0,0,0-96,0V80H48A16,16,0,0,0,32,96V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM104,56a24,24,0,0,1,48,0V80H104ZM208,208H48V96H208ZM128,120a28,28,0,0,0-8,54.82V192a8,8,0,0,0,16,0V174.82A28,28,0,0,0,128,120Zm0,32a4,4,0,1,1,4-4A4,4,0,0,1,128,152Z"/></svg></div>
     <div class="modal-sub" id="modal-sub"></div>
     <div class="modal-stats" id="modal-stats"></div>
     <button class="modal-btn btn-ok" onclick="closeDay()">✓ CONFIRMAR E FECHAR</button>
@@ -474,12 +496,12 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 <script>
 // ═══════════════ DAY TYPES ═══════════════
 const DAY_TYPES = {
-  longao:{id:'longao',emoji:'🏅',label:'Longão',color:'#c9a03e',rgb:'201,160,62',focus:'Carboload máximo · géis · beterraba 2–3h antes',macros:{carbo:'8–10g/kg',prot:'1,8g/kg'}},
-  z45:{id:'z45',emoji:'⚡',label:'Z4/Z5',color:'#c86060',rgb:'200,96,96',focus:'Recuperação máx · antiinflamatório intenso',macros:{carbo:'5–6g/kg',prot:'2,2g/kg'}},
-  z23:{id:'z23',emoji:'🔵',label:'Z2/Z3',color:'#5aa8c8',rgb:'90,168,200',focus:'Equilíbrio energia · cardápio padrão completo',macros:{carbo:'5g/kg',prot:'2g/kg'}},
-  z1:{id:'z1',emoji:'🔁',label:'Z1',color:'#6ab866',rgb:'106,184,102',focus:'Recuperação ativa · carbos mínimos',macros:{carbo:'3–4g/kg',prot:'1,8g/kg'}},
-  forca:{id:'forca',emoji:'💪',label:'Força',color:'#9e75c8',rgb:'158,117,200',focus:'Proteína máxima · creatina · carbo moderado',macros:{carbo:'4–5g/kg',prot:'2,2g/kg'}},
-  descanso:{id:'descanso',emoji:'😴',label:'Descanso',color:'#7a7e79',rgb:'122,126,121',focus:'Recuperação passiva · antiinflamatório máximo',macros:{carbo:'3g/kg',prot:'1,8g/kg'}},
+  longao:{id:'longao',emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M220,144a92,92,0,1,1-92-92A92.1,92.1,0,0,1,220,144Zm-92-68a68,68,0,1,0,68,68A68.07,68.07,0,0,0,128,76Zm31.56-60.22a12,12,0,0,0-16.9,1.56L128,35.69,113.34,17.34a12,12,0,0,0-18.68,15.12l16,20a12,12,0,0,0,18.68,0l16-20A12,12,0,0,0,159.56,15.78ZM140,148V116a12,12,0,0,0-21.66-7.2l-16,20a12,12,0,1,0,18.66,15.12L124,140v8a12,12,0,0,0,24,0Z"/></svg>',label:'Longão',color:'#c9a03e',rgb:'201,160,62',focus:'Carboload máximo · géis · beterraba 2–3h antes',macros:{carbo:'8–10g/kg',prot:'1,8g/kg'}},
+  z45:{id:'z45',emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M213.85,125.46l-112,120a12,12,0,0,1-20.71-10.81L107.21,148H48a12,12,0,0,1-9.18-19.73l96-112a12,12,0,0,1,20.59,11.06L138.6,108H208a12,12,0,0,1,5.25,22.81Z"/></svg>',label:'Z4/Z5',color:'#c86060',rgb:'200,96,96',focus:'Recuperação máx · antiinflamatório intenso',macros:{carbo:'5–6g/kg',prot:'2,2g/kg'}},
+  z23:{id:'z23',emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M244,120H209l-25.6-51.2a12,12,0,0,0-21.6,1.06L133.7,160,112,84.8A12,12,0,0,0,90.6,82.4L68.31,120H12a12,12,0,0,0,0,24H76a12,12,0,0,0,10.4-6L102,109.9l22.4,76.3A12,12,0,0,0,135.6,195a11.83,11.83,0,0,0,1.9.15,12,12,0,0,0,11.07-7.38L178.24,96l15.16,30.8A12,12,0,0,0,204,132h40a12,12,0,0,0,0-24Z"/></svg>',label:'Z2/Z3',color:'#5aa8c8',rgb:'90,168,200',focus:'Equilíbrio energia · cardápio padrão completo',macros:{carbo:'5g/kg',prot:'2g/kg'}},
+  z1:{id:'z1',emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M240,56v48a12,12,0,0,1-12,12H180a12,12,0,0,1,0-24h20.69L181,72.19a84,84,0,1,0,2.64,118.2,12,12,0,0,1,17,17A108,108,0,1,1,228,65.46V56a12,12,0,0,1,24,0Z"/></svg>',label:'Z1',color:'#6ab866',rgb:'106,184,102',focus:'Recuperação ativa · carbos mínimos',macros:{carbo:'3–4g/kg',prot:'1,8g/kg'}},
+  forca:{id:'forca',emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M248,116H236V96a20,20,0,0,0-20-20H208a20,20,0,0,0-20,20v20H68V96A20,20,0,0,0,48,76H40A20,20,0,0,0,20,96v20H8a12,12,0,0,0,0,24H20v20a20,20,0,0,0,20,20h8a20,20,0,0,0,20-20V140H188v20a20,20,0,0,0,20,20h8a20,20,0,0,0,20-20V140h12a12,12,0,0,0,0-24ZM44,156H44V100h4v56Zm164,0V100h4v56Z"/></svg>',label:'Força',color:'#9e75c8',rgb:'158,117,200',focus:'Proteína máxima · creatina · carbo moderado',macros:{carbo:'4–5g/kg',prot:'2,2g/kg'}},
+  descanso:{id:'descanso',emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236,96a12,12,0,0,1-12,12H212v12a12,12,0,0,1-24,0V108H176a12,12,0,0,1,0-24h12V72a12,12,0,0,1,24,0V84h12A12,12,0,0,1,236,96ZM144,60h8v8a12,12,0,0,0,24,0V60h8a12,12,0,0,0,0-24h-8V28a12,12,0,0,0-24,0v8h-8a12,12,0,0,0,0,24Zm49.09,91.46A104,104,0,0,1,64.54,62.91a12,12,0,0,0-15.8-14.72A116,116,0,1,0,207.81,207.26a12,12,0,0,0-14.72-15.8ZM128,220A92,92,0,0,1,86.11,45.56a128.09,128.09,0,0,0,124.33,124.33A92.24,92.24,0,0,1,128,220Z"/></svg>',label:'Descanso',color:'#7a7e79',rgb:'122,126,121',focus:'Recuperação passiva · antiinflamatório máximo',macros:{carbo:'3g/kg',prot:'1,8g/kg'}},
 };
 
 // ═══════════════ FOOD DATA ═══════════════
@@ -636,43 +658,43 @@ function getFoodSections(dt) {
   // Build sections based on day type
   return [
     {
-      id:'r1', emoji:'☀️', title:'Café da Manhã', time:'12:45',
+      id:'r1', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M20,180H36.23A96,96,0,0,1,220,152a12,12,0,0,0,0,24,72,72,0,0,0-143.79,4H236a12,12,0,0,1,0,24H20a12,12,0,0,1,0-24Zm108-76a12,12,0,0,0,12-12V64a12,12,0,0,0-24,0V92A12,12,0,0,0,128,104Zm67.88,21.37a12,12,0,0,0,8.49-3.51l20-20a12,12,0,0,0-17-17l-20,20a12,12,0,0,0,8.49,20.49ZM51.63,121.86a12,12,0,0,0,17-17l-20-20a12,12,0,0,0-17,17Z"/></svg>', title:'Café da Manhã', time:'12:45',
       groups:[
-        {id:'g_prot_animal', emoji:'🥩', title:'Proteína animal', note:'Marque o que comeu', multi:true, items:PROTEINS_ANIMAL},
-        {id:'g_ovos', emoji:'🥚', title:'Ovos & Laticínios', note:'Marque o que comeu', multi:true, items:EGGS_DAIRY},
-        {id:'g_carbo1', emoji:'🌾', title:'Carbo complexo', note:'Marque o que comeu', multi:true, items:CARBOS},
-        {id:'g_fat1', emoji:'🥑', title:'Gordura boa', note:'Marque o que comeu', multi:true, items:FATS},
-        {id:'g_anti1', emoji:'🧄', title:'Vegetal antiinflamatório', note:'Marque o que usou', multi:true, items:ANTI_VEGS},
-        {id:'g_folato1', emoji:'🥦', title:'Folato natural (MTHFR TT)', note:'Marque o que comeu', multi:true, items:FOLATO_VEGS},
-        {id:'g_bev1', emoji:'☕', title:'Bebida / Chá', note:'Marque o que bebeu', multi:true, items:DRINKS},
+        {id:'g_prot_animal', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236,128v8a28,28,0,0,1-28,28H48a28,28,0,0,1-28-28v-8a12,12,0,0,1,12-12H224A12,12,0,0,1,236,128ZM48,100H208a84,84,0,0,0-160,0ZM222,180H34a12,12,0,0,0-9.43,19.43C35.89,214.22,58.92,228,80,228h96c21.08,0,44.11-13.78,55.43-28.57A12,12,0,0,0,222,180Z"/></svg>', title:'Proteína animal', note:'Marque o que comeu', multi:true, items:PROTEINS_ANIMAL},
+        {id:'g_ovos', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M204,144c0,41.36-34.3,76-76,76s-76-34.64-76-76C52,93.12,96.36,36,128,36S204,93.12,204,144Zm-76,52a52.06,52.06,0,0,0,52-52,12,12,0,0,0-24,0,28,28,0,0,1-28,28,12,12,0,0,0,0,24Z"/></svg>', title:'Ovos & Laticínios', note:'Marque o que comeu', multi:true, items:EGGS_DAIRY},
+        {id:'g_carbo1', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M220,100a92,92,0,0,0-84,54.18V88a68,68,0,0,0-68-68,12,12,0,0,0-12,12c0,48.6,34.72,88.75,80,95.52V232a12,12,0,0,0,24,0V188.65A92,92,0,0,0,232,100,12,12,0,0,0,220,100ZM60,51.76A44.09,44.09,0,0,1,100.24,92,44.1,44.1,0,0,1,60,51.76ZM128,163.47V148a68.12,68.12,0,0,1,68-68,68.12,68.12,0,0,1-68,83.47Z"/></svg>', title:'Carbo complexo', note:'Marque o que comeu', multi:true, items:CARBOS},
+        {id:'g_fat1', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M176,136a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,136Zm-72,0a24,24,0,1,1,24,24A24,24,0,0,1,104,136ZM128,20c-44.18,0-80,43-80,96a80,80,0,0,0,160,0C208,63,172.18,20,128,20Zm0,152a56.06,56.06,0,0,1-56-56c0-41.74,26.34-72,56-72s56,30.26,56,72A56.06,56.06,0,0,1,128,172Z"/></svg>', title:'Gordura boa', note:'Marque o que comeu', multi:true, items:FATS},
+        {id:'g_anti1', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M208,40H48A16,16,0,0,0,32,56V120c0,88,88,120,88,120s88-32,88-120V56A16,16,0,0,0,208,40Zm0,80c0,65.74-60.58,98.18-80,104.93C108.55,218.14,48,185.65,48,120V56H208ZM152,112H140V100a12,12,0,0,0-24,0v12H104a12,12,0,0,0,0,24h12v12a12,12,0,0,0,24,0V136h12a12,12,0,0,0,0-24Z"/></svg>', title:'Vegetal antiinflamatório', note:'Marque o que usou', multi:true, items:ANTI_VEGS},
+        {id:'g_folato1', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M215.35,40.65a12,12,0,0,0-11.25-3.15C119.78,60.39,80,128.06,80,176a76,76,0,0,0,63.65,74.94A12,12,0,0,0,156,240c0-24.83,16.71-47.58,34.46-71.71C208.78,143.24,228,117.38,228,88A88.1,88.1,0,0,0,215.35,40.65ZM141.48,222.72A52.06,52.06,0,0,1,104,172c0-35.12,24.19-87.37,90.29-115.24A64.11,64.11,0,0,1,204,88c0,22-16.35,44.6-32.64,67.06C157.13,175.38,144.52,199,141.48,222.72ZM68,172a76.22,76.22,0,0,0,5.41,28.13A60,60,0,0,1,24,144C24,99.34,55.71,43.14,112.22,17.17a12,12,0,0,1,10,21.88C76.87,60.59,52,102.84,52,144a36,36,0,0,0,16,30A76.6,76.6,0,0,0,68,172Z"/></svg>', title:'Folato natural (MTHFR TT)', note:'Marque o que comeu', multi:true, items:FOLATO_VEGS},
+        {id:'g_bev1', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M240,100a40,40,0,0,1-40,40H192v20a80.09,80.09,0,0,1-80,80H88a80.09,80.09,0,0,1-80-80V68A12,12,0,0,1,20,56H192a12,12,0,0,1,0,24H32v80a56.06,56.06,0,0,0,56,56h24a56.06,56.06,0,0,0,56-56V140H200a16,16,0,0,0,0,32,12,12,0,0,1,0,24,40,40,0,0,1,0-80V100A40,40,0,0,1,240,100Zm-16,0a16,16,0,0,0-16-16v32A16,16,0,0,0,224,100Z"/></svg>', title:'Bebida / Chá', note:'Marque o que bebeu', multi:true, items:DRINKS},
       ]
     },
     ...(hasTreino ? [{
-      id:'r2', emoji:'⚡', title:'Pré-treino', time:'14:00–14:30',
+      id:'r2', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M213.85,125.46l-112,120a12,12,0,0,1-20.71-10.81L107.21,148H48a12,12,0,0,1-9.18-19.73l96-112a12,12,0,0,1,20.59,11.06L138.6,108H208a12,12,0,0,1,5.25,22.81Z"/></svg>', title:'Pré-treino', time:'14:00–14:30',
       groups:[
-        {id:'g_carbo_pre', emoji:'🍌', title:'Carbo rápido pré-treino', note:'Marque o que comeu', multi:true, items:[
+        {id:'g_carbo_pre', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20ZM44,128a84.19,84.19,0,0,1,3-22.39L116,164H55.41A83.48,83.48,0,0,1,44,128Zm95.36,56H116.64L68,135.31V120.69ZM128,44a84.19,84.19,0,0,1,52.57,18.52L81.38,164a84,84,0,0,1,0-120Zm0,168a83.5,83.5,0,0,1-19.08-2.21L155,164h45.67A83.87,83.87,0,0,1,128,212Zm24-47.86V92.69L200.55,142A84.18,84.18,0,0,1,152,164.14Z"/></svg>', title:'Carbo rápido pré-treino', note:'Marque o que comeu', multi:true, items:[
           ...FRUITS.filter(f=>['banana','tamara','uva_passa'].includes(f.id)),
           ...(dt==='longao'?[{id:'malto_pre',name:'Maltodextrina 36g pré-longão',detail:'Carboload',qty:'36g',tags:[],tl:[]}]:[]),
         ]},
-        {id:'g_drink_pre', emoji:'💧', title:'Hidratação pré-treino', note:'Marque', multi:true, items:[
+        {id:'g_drink_pre', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M174,48c-28.14-28.14-43.78-35.89-46-37a12,12,0,0,0-4-1,11.86,11.86,0,0,0-4,1c-2.26,1.14-17.9,8.89-46,37C50.39,71.42,28,107,28,152a100,100,0,0,0,200,0C228,107,205.61,71.42,174,48Zm-46,176a76.08,76.08,0,0,1-76-76c0-36.64,17.7-66.49,38.4-87.37Q101.44,49.44,128,32.94q26.58,16.52,37.6,27.69C186.3,81.51,204,111.36,204,148A76.08,76.08,0,0,1,128,224Z"/></svg>', title:'Hidratação pré-treino', note:'Marque', multi:true, items:[
           {id:'agua_pre',name:'Água 500ml',detail:'Pré-hidratação · 30 min antes',qty:'500ml',tags:[],tl:[]},
           ...DRINKS.filter(d=>['agua_coco','suco_beterraba'].includes(d.id)),
         ]},
       ]
     }] : []),
     ...(hasTreino ? [{
-      id:'r3', emoji:'🔥', title:'Pós-treino', time:'15:30',
+      id:'r3', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M181.23,172.17C168.42,193.28,146.6,208,124,208S79.58,193.28,66.77,172.17c-13.07-21.38-13-46.9,0-68.41L104.32,41.4a24,24,0,0,1,47.36,0l37.55,62.36C202.27,125.27,202.3,150.79,181.23,172.17ZM128,124a44,44,0,0,0-44,44,44,44,0,0,0,88,0A44,44,0,0,0,128,124Z"/></svg>', title:'Pós-treino', time:'15:30',
       groups:[
-        {id:'g_prot_pos', emoji:'🥩', title:'Proteína pós-treino', note:'Marque o que comeu', multi:true, items:[
+        {id:'g_prot_pos', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236,128v8a28,28,0,0,1-28,28H48a28,28,0,0,1-28-28v-8a12,12,0,0,1,12-12H224A12,12,0,0,1,236,128ZM48,100H208a84,84,0,0,0-160,0ZM222,180H34a12,12,0,0,0-9.43,19.43C35.89,214.22,58.92,228,80,228h96c21.08,0,44.11-13.78,55.43-28.57A12,12,0,0,0,222,180Z"/></svg>', title:'Proteína pós-treino', note:'Marque o que comeu', multi:true, items:[
           {id:'whey',name:'Whey protein 25–30g',detail:'Absorção rápida · janela de 30 min',qty:'25–30g',tags:[],tl:[]},
           ...PROTEINS_ANIMAL.filter(p=>['frango_peito','atum','salmao'].includes(p.id)),
         ]},
-        {id:'g_carbo_pos', emoji:'⚡', title:'Carbo pós-treino', note:'Marque o que comeu', multi:true, items:[
+        {id:'g_carbo_pos', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M213.85,125.46l-112,120a12,12,0,0,1-20.71-10.81L107.21,148H48a12,12,0,0,1-9.18-19.73l96-112a12,12,0,0,1,20.59,11.06L138.6,108H208a12,12,0,0,1,5.25,22.81Z"/></svg>', title:'Carbo pós-treino', note:'Marque o que comeu', multi:true, items:[
           {id:'malto_pos',name:'Maltodextrina 36g',detail:'Reposição imediata de glicogênio',qty:'36g',tags:[],tl:[]},
           ...FRUITS.filter(f=>['banana','uva_passa'].includes(f.id)),
           ...CARBOS.filter(c=>['arroz_br'].includes(c.id)),
         ]},
-        {id:'g_anti_pos', emoji:'💙', title:'Antiinflamatório pós-treino', note:'Marque o que usou', multi:true, items:[
+        {id:'g_anti_pos', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M240,94c0,70-103.79,126.66-108.21,129a12,12,0,0,1-11.58,0C115.79,220.66,16,164,16,94A62.07,62.07,0,0,1,78,32a61.35,61.35,0,0,1,50,25.56A61.35,61.35,0,0,1,178,32,62.07,62.07,0,0,1,240,94ZM128,207c13.06-7.53,65.06-40.11,86.35-80H128Zm0-104v24h86.35C218.66,115.15,210.11,101,200,89.4L128,103Z"/></svg>', title:'Antiinflamatório pós-treino', note:'Marque o que usou', multi:true, items:[
           ...FRUITS.filter(f=>['mirtilo','cereja','romã'].includes(f.id)),
           ...DRINKS.filter(d=>['agua_coco'].includes(d.id)),
           ...(highAnti?[{id:'suco_cereja',name:'Suco cereja ácida concentrado',detail:'Z4/Z5: antiinflamatório extra · reforço',qty:'50ml',tags:['ft-anti'],tl:['antiinflamatório extra']}]:[]),
@@ -680,32 +702,32 @@ function getFoodSections(dt) {
       ]
     }] : []),
     {
-      id:'r4', emoji:'🍽️', title:'Almoço', time:'16:30',
+      id:'r4', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M80,48V128a48.05,48.05,0,0,0,40,47.23V224a12,12,0,0,0,24,0V175.23A48.05,48.05,0,0,0,184,128V48a12,12,0,0,0-24,0v60H100V48A12,12,0,0,0,80,48Zm96,80a24,24,0,0,1-48,0V132h48ZM68,24A12,12,0,0,0,56,36V224a12,12,0,0,0,24,0V164a12,12,0,0,0,0-24V100a12,12,0,0,0,0-24V36A12,12,0,0,0,68,24Z"/></svg>', title:'Almoço', time:'16:30',
       groups:[
-        {id:'g_prot_jan', emoji:'🥩', title:'Proteína principal', note:'Marque o que comeu', multi:true, items:[...PROTEINS_ANIMAL,...PROTEINS_VEG.filter(p=>['tofu','tempeh','lentilha'].includes(p.id))]},
-        {id:'g_carbo_jan', emoji:'🌾', title:'Carbo', note:'Marque o que comeu', multi:true, items:lowCarbo
+        {id:'g_prot_jan', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236,128v8a28,28,0,0,1-28,28H48a28,28,0,0,1-28-28v-8a12,12,0,0,1,12-12H224A12,12,0,0,1,236,128ZM48,100H208a84,84,0,0,0-160,0ZM222,180H34a12,12,0,0,0-9.43,19.43C35.89,214.22,58.92,228,80,228h96c21.08,0,44.11-13.78,55.43-28.57A12,12,0,0,0,222,180Z"/></svg>', title:'Proteína principal', note:'Marque o que comeu', multi:true, items:[...PROTEINS_ANIMAL,...PROTEINS_VEG.filter(p=>['tofu','tempeh','lentilha'].includes(p.id))]},
+        {id:'g_carbo_jan', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M220,100a92,92,0,0,0-84,54.18V88a68,68,0,0,0-68-68,12,12,0,0,0-12,12c0,48.6,34.72,88.75,80,95.52V232a12,12,0,0,0,24,0V188.65A92,92,0,0,0,232,100,12,12,0,0,0,220,100ZM60,51.76A44.09,44.09,0,0,1,100.24,92,44.1,44.1,0,0,1,60,51.76ZM128,163.47V148a68.12,68.12,0,0,1,68-68,68.12,68.12,0,0,1-68,83.47Z"/></svg>', title:'Carbo', note:'Marque o que comeu', multi:true, items:lowCarbo
           ? [...CARBOS.filter(c=>['arroz_int','batata_doce','batata_ing'].includes(c.id)).map(c=>({...c,detail:c.detail+' · porção reduzida descanso/Z1',qty:'80g'}))]
           : CARBOS},
-        {id:'g_legume_jan', emoji:'🥦', title:'Vegetais (obrigatório)', note:'Marque o que comeu', multi:true, items:[...FOLATO_VEGS,...NITRATO_VEGS,...ANTI_VEGS]},
-        {id:'g_ferment_jan', emoji:'🫙', title:'Fermentado (gut health)', note:'Marque o que comeu', multi:true, items:FERMENTED},
+        {id:'g_legume_jan', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M215.35,40.65a12,12,0,0,0-11.25-3.15C119.78,60.39,80,128.06,80,176a76,76,0,0,0,63.65,74.94A12,12,0,0,0,156,240c0-24.83,16.71-47.58,34.46-71.71C208.78,143.24,228,117.38,228,88A88.1,88.1,0,0,0,215.35,40.65ZM141.48,222.72A52.06,52.06,0,0,1,104,172c0-35.12,24.19-87.37,90.29-115.24A64.11,64.11,0,0,1,204,88c0,22-16.35,44.6-32.64,67.06C157.13,175.38,144.52,199,141.48,222.72ZM68,172a76.22,76.22,0,0,0,5.41,28.13A60,60,0,0,1,24,144C24,99.34,55.71,43.14,112.22,17.17a12,12,0,0,1,10,21.88C76.87,60.59,52,102.84,52,144a36,36,0,0,0,16,30A76.6,76.6,0,0,0,68,172Z"/></svg>', title:'Vegetais (obrigatório)', note:'Marque o que comeu', multi:true, items:[...FOLATO_VEGS,...NITRATO_VEGS,...ANTI_VEGS]},
+        {id:'g_ferment_jan', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M200,76.53V56a20,20,0,0,0-20-20H76A20,20,0,0,0,56,56V76.53A28,28,0,0,0,36,104v96a20,20,0,0,0,20,20H200a20,20,0,0,0,20-20V104A28,28,0,0,0,200,76.53ZM80,60H176V76H80Zm116,140H60V104a4,4,0,0,1,4-4H192a4,4,0,0,1,4,4ZM104,128a12,12,0,0,1,12-12h24a12,12,0,0,1,0,24H116A12,12,0,0,1,104,128Z"/></svg>', title:'Fermentado (gut health)', note:'Marque o que comeu', multi:true, items:FERMENTED},
       ]
     },
     {
-      id:'r5', emoji:'🌙', title:'Janta', time:'20:30',
+      id:'r5', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M240,96a12,12,0,0,1-12,12H216v12a12,12,0,0,1-24,0V108H180a12,12,0,0,1,0-24h12V72a12,12,0,0,1,24,0V84h12A12,12,0,0,1,240,96ZM193.09,151.46A104,104,0,0,1,64.54,62.91a12,12,0,0,0-15.8-14.72A116,116,0,1,0,207.81,207.26a12,12,0,0,0-14.72-15.8ZM128,220A92,92,0,0,1,86.11,45.56a128.09,128.09,0,0,0,124.33,124.33A92.24,92.24,0,0,1,128,220Z"/></svg>', title:'Janta', time:'20:30',
       groups:[
-        {id:'g_prot_n1', emoji:'🥩', title:'Proteína', note:'Marque o que comeu', multi:true, items:[
+        {id:'g_prot_n1', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236,128v8a28,28,0,0,1-28,28H48a28,28,0,0,1-28-28v-8a12,12,0,0,1,12-12H224A12,12,0,0,1,236,128ZM48,100H208a84,84,0,0,0-160,0ZM222,180H34a12,12,0,0,0-9.43,19.43C35.89,214.22,58.92,228,80,228h96c21.08,0,44.11-13.78,55.43-28.57A12,12,0,0,0,222,180Z"/></svg>', title:'Proteína', note:'Marque o que comeu', multi:true, items:[
           ...EGGS_DAIRY.filter(e=>['cottage','iogurte','ovos'].includes(e.id)),
           ...PROTEINS_ANIMAL.filter(p=>['atum'].includes(p.id)),
           {id:'barrinha',name:'Barrinha de proteína (sem açúcar)',detail:'Verificar: sem ácido fólico no rótulo',qty:'1 un',tags:[],tl:[]},
         ]},
-        {id:'g_fat_n1', emoji:'🌰', title:'Gordura noturna', note:'Sempre incluir', multi:true, items:FATS.filter(f=>['castanha_para','nozes','amendoas','amendoim','chocolate85'].includes(f.id))},
-        {id:'g_fruit_n1', emoji:'🍎', title:'Fruta', note:'Marque o que comeu', multi:true, items:FRUITS.filter(f=>['maca','mirtilo','cereja'].includes(f.id))},
+        {id:'g_fat_n1', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M233.55,78.27l-96-56a16,16,0,0,0-15.1,0l-96,56A16,16,0,0,0,18,92v72a16,16,0,0,0,8.45,14.13l96,56a16,16,0,0,0,15.1,0l96-56A16,16,0,0,0,238,164V92A16,16,0,0,0,233.55,78.27ZM128,40l80,46.67L128,133.33,48,86.67Zm-96,56,80,46.67V218.67L32,172Zm96,120V142l80-46.67V172Z"/></svg>', title:'Gordura noturna', note:'Sempre incluir', multi:true, items:FATS.filter(f=>['castanha_para','nozes','amendoas','amendoim','chocolate85'].includes(f.id))},
+        {id:'g_fruit_n1', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M214.75,211.71a12,12,0,1,1-20.5-12.42c9.55-15.77,14.25-34.9,14.25-52.29a80,80,0,0,0-80-80c-19.6,0-39,7.4-51,21.29A12,12,0,1,1,60,72.71C76.06,54.47,101.27,44,128,44a104.11,104.11,0,0,1,104,104C232,169.75,226.4,192.15,214.75,211.71ZM44,108a12,12,0,0,0-12,12c0,22.77,7.92,52.05,27.3,78a12,12,0,1,0,19.4-14.08C61.92,160.28,56,138.37,56,120A12,12,0,0,0,44,108ZM156,32a12,12,0,0,0-12-12H112a12,12,0,0,0,0,24h32A12,12,0,0,0,156,32Z"/></svg>', title:'Fruta', note:'Marque o que comeu', multi:true, items:FRUITS.filter(f=>['maca','mirtilo','cereja'].includes(f.id))},
       ]
     },
     {
-      id:'r6', emoji:'🌃', title:'Lanche 1', time:'00:00',
+      id:'r6', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236,96a12,12,0,0,1-12,12H212v12a12,12,0,0,1-24,0V108H176a12,12,0,0,1,0-24h12V72a12,12,0,0,1,24,0V84h12A12,12,0,0,1,236,96ZM144,60h8v8a12,12,0,0,0,24,0V60h8a12,12,0,0,0,0-24h-8V28a12,12,0,0,0-24,0v8h-8a12,12,0,0,0,0,24Zm49.09,91.46A104,104,0,0,1,64.54,62.91a12,12,0,0,0-15.8-14.72A116,116,0,1,0,207.81,207.26a12,12,0,0,0-14.72-15.8ZM128,220A92,92,0,0,1,86.11,45.56a128.09,128.09,0,0,0,124.33,124.33A92.24,92.24,0,0,1,128,220Z"/></svg>', title:'Lanche 1', time:'00:00',
       groups:[
-        {id:'g_lanche_n1', emoji:'🥫', title:'O que comeu', note:'Marque o que comeu', multi:true, items:[
+        {id:'g_lanche_n1', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M223.68,66.15,135.68,18a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,34.2,214.43,80,177.35,99.78l-86.43-45.8ZM128,125.8,41.57,80,80,58.78l86.43,45.79ZM32,94.57,116,139.42v95.1L32,189.63Zm104,139.86V139.42l84-45.78v94.94Z"/></svg>', title:'O que comeu', note:'Marque o que comeu', multi:true, items:[
           ...PROTEINS_ANIMAL.filter(p=>['atum','frango_peito'].includes(p.id)),
           ...EGGS_DAIRY.filter(e=>['cottage','ovos'].includes(e.id)),
           ...CARBOS.filter(c=>['pao_sourdough'].includes(c.id)),
@@ -717,9 +739,9 @@ function getFoodSections(dt) {
       ]
     },
     {
-      id:'r6b', emoji:'🌆', title:'Lanche 2', time:'02:00',
+      id:'r6b', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,36A92,92,0,1,0,220,128,92.1,92.1,0,0,0,128,36Zm0,160a68,68,0,1,1,68-68A68.07,68.07,0,0,1,128,196Zm40-68a12,12,0,0,1-12,12H128a12,12,0,0,1-12-12V88a12,12,0,0,1,24,0v28h28A12,12,0,0,1,168,128ZM72,24A12,12,0,0,1,60,12H36A12,12,0,0,1,24,24V48a12,12,0,0,0,24,0V35.31L72.69,60A12,12,0,0,0,90,42.69Z"/></svg>', title:'Lanche 2', time:'02:00',
       groups:[
-        {id:'g_lanche_n2', emoji:'🥫', title:'O que comeu', note:'Marque o que comeu', multi:true, items:[
+        {id:'g_lanche_n2', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M223.68,66.15,135.68,18a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,34.2,214.43,80,177.35,99.78l-86.43-45.8ZM128,125.8,41.57,80,80,58.78l86.43,45.79ZM32,94.57,116,139.42v95.1L32,189.63Zm104,139.86V139.42l84-45.78v94.94Z"/></svg>', title:'O que comeu', note:'Marque o que comeu', multi:true, items:[
           ...PROTEINS_ANIMAL.filter(p=>['atum'].includes(p.id)),
           ...CARBOS.filter(c=>['pao_sourdough'].includes(c.id)),
           {id:'pepino2',name:'Pepino / cenoura / tomate cru',detail:'Micronutrientes · leve',qty:'à vontade',tags:[],tl:[]},
@@ -730,11 +752,11 @@ function getFoodSections(dt) {
       ]
     },
     {
-      id:'r7', emoji:'😴', title:'Pré-sono', time:'04:30',
+      id:'r7', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236,96a12,12,0,0,1-12,12H212v12a12,12,0,0,1-24,0V108H176a12,12,0,0,1,0-24h12V72a12,12,0,0,1,24,0V84h12A12,12,0,0,1,236,96ZM144,60h8v8a12,12,0,0,0,24,0V60h8a12,12,0,0,0,0-24h-8V28a12,12,0,0,0-24,0v8h-8a12,12,0,0,0,0,24Zm49.09,91.46A104,104,0,0,1,64.54,62.91a12,12,0,0,0-15.8-14.72A116,116,0,1,0,207.81,207.26a12,12,0,0,0-14.72-15.8ZM128,220A92,92,0,0,1,86.11,45.56a128.09,128.09,0,0,0,124.33,124.33A92.24,92.24,0,0,1,128,220Z"/></svg>', title:'Pré-sono', time:'04:30',
       groups:[
-        {id:'g_caseina', emoji:'🥛', title:'Caseína pré-sono', note:'Marque o que comeu', multi:true, items:EGGS_DAIRY.filter(e=>['iogurte','cottage'].includes(e.id))},
-        {id:'g_magnesio', emoji:'🌰', title:'Magnésio + selênio', note:'Marque o que comeu', multi:true, items:FATS.filter(f=>['castanha_para','nozes','amendoas','amendoim'].includes(f.id))},
-        {id:'g_melatonina', emoji:'🍒', title:'Melatonina natural + relaxamento', note:'Marque o que tomou', multi:true, items:[
+        {id:'g_caseina', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M216,52H40A12,12,0,0,0,28,64V176a28,28,0,0,0,28,28H200a28,28,0,0,0,28-28V64A12,12,0,0,0,216,52Zm-12,124a4,4,0,0,1-4,4H56a4,4,0,0,1-4-4V76H204Z"/></svg>', title:'Caseína pré-sono', note:'Marque o que comeu', multi:true, items:EGGS_DAIRY.filter(e=>['iogurte','cottage'].includes(e.id))},
+        {id:'g_magnesio', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M233.55,78.27l-96-56a16,16,0,0,0-15.1,0l-96,56A16,16,0,0,0,18,92v72a16,16,0,0,0,8.45,14.13l96,56a16,16,0,0,0,15.1,0l96-56A16,16,0,0,0,238,164V92A16,16,0,0,0,233.55,78.27ZM128,40l80,46.67L128,133.33,48,86.67Zm-96,56,80,46.67V218.67L32,172Zm96,120V142l80-46.67V172Z"/></svg>', title:'Magnésio + selênio', note:'Marque o que comeu', multi:true, items:FATS.filter(f=>['castanha_para','nozes','amendoas','amendoim'].includes(f.id))},
+        {id:'g_melatonina', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M200,116a44,44,0,1,0,44,44A44.05,44.05,0,0,0,200,116Zm0,64a20,20,0,1,1,20-20A20,20,0,0,1,200,180ZM56,116a44,44,0,1,0,44,44A44.05,44.05,0,0,0,56,116Zm0,64a20,20,0,1,1,20-20A20,20,0,0,1,56,180Zm152-80a12,12,0,0,1-12,12,60.07,60.07,0,0,1-60-60V56L119.43,72.57a12,12,0,0,1-17-17l24-24A12,12,0,0,1,144,40V92a36,36,0,0,0,36,36A12,12,0,0,1,208,140ZM88,104a12,12,0,0,0-12,12,36,36,0,0,1-36,36,12,12,0,0,0,0,24,60.07,60.07,0,0,0,60-60A12,12,0,0,0,88,104Z"/></svg>', title:'Melatonina natural + relaxamento', note:'Marque o que tomou', multi:true, items:[
           ...FRUITS.filter(f=>['cereja','mirtilo'].includes(f.id)),
           ...DRINKS.filter(d=>['cha_camomila','cha_melissa','cha_lavanda','golden_milk'].includes(d.id)),
         ]},
@@ -746,51 +768,51 @@ function getFoodSections(dt) {
 // ═══════════════ AVOID DATA ═══════════════
 const AVOID_SECTIONS = [
   {
-    id:'folic', emoji:'🚫', title:'Ácido Fólico Sintético — MTHFR TT',
+    id:'folic', emoji:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20ZM44,128a84.18,84.18,0,0,1,13.35-44.74l115.39,115.39A84,84,0,0,1,44,128Zm155.4,28.69L83.31,40.9A84,84,0,0,1,199.4,156.69Z"/></svg>', title:'Ácido Fólico Sintético — MTHFR TT',
     items:[
-      {id:'av_farinha',name:'Farinha de trigo branca enriquecida',why:'Obrigatória no Brasil/EUA · verificar na Itália',icon:'🚫',level:'lv-ban',lb:'VERIFICAR'},
-      {id:'av_pao_ind',name:'Pão industrial de supermercado',why:'Farinha enriquecida · mesmo na Itália verificar',icon:'🚫',level:'lv-ban',lb:'VERIFICAR'},
-      {id:'av_cereais',name:'Cereais matinais (corn flakes, etc.)',why:'Kellogg\'s, Nestlé · enriquecidos sempre',icon:'🚫',level:'lv-ban',lb:'EVITAR'},
-      {id:'av_miojo',name:'Macarrão instantâneo (miojo)',why:'Farinha enriquecida + conservantes + sódio',icon:'🚫',level:'lv-ban',lb:'EVITAR'},
-      {id:'av_multi',name:'Multivitamínicos genéricos',why:'Centrum, qualquer multi barato = ácido fólico',icon:'🚫',level:'lv-ban',lb:'PROIBIDO'},
-      {id:'av_achoc',name:'Achocolatados "com vitaminas"',why:'Nescau, Nesquik · enriquecidos',icon:'🚫',level:'lv-ban',lb:'EVITAR'},
-      {id:'av_barrinha',name:'Barrinhas enriquecidas com vitaminas',why:'PowerBar, Clif Bar · verificar "folic acid"',icon:'🚫',level:'lv-ban',lb:'VERIFICAR'},
-      {id:'av_suco_enriq',name:'Sucos de caixa enriquecidos',why:'Tropicana "Heart Healthy" · com vitaminas',icon:'🚫',level:'lv-ban',lb:'VERIFICAR'},
+      {id:'av_farinha',name:'Farinha de trigo branca enriquecida',why:'Obrigatória no Brasil/EUA · verificar na Itália',icon:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20ZM44,128a84.18,84.18,0,0,1,13.35-44.74l115.39,115.39A84,84,0,0,1,44,128Zm155.4,28.69L83.31,40.9A84,84,0,0,1,199.4,156.69Z"/></svg>',level:'lv-ban',lb:'VERIFICAR'},
+      {id:'av_pao_ind',name:'Pão industrial de supermercado',why:'Farinha enriquecida · mesmo na Itália verificar',icon:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20ZM44,128a84.18,84.18,0,0,1,13.35-44.74l115.39,115.39A84,84,0,0,1,44,128Zm155.4,28.69L83.31,40.9A84,84,0,0,1,199.4,156.69Z"/></svg>',level:'lv-ban',lb:'VERIFICAR'},
+      {id:'av_cereais',name:'Cereais matinais (corn flakes, etc.)',why:'Kellogg\'s, Nestlé · enriquecidos sempre',icon:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20ZM44,128a84.18,84.18,0,0,1,13.35-44.74l115.39,115.39A84,84,0,0,1,44,128Zm155.4,28.69L83.31,40.9A84,84,0,0,1,199.4,156.69Z"/></svg>',level:'lv-ban',lb:'EVITAR'},
+      {id:'av_miojo',name:'Macarrão instantâneo (miojo)',why:'Farinha enriquecida + conservantes + sódio',icon:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20ZM44,128a84.18,84.18,0,0,1,13.35-44.74l115.39,115.39A84,84,0,0,1,44,128Zm155.4,28.69L83.31,40.9A84,84,0,0,1,199.4,156.69Z"/></svg>',level:'lv-ban',lb:'EVITAR'},
+      {id:'av_multi',name:'Multivitamínicos genéricos',why:'Centrum, qualquer multi barato = ácido fólico',icon:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20ZM44,128a84.18,84.18,0,0,1,13.35-44.74l115.39,115.39A84,84,0,0,1,44,128Zm155.4,28.69L83.31,40.9A84,84,0,0,1,199.4,156.69Z"/></svg>',level:'lv-ban',lb:'PROIBIDO'},
+      {id:'av_achoc',name:'Achocolatados "com vitaminas"',why:'Nescau, Nesquik · enriquecidos',icon:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20ZM44,128a84.18,84.18,0,0,1,13.35-44.74l115.39,115.39A84,84,0,0,1,44,128Zm155.4,28.69L83.31,40.9A84,84,0,0,1,199.4,156.69Z"/></svg>',level:'lv-ban',lb:'EVITAR'},
+      {id:'av_barrinha',name:'Barrinhas enriquecidas com vitaminas',why:'PowerBar, Clif Bar · verificar "folic acid"',icon:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20ZM44,128a84.18,84.18,0,0,1,13.35-44.74l115.39,115.39A84,84,0,0,1,44,128Zm155.4,28.69L83.31,40.9A84,84,0,0,1,199.4,156.69Z"/></svg>',level:'lv-ban',lb:'VERIFICAR'},
+      {id:'av_suco_enriq',name:'Sucos de caixa enriquecidos',why:'Tropicana "Heart Healthy" · com vitaminas',icon:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20ZM44,128a84.18,84.18,0,0,1,13.35-44.74l115.39,115.39A84,84,0,0,1,44,128Zm155.4,28.69L83.31,40.9A84,84,0,0,1,199.4,156.69Z"/></svg>',level:'lv-ban',lb:'VERIFICAR'},
     ]
   },
   {
-    id:'proibido', emoji:'🔴', title:'Proibidos — DNA',
+    id:'proibido', emoji:'<svg style="color:var(--red)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm-8-80V104a8,8,0,0,1,16,0v28a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,168Z"/></svg>', title:'Proibidos — DNA',
     items:[
-      {id:'av_alcool',name:'Álcool (qualquer forma frequente)',why:'MAOA: depleta magnésio + B12. Destrói sono. Anula ganhos do treino em até 40%',icon:'🔴',level:'lv-ban',lb:'PROIBIDO FREQUENTE'},
-      {id:'av_energetico',name:'Bebidas energéticas (Red Bull, Monster)',why:'Ácido fólico + B12 cianocobalamina + ADRB2 sensível. Triplo problema',icon:'🔴',level:'lv-ban',lb:'PROIBIDO'},
-      {id:'av_trans',name:'Gordura trans / hidrogenada (margarina)',why:'IL6/TNF: inflamação máxima. Interfere com ômega-3 suplementado',icon:'🔴',level:'lv-ban',lb:'PROIBIDO'},
-      {id:'av_cigarro',name:'Cigarro / tabaco',why:'ADRB2: piora broncodilatação. SOD2: estresse oxidativo. Incompatível com maratona',icon:'🔴',level:'lv-ban',lb:'INCOMPATÍVEL'},
-      {id:'av_oleos',name:'Óleos vegetais refinados (soja, canola, girassol)',why:'Ômega-6 em excesso → inflamação crônica. SOD2/IL6',icon:'🔴',level:'lv-ban',lb:'EVITAR'},
+      {id:'av_alcool',name:'Álcool (qualquer forma frequente)',why:'MAOA: depleta magnésio + B12. Destrói sono. Anula ganhos do treino em até 40%',icon:'<svg style="color:var(--red)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm-8-80V104a8,8,0,0,1,16,0v28a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,168Z"/></svg>',level:'lv-ban',lb:'PROIBIDO FREQUENTE'},
+      {id:'av_energetico',name:'Bebidas energéticas (Red Bull, Monster)',why:'Ácido fólico + B12 cianocobalamina + ADRB2 sensível. Triplo problema',icon:'<svg style="color:var(--red)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm-8-80V104a8,8,0,0,1,16,0v28a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,168Z"/></svg>',level:'lv-ban',lb:'PROIBIDO'},
+      {id:'av_trans',name:'Gordura trans / hidrogenada (margarina)',why:'IL6/TNF: inflamação máxima. Interfere com ômega-3 suplementado',icon:'<svg style="color:var(--red)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm-8-80V104a8,8,0,0,1,16,0v28a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,168Z"/></svg>',level:'lv-ban',lb:'PROIBIDO'},
+      {id:'av_cigarro',name:'Cigarro / tabaco',why:'ADRB2: piora broncodilatação. SOD2: estresse oxidativo. Incompatível com maratona',icon:'<svg style="color:var(--red)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm-8-80V104a8,8,0,0,1,16,0v28a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,168Z"/></svg>',level:'lv-ban',lb:'INCOMPATÍVEL'},
+      {id:'av_oleos',name:'Óleos vegetais refinados (soja, canola, girassol)',why:'Ômega-6 em excesso → inflamação crônica. SOD2/IL6',icon:'<svg style="color:var(--red)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm-8-80V104a8,8,0,0,1,16,0v28a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,168Z"/></svg>',level:'lv-ban',lb:'EVITAR'},
     ]
   },
   {
-    id:'reduzir', emoji:'⚠️', title:'Reduzir — Inflamação',
+    id:'reduzir', emoji:'<svg style="color:var(--gold)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236.8,188.09,149.35,36.22a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"/></svg>', title:'Reduzir — Inflamação',
     items:[
-      {id:'av_acucar',name:'Açúcar refinado em excesso',why:'Glicação + inflamação + pico glicêmico',icon:'⚠️',level:'lv-red',lb:'REDUZIR'},
-      {id:'av_embutidos',name:'Carnes processadas (salsicha, presunto)',why:'Nitratos + gordura saturada + sódio · IL6',icon:'⚠️',level:'lv-red',lb:'REDUZIR'},
-      {id:'av_carne_gorda',name:'Carne vermelha gordurosa em excesso',why:'IL6/TNF · máx 1–2x semana cortes magros',icon:'⚠️',level:'lv-red',lb:'LIMITAR'},
-      {id:'av_fritura',name:'Frituras em óleo vegetal',why:'Oxidação lipídica em alta temperatura · SOD2',icon:'⚠️',level:'lv-red',lb:'EVITAR'},
-      {id:'av_fastfood',name:'Fast food em geral',why:'Ácido fólico + gordura trans + óleos + sódio',icon:'⚠️',level:'lv-red',lb:'EVITAR'},
-      {id:'av_ultraproc',name:'Alimentos ultraprocessados',why:'Conservantes degradam microbioma · MTHFR',icon:'⚠️',level:'lv-red',lb:'REDUZIR'},
-      {id:'av_gluten',name:'Glúten em excesso (sensibilidade MTHFR)',why:'MTHFR TT: maior incidência de sensibilidade. Monitorar.',icon:'⚠️',level:'lv-care',lb:'MONITORAR'},
-      {id:'av_latic_enriq',name:'Laticínios com vitaminas adicionadas',why:'Leite enriquecido · ácido fólico adicionado',icon:'⚠️',level:'lv-red',lb:'VERIFICAR'},
+      {id:'av_acucar',name:'Açúcar refinado em excesso',why:'Glicação + inflamação + pico glicêmico',icon:'<svg style="color:var(--gold)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236.8,188.09,149.35,36.22a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"/></svg>',level:'lv-red',lb:'REDUZIR'},
+      {id:'av_embutidos',name:'Carnes processadas (salsicha, presunto)',why:'Nitratos + gordura saturada + sódio · IL6',icon:'<svg style="color:var(--gold)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236.8,188.09,149.35,36.22a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"/></svg>',level:'lv-red',lb:'REDUZIR'},
+      {id:'av_carne_gorda',name:'Carne vermelha gordurosa em excesso',why:'IL6/TNF · máx 1–2x semana cortes magros',icon:'<svg style="color:var(--gold)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236.8,188.09,149.35,36.22a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"/></svg>',level:'lv-red',lb:'LIMITAR'},
+      {id:'av_fritura',name:'Frituras em óleo vegetal',why:'Oxidação lipídica em alta temperatura · SOD2',icon:'<svg style="color:var(--gold)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236.8,188.09,149.35,36.22a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"/></svg>',level:'lv-red',lb:'EVITAR'},
+      {id:'av_fastfood',name:'Fast food em geral',why:'Ácido fólico + gordura trans + óleos + sódio',icon:'<svg style="color:var(--gold)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236.8,188.09,149.35,36.22a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"/></svg>',level:'lv-red',lb:'EVITAR'},
+      {id:'av_ultraproc',name:'Alimentos ultraprocessados',why:'Conservantes degradam microbioma · MTHFR',icon:'<svg style="color:var(--gold)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236.8,188.09,149.35,36.22a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"/></svg>',level:'lv-red',lb:'REDUZIR'},
+      {id:'av_gluten',name:'Glúten em excesso (sensibilidade MTHFR)',why:'MTHFR TT: maior incidência de sensibilidade. Monitorar.',icon:'<svg style="color:var(--gold)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236.8,188.09,149.35,36.22a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"/></svg>',level:'lv-care',lb:'MONITORAR'},
+      {id:'av_latic_enriq',name:'Laticínios com vitaminas adicionadas',why:'Leite enriquecido · ácido fólico adicionado',icon:'<svg style="color:var(--gold)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236.8,188.09,149.35,36.22a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"/></svg>',level:'lv-red',lb:'VERIFICAR'},
     ]
   },
   {
-    id:'timing', emoji:'🕐', title:'Regras por Janela de Tempo',
+    id:'timing', emoji:'<svg style="color:var(--blue)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm52-84a12,12,0,0,1-12,12H128a12,12,0,0,1-12-12V80a12,12,0,0,1,24,0v36h28A12,12,0,0,1,180,128Z"/></svg>', title:'Regras por Janela de Tempo',
     items:[
-      {id:'av_cafeina',name:'Cafeína após 15h–16h',why:'CLOCK AG · meia-vida 5–7h · compromete sono das 5h',icon:'🕐',level:'lv-care',lb:'APÓS 15H: NÃO'},
-      {id:'av_chocolate_noite',name:'Chocolate amargo após 22h',why:'Teobromina estimulante · CLOCK AG sensível',icon:'🕐',level:'lv-care',lb:'ANTES 20H: OK'},
-      {id:'av_refeicao_3h',name:'Refeição pesada após 3h da manhã',why:'Digestão ativa prejudica sono. Lanche leve ok.',icon:'🕐',level:'lv-care',lb:'LEVE APENAS'},
-      {id:'av_fibra_prova',name:'Fibra em excesso –48h antes da prova',why:'Brócolis cru, grão-de-bico · flatulência',icon:'🏁',level:'lv-care',lb:'EVITAR –48H'},
-      {id:'av_gordura_prova',name:'Gordura excessiva pré-prova',why:'Retarda esvaziamento gástrico',icon:'🏁',level:'lv-care',lb:'REDUZIR –24H'},
-      {id:'av_novo',name:'Alimento novo na semana da prova',why:'Nunca testar algo que não comeu antes',icon:'🏁',level:'lv-ban',lb:'REGRA DE OURO'},
-      {id:'av_aaine',name:'Ibuprofeno / AINEs de forma rotineira',why:'Destrói microbioma. Usar cúrcuma + cereja + ômega-3',icon:'⚠️',level:'lv-red',lb:'EVITAR ROTINA'},
+      {id:'av_cafeina',name:'Cafeína após 15h–16h',why:'CLOCK AG · meia-vida 5–7h · compromete sono das 5h',icon:'<svg style="color:var(--blue)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm52-84a12,12,0,0,1-12,12H128a12,12,0,0,1-12-12V80a12,12,0,0,1,24,0v36h28A12,12,0,0,1,180,128Z"/></svg>',level:'lv-care',lb:'APÓS 15H: NÃO'},
+      {id:'av_chocolate_noite',name:'Chocolate amargo após 22h',why:'Teobromina estimulante · CLOCK AG sensível',icon:'<svg style="color:var(--blue)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm52-84a12,12,0,0,1-12,12H128a12,12,0,0,1-12-12V80a12,12,0,0,1,24,0v36h28A12,12,0,0,1,180,128Z"/></svg>',level:'lv-care',lb:'ANTES 20H: OK'},
+      {id:'av_refeicao_3h',name:'Refeição pesada após 3h da manhã',why:'Digestão ativa prejudica sono. Lanche leve ok.',icon:'<svg style="color:var(--blue)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm52-84a12,12,0,0,1-12,12H128a12,12,0,0,1-12-12V80a12,12,0,0,1,24,0v36h28A12,12,0,0,1,180,128Z"/></svg>',level:'lv-care',lb:'LEVE APENAS'},
+      {id:'av_fibra_prova',name:'Fibra em excesso –48h antes da prova',why:'Brócolis cru, grão-de-bico · flatulência',icon:'<svg style="color:var(--orange)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M42.76,44A12,12,0,0,0,32,56V216a12,12,0,0,0,24,0V183.42C67.77,166.08,90.5,152,128,152c52,0,96-32,96-72S180,8,128,8C88.08,8,62.52,24.17,42.76,44ZM200,80c0,22.79-31.92,48-72,48S56,102.79,56,80H200ZM128,32c40.08,0,72,25.21,72,48H56C56,57.21,87.92,32,128,32Z"/></svg>',level:'lv-care',lb:'EVITAR –48H'},
+      {id:'av_gordura_prova',name:'Gordura excessiva pré-prova',why:'Retarda esvaziamento gástrico',icon:'<svg style="color:var(--orange)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M42.76,44A12,12,0,0,0,32,56V216a12,12,0,0,0,24,0V183.42C67.77,166.08,90.5,152,128,152c52,0,96-32,96-72S180,8,128,8C88.08,8,62.52,24.17,42.76,44ZM200,80c0,22.79-31.92,48-72,48S56,102.79,56,80H200ZM128,32c40.08,0,72,25.21,72,48H56C56,57.21,87.92,32,128,32Z"/></svg>',level:'lv-care',lb:'REDUZIR –24H'},
+      {id:'av_novo',name:'Alimento novo na semana da prova',why:'Nunca testar algo que não comeu antes',icon:'<svg style="color:var(--orange)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M42.76,44A12,12,0,0,0,32,56V216a12,12,0,0,0,24,0V183.42C67.77,166.08,90.5,152,128,152c52,0,96-32,96-72S180,8,128,8C88.08,8,62.52,24.17,42.76,44ZM200,80c0,22.79-31.92,48-72,48S56,102.79,56,80H200ZM128,32c40.08,0,72,25.21,72,48H56C56,57.21,87.92,32,128,32Z"/></svg>',level:'lv-ban',lb:'REGRA DE OURO'},
+      {id:'av_aaine',name:'Ibuprofeno / AINEs de forma rotineira',why:'Destrói microbioma. Usar cúrcuma + cereja + ômega-3',icon:'<svg style="color:var(--gold)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236.8,188.09,149.35,36.22a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"/></svg>',level:'lv-red',lb:'EVITAR ROTINA'},
     ]
   },
 ];
@@ -921,7 +943,7 @@ function renderSuplem(){
       <div class="si-b">
         <div class="si-name">${item.name}</div>
         <div class="si-dose">${item.dose}</div>
-        <div class="si-time">🕐 ${item.time}</div>
+        <div class="si-time"><svg style="color:var(--blue);font-size:10px" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm52-84a12,12,0,0,1-12,12H128a12,12,0,0,1-12-12V80a12,12,0,0,1,24,0v36h28A12,12,0,0,1,180,128Z"/></svg> ${item.time}</div>
         <div class="si-hl hl-${item.hl}">${item.hlLabel}</div>
       </div>
     `;
@@ -942,9 +964,9 @@ function renderTreino(){
 
   // Tipo de treino
   const tc1=document.createElement('div');tc1.className='tc';
-  tc1.innerHTML=`<div class="tc-head"><span style="font-size:18px">🏃</span><span class="tc-title">Tipo de Treino</span></div>
+  tc1.innerHTML=`<div class="tc-head"><span style="font-size:18px"><svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M176,48a20,20,0,1,1-20-20A20,20,0,0,1,176,48Zm-8.57,37.4-28.41,23.34-16.41-19.69A12,12,0,0,0,112,84H72a12,12,0,0,0,0,24h34.42l22.66,27.19-27.35,50.15L68,165.49a12,12,0,0,0-12.94,20.27l40,25.56a12,12,0,0,0,16-2.76l28.05-38.72,14.71,17.65A12,12,0,0,0,163,191l36-23a12,12,0,1,0-12.64-20.42l-25.79,16.48-17.2-20.63,29.61-24.33A12,12,0,0,0,176,108a11.85,11.85,0,0,0-8.57-22.6Z"/></svg></span><span class="tc-title">Tipo de Treino</span></div>
   <div class="tipo-grid" id="tipo-grid">
-    ${['Z1 Regenerativo','Z2 Base aeróbica','Z3 Tempo','Z4 Limiar','Z5 VO2max','💪 Força','🏅 Longão','😴 Descanso','❌ Sem treino']
+    ${['Z1 Regenerativo','Z2 Base aeróbica','Z3 Tempo','Z4 Limiar','Z5 VO2max','Força','Longão','Descanso','Sem treino']
       .map((t,i)=>`<div class="tipo-btn${state.treino.tipo===t?' active':''}" onclick="selTipo('${t}',this)">${t}</div>`).join('')}
   </div>`;
   c.appendChild(tc1);
@@ -962,14 +984,14 @@ function renderTreino(){
   // Sono
   const sonoPct=Math.min(((state.sono||0)/8)*100,100);
   const tc3=document.createElement('div');tc3.className='tc';
-  tc3.innerHTML=`<div class="tc-head"><span style="font-size:18px">😴</span><span class="tc-title">Horas de Sono</span></div>
+  tc3.innerHTML=`<div class="tc-head"><span class="tc-icon"><svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236,112H216V72a20,20,0,0,0-20-20H60A20,20,0,0,0,40,72v40H20A12,12,0,0,0,8,124v72a12,12,0,0,0,24,0v-4H224v4a12,12,0,0,0,24,0V124A12,12,0,0,0,236,112ZM64,76H192v36H152V104a12,12,0,0,0-12-12H116a12,12,0,0,0-12,12v8H64ZM224,168H32V136H224Z"/></svg></span><span class="tc-title">Horas de Sono</span></div>
   <div class="stepper">
     <button class="step-btn" onclick="changeSono(-.5)">−</button>
     <div class="step-val" id="sono-val">${state.sono||0}h</div>
     <button class="step-btn" onclick="changeSono(.5)">+</button>
   </div>
   <div class="sono-bar-wrap"><div class="sono-bar-fill" id="sono-fill" style="width:${sonoPct}%"></div></div>
-  <div style="font-family:'DM Mono',monospace;font-size:10px;color:${state.sono>=7?'var(--green)':'var(--muted)'};margin-top:6px;text-align:right" id="sono-meta">${state.sono>=7?'✅ Meta atingida!':'Meta: 7–8h'}</div>`;
+  <div style="font-family:'DM Mono',monospace;font-size:10px;color:${state.sono>=7?'var(--green)':'var(--muted)'};margin-top:6px;text-align:right" id="sono-meta">${state.sono>=7?'<svg style="color:var(--green)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"/></svg> Meta atingida!':'Meta: 7–8h'}</div>`;
   c.appendChild(tc3);
 
   // Concluído
@@ -980,7 +1002,7 @@ function renderTreino(){
       <span class="cmark" style="${concDone?'opacity:1;transform:scale(1)':''}">✓</span>
     </div>
     <div>
-      <div style="font-size:13px;font-weight:600">${concDone?'✅ Treino concluído!':'Treino concluído hoje?'}</div>
+      <div style="font-size:13px;font-weight:600">${concDone?'<svg style="color:var(--green)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"/></svg> Treino concluído!':'Treino concluído hoje?'}</div>
       <div style="font-size:11px;color:var(--dim)">${concDone&&state.treino.duracao?state.treino.duracao+' min':'Toque para marcar'}</div>
     </div>
   </div>`;
@@ -993,7 +1015,7 @@ function changeSono(d){
   state.sono=Math.max(0,Math.min(12,(state.sono||0)+d));
   const sv=document.getElementById('sono-val');if(sv)sv.textContent=state.sono+'h';
   const sf=document.getElementById('sono-fill');if(sf)sf.style.width=Math.min((state.sono/8)*100,100)+'%';
-  const sm=document.getElementById('sono-meta');if(sm){sm.textContent=state.sono>=7?'✅ Meta atingida!':'Meta: 7–8h';sm.style.color=state.sono>=7?'var(--green)':'var(--muted)';}
+  const sm=document.getElementById('sono-meta');if(sm){sm.textContent=state.sono>=7?'<svg style="color:var(--green)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"/></svg> Meta atingida!':'Meta: 7–8h';sm.style.color=state.sono>=7?'var(--green)':'var(--muted)';}
   saveState();updateScore();
 }
 function toggleConc(){state.treino.concluido=!state.treino.concluido;saveState();updateScore();renderTreino();}
@@ -1109,7 +1131,7 @@ function renderHistory(){
           <div class="hd-stat"><div class="hd-sv">${pct}%</div><div class="hd-sl">SCORE</div></div>
           <div class="hd-stat"><div class="hd-sv">${day.water>=1000?(day.water/1000).toFixed(1)+'L':day.water+'ml'}</div><div class="hd-sl">ÁGUA</div></div>
           <div class="hd-stat"><div class="hd-sv">${day.sono||0}h</div><div class="hd-sl">SONO</div></div>
-          <div class="hd-stat"><div class="hd-sv">${day.treino?.concluido?'✅':'❌'}</div><div class="hd-sl">TREINO</div></div>
+          <div class="hd-stat"><div class="hd-sv">${day.treino?.concluido?'✅':'<svg style="color:var(--red)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M168.49,104.49a12,12,0,0,1-17,17L128,98l-23.51,23.52a12,12,0,0,1-17-17L111,81,87.51,57.51a12,12,0,0,1,17-17L128,64l23.51-23.52a12,12,0,0,1,17,17L145,81ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-24,0a80,80,0,1,0-80,80A80.09,80.09,0,0,0,208,128Z"/></svg>'}</div><div class="hd-sl">TREINO</div></div>
         </div>
         ${(day.desvios||[]).length>0?`<div class="hd-sec-t" style="margin-bottom:6px">⚠️ Desvios (${day.desvios.length})</div>${day.desvios.map(d=>`<div class="hd-item"><div class="hd-dot dot-miss"></div><span style="color:var(--red);font-size:11px">${d}</span></div>`).join('')}<div style="height:8px"></div>`:''}
         ${(day.missed||[]).length>0?`<div class="hd-sec-t" style="margin-bottom:6px">❌ Faltou (${day.missed.length})</div>${day.missed.slice(0,6).map(m=>`<div class="hd-item"><div class="hd-dot dot-miss"></div><span style="color:var(--dim);font-size:11px">${m}</span></div>`).join('')}${day.missed.length>6?`<div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:3px">+${day.missed.length-6} mais...</div>`:''}`:'<div style="color:var(--green);font-size:11px;font-family:\'DM Mono\',monospace">✅ Alimentação perfeita!</div>'}
@@ -1212,14 +1234,14 @@ function showQuickDesvio(){
   wrap.innerHTML='';
   // Show top avoid items
   const topItems=[
-    {id:'alcool',name:'Álcool',icon:'🔴',sid:'proibido',idx:0},
-    {id:'energetico',name:'Bebida energética',icon:'🔴',sid:'proibido',idx:1},
-    {id:'trans',name:'Gordura trans',icon:'🔴',sid:'proibido',idx:2},
-    {id:'fastfood',name:'Fast food',icon:'⚠️',sid:'reduzir',idx:4},
-    {id:'acucar',name:'Açúcar em excesso',icon:'⚠️',sid:'reduzir',idx:0},
-    {id:'cafeina_tarde',name:'Cafeína após 15h',icon:'🕐',sid:'timing',idx:0},
-    {id:'folic_multi',name:'Multivitamínico genérico',icon:'🚫',sid:'folic',idx:4},
-    {id:'fritura',name:'Fritura',icon:'⚠️',sid:'reduzir',idx:3},
+    {id:'alcool',name:'Álcool',icon:'<svg style="color:var(--red)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm-8-80V104a8,8,0,0,1,16,0v28a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,168Z"/></svg>',sid:'proibido',idx:0},
+    {id:'energetico',name:'Bebida energética',icon:'<svg style="color:var(--red)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm-8-80V104a8,8,0,0,1,16,0v28a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,168Z"/></svg>',sid:'proibido',idx:1},
+    {id:'trans',name:'Gordura trans',icon:'<svg style="color:var(--red)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm-8-80V104a8,8,0,0,1,16,0v28a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,168Z"/></svg>',sid:'proibido',idx:2},
+    {id:'fastfood',name:'Fast food',icon:'<svg style="color:var(--gold)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236.8,188.09,149.35,36.22a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"/></svg>',sid:'reduzir',idx:4},
+    {id:'acucar',name:'Açúcar em excesso',icon:'<svg style="color:var(--gold)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236.8,188.09,149.35,36.22a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"/></svg>',sid:'reduzir',idx:0},
+    {id:'cafeina_tarde',name:'Cafeína após 15h',icon:'<svg style="color:var(--blue)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm52-84a12,12,0,0,1-12,12H128a12,12,0,0,1-12-12V80a12,12,0,0,1,24,0v36h28A12,12,0,0,1,180,128Z"/></svg>',sid:'timing',idx:0},
+    {id:'folic_multi',name:'Multivitamínico genérico',icon:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20ZM44,128a84.18,84.18,0,0,1,13.35-44.74l115.39,115.39A84,84,0,0,1,44,128Zm155.4,28.69L83.31,40.9A84,84,0,0,1,199.4,156.69Z"/></svg>',sid:'folic',idx:4},
+    {id:'fritura',name:'Fritura',icon:'<svg style="color:var(--gold)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236.8,188.09,149.35,36.22a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"/></svg>',sid:'reduzir',idx:3},
   ];
   topItems.forEach(item=>{
     const k='avoid_'+item.sid+'_'+item.idx;
@@ -1331,7 +1353,7 @@ function renderChart(){
   chartEl.className='chart-wrap';
   const maxScore=Math.max(...last14.map(d=>d.score||0),1);
   chartEl.innerHTML=`
-    <div class="chart-title">📈 Score — últimos ${last14.length} dias</div>
+    <div class="chart-title"><svg style="color:var(--orange)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M228,208H36V48a12,12,0,0,0-24,0V220a12,12,0,0,0,12,12H228a12,12,0,0,0,0-24ZM60,176a12,12,0,0,0,8.49-3.52L112,129l44,44a12,12,0,0,0,17,0l72-72a12,12,0,0,0-17-17L164,147.51l-44-44a12,12,0,0,0-17,0L51.51,155.51A12,12,0,0,0,60,176Z"/></svg> Score — últimos ${last14.length} dias</div>
     <div class="chart-bars">
       ${last14.map(d=>{
         const pct=d.score||0;
@@ -1360,13 +1382,13 @@ function renderPatterns(){
   history.forEach(d=>(d.missed||[]).forEach(m=>{suppMisses[m]=(suppMisses[m]||0)+1;}));
   const topMiss=Object.entries(suppMisses).sort((a,b)=>b[1]-a[1]).slice(0,3);
   if(topMiss.length>0){
-    patterns.push({icon:'❌',title:`Mais esquecido: ${topMiss[0][0].slice(0,30)}...`,desc:`Faltou em ${topMiss[0][1]} de ${history.length} dias (${Math.round(topMiss[0][1]/history.length*100)}% das vezes)`});
+    patterns.push({icon:'<svg style="color:var(--red)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M168.49,104.49a12,12,0,0,1-17,17L128,98l-23.51,23.52a12,12,0,0,1-17-17L111,81,87.51,57.51a12,12,0,0,1,17-17L128,64l23.51-23.52a12,12,0,0,1,17,17L145,81ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-24,0a80,80,0,1,0-80,80A80.09,80.09,0,0,0,208,128Z"/></svg>',title:`Mais esquecido: ${topMiss[0][0].slice(0,30)}...`,desc:`Faltou em ${topMiss[0][1]} de ${history.length} dias (${Math.round(topMiss[0][1]/history.length*100)}% das vezes)`});
   }
 
   // Water pattern
   const lowWater=history.filter(d=>(d.water||0)<3000).length;
   if(lowWater>0){
-    patterns.push({icon:'💧',title:`Água abaixo da meta em ${lowWater} dias`,desc:`${Math.round(lowWater/history.length*100)}% dos dias sem atingir 3L. Meta: beber mais nos dias de trabalho.`});
+    patterns.push({icon:'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M174,48c-28.14-28.14-43.78-35.89-46-37a12,12,0,0,0-4-1,11.86,11.86,0,0,0-4,1c-2.26,1.14-17.9,8.89-46,37C50.39,71.42,28,107,28,152a100,100,0,0,0,200,0C228,107,205.61,71.42,174,48Zm-46,176a76.08,76.08,0,0,1-76-76c0-36.64,17.7-66.49,38.4-87.37Q101.44,49.44,128,32.94q26.58,16.52,37.6,27.69C186.3,81.51,204,111.36,204,148A76.08,76.08,0,0,1,128,224Z"/></svg>',title:`Água abaixo da meta em ${lowWater} dias`,desc:`${Math.round(lowWater/history.length*100)}% dos dias sem atingir 3L. Meta: beber mais nos dias de trabalho.`});
   }
 
   // Score trend
@@ -1377,7 +1399,7 @@ function renderPatterns(){
       const prev7avg=Math.round(prev7.reduce((a,d)=>a+(d.score||0),0)/prev7.length);
       const diff=last7avg-prev7avg;
       if(Math.abs(diff)>=5){
-        patterns.push({icon:diff>0?'📈':'📉',title:`Score ${diff>0?'melhorando':'caindo'}: ${diff>0?'+':''}${diff}% vs semana anterior`,desc:`Média últimos 7 dias: ${last7avg}% · Semana anterior: ${prev7avg}%`});
+        patterns.push({icon:diff>0?'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M244,64v72a12,12,0,0,1-24,0V102.48l-82.34,82.35a12,12,0,0,1-17,0L80,144,29.66,194.34a12,12,0,0,1-17-17l59-59a12,12,0,0,1,17,0L130,159l73.52-73.52H172a12,12,0,0,1,0-24h60A12,12,0,0,1,244,64Z"/></svg>':'<svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M244,168v-72a12,12,0,0,0-24,0v33.52L146.48,97a12,12,0,0,0-17,0L80,136,29.66,85.66a12,12,0,0,0-17,17l59,59a12,12,0,0,0,17,0l49.52-49.52L218,185.52V152a12,12,0,0,0-24,0V168Z"/></svg>',title:`Score ${diff>0?'melhorando':'caindo'}: ${diff>0?'+':''}${diff}% vs semana anterior`,desc:`Média últimos 7 dias: ${last7avg}% · Semana anterior: ${prev7avg}%`});
       }
     }
   }
@@ -1387,13 +1409,13 @@ function renderPatterns(){
   history.forEach(d=>(d.desvios||[]).forEach(dv=>{allDesvios[dv]=(allDesvios[dv]||0)+1;}));
   const topDesvio=Object.entries(allDesvios).sort((a,b)=>b[1]-a[1]).slice(0,1);
   if(topDesvio.length>0&&topDesvio[0][1]>1){
-    patterns.push({icon:'⚠️',title:`Desvio recorrente: ${topDesvio[0][0].slice(0,30)}`,desc:`Ocorreu ${topDesvio[0][1]} vezes no histórico. Vale monitorar.`});
+    patterns.push({icon:'<svg style="color:var(--gold)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236.8,188.09,149.35,36.22a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"/></svg>',title:`Desvio recorrente: ${topDesvio[0][0].slice(0,30)}`,desc:`Ocorreu ${topDesvio[0][1]} vezes no histórico. Vale monitorar.`});
   }
 
   if(patterns.length===0)return;
   const pEl=document.createElement('div');
   pEl.className='patterns-wrap';
-  pEl.innerHTML=`<div class="sh" style="position:relative"><span class="sh-em">🔍</span><span class="sh-title">Padrões detectados</span></div>`;
+  pEl.innerHTML=`<div class="sh" style="position:relative"><span class="sh-em"><svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,218.34l-50.07-50.07a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.31ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/></svg></span><span class="sh-title">Padrões detectados</span></div>`;
   patterns.forEach(p=>{
     const item=document.createElement('div');
     item.className='pattern-item';
@@ -1414,7 +1436,7 @@ function renderDesviosAcumulados(){
   const maxCount=sorted[0][1];
   const dEl=document.createElement('div');
   dEl.className='desvios-wrap';
-  dEl.innerHTML=`<div class="sh" style="position:relative"><span class="sh-em">📊</span><span class="sh-title">Desvios acumulados</span></div>`;
+  dEl.innerHTML=`<div class="sh" style="position:relative"><span class="sh-em"><svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M228,208H36V48a12,12,0,0,0-24,0V220a12,12,0,0,0,12,12H228a12,12,0,0,0,0-24ZM60,168a12,12,0,0,0,12-12V104a12,12,0,0,0-24,0v52A12,12,0,0,0,60,168Zm52,0a12,12,0,0,0,12-12V72a12,12,0,0,0-24,0v84A12,12,0,0,0,112,168Zm52,0a12,12,0,0,0,12-12V120a12,12,0,0,0-24,0v36A12,12,0,0,0,164,168Z"/></svg></span><span class="sh-title">Desvios acumulados</span></div>`;
   sorted.forEach(([name,count])=>{
     const row=document.createElement('div');row.className='desvio-row';
     row.innerHTML=`<div class="desvio-name">${name.slice(0,32)}</div><div class="desvio-count">${count}×</div><div class="desvio-bar-wrap"><div class="desvio-bar" style="width:${Math.round(count/maxCount*100)}%"></div></div>`;
@@ -1504,7 +1526,7 @@ function renderHistory(){
           <div class="hd-stat"><div class="hd-sv">${pct}%</div><div class="hd-sl">SCORE</div></div>
           <div class="hd-stat"><div class="hd-sv">${day.water>=1000?(day.water/1000).toFixed(1)+'L':day.water+'ml'}</div><div class="hd-sl">ÁGUA</div></div>
           <div class="hd-stat"><div class="hd-sv">${day.sono||0}h</div><div class="hd-sl">SONO</div></div>
-          <div class="hd-stat"><div class="hd-sv">${day.treino?.concluido?'✅':'❌'}</div><div class="hd-sl">TREINO</div></div>
+          <div class="hd-stat"><div class="hd-sv">${day.treino?.concluido?'✅':'<svg style="color:var(--red)" width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M168.49,104.49a12,12,0,0,1-17,17L128,98l-23.51,23.52a12,12,0,0,1-17-17L111,81,87.51,57.51a12,12,0,0,1,17-17L128,64l23.51-23.52a12,12,0,0,1,17,17L145,81ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-24,0a80,80,0,1,0-80,80A80.09,80.09,0,0,0,208,128Z"/></svg>'}</div><div class="hd-sl">TREINO</div></div>
         </div>
         ${(day.desvios||[]).length>0?`<div class="hd-sec-t" style="margin-bottom:6px;color:var(--red)">⚠️ Desvios (${day.desvios.length})</div>${day.desvios.map(d=>`<div class="hd-item"><div class="hd-dot dot-miss"></div><span style="color:var(--red);font-size:11px">${d}</span></div>`).join('')}<div style="height:8px"></div>`:''}
         ${(day.missed||[]).length>0?`<div class="hd-sec-t" style="margin-bottom:6px">❌ Faltou (${day.missed.length})</div>${day.missed.slice(0,6).map(m=>`<div class="hd-item"><div class="hd-dot dot-miss"></div><span style="color:var(--dim);font-size:11px">${m}</span></div>`).join('')}${day.missed.length>6?`<div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:3px">+${day.missed.length-6} mais...</div>`:''}`:'<div style="color:var(--green);font-size:11px;font-family:\'DM Mono\',monospace">✅ Alimentação perfeita!</div>'}
@@ -1524,7 +1546,7 @@ function renderFood(){
   // Expand all button
   const expandBtn=document.createElement('div');
   expandBtn.className='expand-all-btn';
-  expandBtn.innerHTML='<span>▼</span><span id="expand-btn-lbl">EXPANDIR TUDO</span>';
+  expandBtn.innerHTML='<span><svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/></svg></span><span id="expand-btn-lbl">EXPANDIR TUDO</span>';
   let expanded=false;
   expandBtn.addEventListener('click',()=>{
     expanded=!expanded;
