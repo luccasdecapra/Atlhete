@@ -255,6 +255,39 @@ i[class^="ph-"]{line-height:1}
 .nb i[class^="ph-"]{font-size:20px;line-height:1;display:block}
 .nb-lbl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.06em;margin-top:2px;text-transform:uppercase}
 
+/* SEARCH / BUSCA */
+.busca-wrap{padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+.busca-input-wrap{display:flex;align-items:center;gap:10px;background:var(--s1);border:1.5px solid var(--border2);border-radius:12px;padding:10px 14px;transition:border-color .2s}
+.busca-input-wrap:focus-within{border-color:var(--orange)}
+.busca-icon{color:var(--dim);flex-shrink:0}
+.busca-input{flex:1;background:none;border:none;outline:none;color:var(--text);font-size:15px;font-family:'DM Sans',sans-serif}
+.busca-input::placeholder{color:var(--muted)}
+.busca-clear{color:var(--muted);cursor:pointer;font-size:14px;padding:0 4px;flex-shrink:0}
+.busca-results{display:flex;flex-direction:column;gap:8px}
+.busca-empty{text-align:center;padding:48px 20px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.busca-empty-icon{opacity:.3}
+.busca-empty-text{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--dim)}
+.busca-empty-sub{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.06em}
+.busca-no-result{text-align:center;padding:32px 20px;color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.08em}
+
+/* SEARCH RESULT CARD */
+.br-card{background:var(--s1);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s}
+.br-card:hover{border-color:var(--border2)}
+.br-top{display:flex;align-items:flex-start;gap:12px;padding:13px 14px}
+.br-emoji{width:36px;height:36px;background:var(--og);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--orange)}
+.br-body{flex:1}
+.br-name{font-size:14px;font-weight:600;margin-bottom:3px}
+.br-name mark{background:rgba(232,131,74,.25);color:var(--orange);border-radius:3px;padding:0 2px}
+.br-meal{font-family:'DM Mono',monospace;font-size:10px;color:var(--blue);letter-spacing:.06em;margin-bottom:4px}
+.br-detail{font-size:12px;color:var(--dim);line-height:1.4}
+.br-qty-box{padding:10px 14px;border-top:1px solid var(--border);background:rgba(232,131,74,.04);display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.br-qty-title{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;width:100%}
+.br-qty-item{display:flex;flex-direction:column;gap:2px}
+.br-qty-val{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--orange)}
+.br-qty-lbl{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.06em}
+.br-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+.br-why{padding:8px 14px;border-top:1px solid var(--border);font-size:11px;color:var(--dim);line-height:1.5;font-style:italic}
+
 /* SELECTED CHIPS */
 .fsg-sel-names{display:none;flex-wrap:wrap;gap:4px;padding:6px 13px 8px;background:rgba(232,131,74,.04);border-top:1px solid var(--border)}
 .sel-chip{font-family:'DM Mono',monospace;font-size:10px;background:rgba(232,131,74,.12);color:var(--orange);border:1px solid rgba(232,131,74,.25);border-radius:12px;padding:2px 9px;white-space:nowrap}
@@ -379,6 +412,7 @@ i[class^="ph-"]{line-height:1}
 
   <div class="tabs">
     <div class="tab active" data-tab="food" onclick="switchTab('food',this)"><svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M236,112H208.83A80,80,0,0,1,208,128a80.08,80.08,0,0,1-80,80H128a80.08,80.08,0,0,1-80-80,80,80,0,0,1-.83-16H20a12,12,0,0,1,0-24H236a12,12,0,0,1,0,24Zm-108,72a56.06,56.06,0,0,0,56-56H72A56.06,56.06,0,0,0,128,184Zm0-152a44,44,0,0,0-43.56,38.4A12,12,0,0,0,96,68a44,44,0,0,0,64,0,12,12,0,0,0,11.56-1.6A44,44,0,0,0,128,32Z"/></svg> Alimentação</div>
+    <div class="tab" data-tab="busca" onclick="switchTab('busca',this)"><svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,218.34l-50.07-50.07a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.31ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/></svg> Busca</div>
     <div class="tab" data-tab="avoid" onclick="switchTab('avoid',this)"><svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20ZM44,128a84.18,84.18,0,0,1,13.35-44.74l115.39,115.39A84,84,0,0,1,44,128Zm155.4,28.69L83.31,40.9A84,84,0,0,1,199.4,156.69Z"/></svg> Evitar</div>
     <div class="tab" data-tab="suplem" onclick="switchTab('suplem',this)"><svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M224,72a56.06,56.06,0,0,0-56-56H88A56.06,56.06,0,0,0,32,72V184a56.06,56.06,0,0,0,56,56h80a56.06,56.06,0,0,0,56-56ZM88,40h80a32.09,32.09,0,0,1,31.6,27.2A32.06,32.06,0,0,1,168,56H88a32.06,32.06,0,0,1-31.6,11.2A32.09,32.09,0,0,1,88,40Zm80,176H88a32,32,0,0,1-32-32V112H200v72A32,32,0,0,1,168,216Z"/></svg> Suplem.</div>
     <div class="tab" data-tab="treino" onclick="switchTab('treino',this)"><svg width="1em" height="1em" viewBox="0 0 256 256" fill="currentColor"><path d="M176,48a20,20,0,1,1-20-20A20,20,0,0,1,176,48Zm-8.57,37.4-28.41,23.34-16.41-19.69A12,12,0,0,0,112,84H72a12,12,0,0,0,0,24h34.42l22.66,27.19-27.35,50.15L68,165.49a12,12,0,0,0-12.94,20.27l40,25.56a12,12,0,0,0,16-2.76l28.05-38.72,14.71,17.65A12,12,0,0,0,163,191l36-23a12,12,0,1,0-12.64-20.42l-25.79,16.48-17.2-20.63,29.61-24.33A12,12,0,0,0,176,108a11.85,11.85,0,0,0-8.57-22.6Z"/></svg> Treino</div>
@@ -405,6 +439,23 @@ i[class^="ph-"]{line-height:1}
     </div>
 
     <!-- EVITAR -->
+    <!-- BUSCA -->
+    <div class="page" id="page-busca">
+      <div class="busca-wrap">
+        <div class="busca-input-wrap">
+          <div class="busca-icon"><svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,218.34l-50.07-50.07a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.31ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/></svg></div>
+          <input class="busca-input" id="busca-input" type="text" placeholder="Buscar alimento ou suplemento..." oninput="runBusca(this.value)" autocomplete="off" autocorrect="off" spellcheck="false">
+          <div class="busca-clear" id="busca-clear" onclick="clearBusca()" style="display:none">✕</div>
+        </div>
+        <div id="busca-results" class="busca-results">
+          <div class="busca-empty">
+            <div class="busca-empty-icon"><svg width="32" height="32" viewBox="0 0 256 256" fill="currentColor" style="color:var(--muted)"><path d="M229.66,218.34l-50.07-50.07a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.31ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/></svg></div>
+            <div class="busca-empty-text">Digite o nome de um alimento</div>
+            <div class="busca-empty-sub">Ex: cereja, salmão, magnésio, aveia...</div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="page" id="page-avoid">
       <div id="avoid-content"></div>
     </div>
@@ -1266,6 +1317,7 @@ function switchTab(id,el){
   if(id==='hist'){renderHistory();}
   if(id==='treino')renderTreino();
   if(id==='backup'){renderStock();renderSuppAlerts();}
+  if(id==='busca'){setTimeout(()=>{const i=document.getElementById('busca-input');if(i)i.focus();},100);}
 }
 function switchBottom(id,el){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -1277,6 +1329,7 @@ function switchBottom(id,el){
   if(id==='hist'){renderHistory();}
   if(id==='treino')renderTreino();
   if(id==='backup'){renderStock();renderSuppAlerts();}
+  if(id==='busca'){setTimeout(()=>{const i=document.getElementById('busca-input');if(i)i.focus();},100);}
 }
 
 function updateHeaderDate(){
@@ -1593,7 +1646,181 @@ function clearAllData(){
 }
 
 // ═══════════════ RENDER ALL (updated) ═══════════════
-// ═══════════════ SUPPLEMENT NOTIFICATIONS ═══════════════
+// ═══════════════ BUSCA DE ALIMENTOS ═══════════════
+// Complete searchable database with ideal quantities for ~75kg athlete
+const BUSCA_DB = [
+  // ── PROTEÍNAS ANIMAIS ──
+  {name:'Salmão fresco',meal:'Almoço / Janta',mealTime:'16:30 ou 20:30',detail:'Ômega-3 EPA+DHA antiinflamatório · vitamina D · IL6/TNF',why:'Principal antiinflamatório alimentar para SOD2 GG. 2–3x por semana é o ideal.',qty:{g:'180–200g',visual:'1 filé médio',raw:'180g cru'},tags:['ômega-3','vitamina D','IL6/TNF'],cat:'proteína'},
+  {name:'Sardinha',meal:'Almoço / Janta',mealTime:'16:30 ou 20:30',detail:'Ômega-3 + vitamina D + cálcio · econômica',why:'Alternativa mais barata ao salmão. Mesmos benefícios de ômega-3.',qty:{g:'200g',visual:'3–4 sardinhas frescas ou 1 lata grande',raw:'200g'},tags:['ômega-3','vitamina D'],cat:'proteína'},
+  {name:'Cavala',meal:'Almoço / Janta',mealTime:'16:30 ou 20:30',detail:'Alto ômega-3 · excelente na Itália · sgombro',why:'Uma das fontes mais ricas de ômega-3 disponíveis na Itália.',qty:{g:'200g',visual:'1 filé grande',raw:'200g'},tags:['ômega-3'],cat:'proteína'},
+  {name:'Atum',meal:'Almoço / Lanche 1 / Lanche 2',mealTime:'16:30 / 00:00 / 02:00',detail:'Proteína rápida · selênio · fácil de levar ao trabalho',why:'Praticidade máxima no turno noturno. Selênio para SOD2 GG.',qty:{g:'150–170g',visual:'1–2 latas (85g cada)',raw:'1–2 latas'},tags:['selênio','prático'],cat:'proteína'},
+  {name:'Peito de frango',meal:'Almoço / Janta',mealTime:'16:30 ou 20:30',detail:'Proteína magra · base semanal',why:'Proteína magra de alto valor biológico. Base da semana.',qty:{g:'180–200g',visual:'1 peito médio',raw:'200g cru → ~150g cozido'},tags:['proteína magra'],cat:'proteína'},
+  {name:'Frango coxa',meal:'Almoço / Janta',mealTime:'16:30 ou 20:30',detail:'Ferro + zinco · mais saboroso que o peito',why:'Mais nutritivo que o peito. Ferro e zinco para atleta.',qty:{g:'150–180g',visual:'1–2 coxas sem pele',raw:'180g'},tags:['ferro','zinco'],cat:'proteína'},
+  {name:'Bife magro',meal:'Almoço / Janta',mealTime:'16:30 ou 20:30',detail:'Ferro heme + B12 + zinco · máx 1–2x/semana',why:'Ferro heme de máxima absorção. B12 ativa para MTHFR. Limitar pela IL6.',qty:{g:'150–180g',visual:'1 bife do tamanho da palma da mão',raw:'180g cru'},tags:['ferro heme','B12','máx 2x/semana'],cat:'proteína'},
+  {name:'Fígado bovino',meal:'Almoço',mealTime:'16:30',detail:'Folato natural altíssimo + B12 + ferro · 1x/semana',why:'A fonte mais rica de folato natural. Essencial para MTHFR TT. 1x/semana.',qty:{g:'100–120g',visual:'1 fatia média',raw:'120g'},tags:['folato natural #1','B12','1x/semana'],cat:'proteína'},
+  {name:'Camarão',meal:'Almoço / Janta',mealTime:'16:30 ou 20:30',detail:'Alta proteína · baixo calorias · selênio + iodo',why:'Proteína magra. Selênio para SOD2 GG.',qty:{g:'200g',visual:'15–18 camarões médios',raw:'200g'},tags:['selênio','proteína'],cat:'proteína'},
+  // ── OVOS & LATICÍNIOS ──
+  {name:'Ovos caipiras',meal:'Café da Manhã / Lanche',mealTime:'12:45 / qualquer',detail:'Proteína completa + colina + B12 + vitamina D',why:'Colina é essencial para MTHFR TT — ajuda na metilação. Proteína completa.',qty:{g:'~55g cada',visual:'2–3 ovos por refeição',raw:'2–3 un'},tags:['colina MTHFR','B12','proteína completa'],cat:'ovos'},
+  {name:'Iogurte grego',meal:'Café da Manhã / Pré-sono',mealTime:'12:45 / 04:30',detail:'15g proteína · caseína · probiótico · sem ácido fólico',why:'Caseína de absorção lenta — ideal antes de dormir. Probiótico para microbioma MTHFR.',qty:{g:'200g',visual:'1 pote inteiro (200g)',raw:'1 pote = ~15g proteína'},tags:['caseína','probiótico','15g prot'],cat:'laticínio'},
+  {name:'Cottage',meal:'Café da Manhã / Lanche / Pré-sono',mealTime:'qualquer',detail:'Proteína + caseína · leve · versátil',why:'Caseína de digestão lenta. Lanche noturno ideal.',qty:{g:'150g',visual:'5–6 colheres de sopa',raw:'150g ≈ 18g proteína'},tags:['caseína','proteína'],cat:'laticínio'},
+  {name:'Ricota',meal:'Café da Manhã / Lanche',mealTime:'12:45 / qualquer',detail:'Proteína + cálcio · digestão fácil',why:'Proteína completa de fácil digestão. Excelente na Itália.',qty:{g:'100g',visual:'4–5 colheres de sopa',raw:'100g ≈ 11g proteína'},tags:['proteína','cálcio'],cat:'laticínio'},
+  {name:'Kefir',meal:'Café da Manhã',mealTime:'12:45',detail:'Probiótico potente · 30+ cepas · microbioma MTHFR',why:'Mais probióticos que qualquer iogurte. Fundamental para absorção de folato.',qty:{g:'200ml',visual:'1 copo grande',raw:'200ml'},tags:['probiótico','microbioma','MTHFR'],cat:'laticínio'},
+  // ── PROTEÍNAS VEGETAIS ──
+  {name:'Lentilha',meal:'Almoço / Janta',mealTime:'16:30 ou 20:30',detail:'Proteína + ferro + folato natural + fibra',why:'Folato natural de alta concentração para MTHFR TT. Ferro não-heme.',qty:{g:'80g seca / 200g cozida',visual:'4 colheres de sopa cozida',raw:'80g seca = 200g cozida'},tags:['folato natural','ferro','proteína vegetal'],cat:'vegetal proteico'},
+  {name:'Grão-de-bico',meal:'Almoço / Janta',mealTime:'16:30 ou 20:30',detail:'Proteína + ferro + folato natural',why:'Folato natural. Proteína vegetal completa. Não usar 48h antes da prova.',qty:{g:'150g cozido',visual:'6–7 colheres de sopa',raw:'60g seco = 150g cozido'},tags:['folato natural','ferro'],cat:'vegetal proteico'},
+  {name:'Feijão',meal:'Almoço',mealTime:'16:30',detail:'Proteína + ferro + folato natural',why:'Folato natural. Não usar 48h antes da prova (gases).',qty:{g:'150g cozido',visual:'1 concha grande',raw:'60g seco = 150g cozido'},tags:['folato natural','ferro'],cat:'vegetal proteico'},
+  {name:'Tofu',meal:'Almoço / Janta',mealTime:'16:30 ou 20:30',detail:'Proteína completa · cálcio · versátil',why:'Proteína completa com todos os aminoácidos. Excelente para dias vegetarianos.',qty:{g:'150g',visual:'bloco médio',raw:'150g ≈ 15g proteína'},tags:['proteína vegetal','cálcio'],cat:'vegetal proteico'},
+  // ── CARBOIDRATOS ──
+  {name:'Arroz integral',meal:'Almoço / Janta',mealTime:'16:30 ou 20:30',detail:'Base energética · IG médio · fibra + magnésio',why:'Carbo complexo principal. IG médio mantém energia estável.',qty:{g:'150g cozido',visual:'1 escumadeira grande / 5 colheres de sopa',raw:'60g cru = 150g cozido'},tags:['carbo complexo','magnésio'],cat:'carbo'},
+  {name:'Arroz branco',meal:'Pós-treino / Pré-prova',mealTime:'15:30 / carboload',detail:'Digestão rápida · reposição glicogênio · pré-prova',why:'Para carboload e pós-treino. Digestão rápida sem fibra.',qty:{g:'150g cozido',visual:'1 escumadeira',raw:'60g cru = 150g cozido'},tags:['carboload','pós-treino'],cat:'carbo'},
+  {name:'Batata-doce',meal:'Café da Manhã / Almoço / Janta',mealTime:'12:45 / 16:30 / 20:30',detail:'IG médio · beta-caroteno · antiinflamatória',why:'IG médio ideal para atleta. Beta-caroteno antioxidante. Pré e pós-treino.',qty:{g:'150–200g',visual:'1 batata-doce média',raw:'150g ≈ 35g carbo'},tags:['carbo complexo','antioxidante'],cat:'carbo'},
+  {name:'Pasta Barilla',meal:'Almoço / Janta / Carboload',mealTime:'16:30 / 20:30 / pré-prova',detail:'✅ SEM ácido fólico na Itália · semola + acqua',why:'MTHFR TT: pasta italiana clássica é segura. Carboload principal.',qty:{g:'80g seca / ~200g cozida',visual:'1 punhado seco (cabia na mão)',raw:'80g seca = ~200g cozida ≈ 60g carbo'},tags:['✅ sem folic acid','carboload'],cat:'carbo'},
+  {name:'Pasta Voiello',meal:'Almoço / Janta / Carboload',mealTime:'16:30 / 20:30 / pré-prova',detail:'✅ SEM ácido fólico · grano duro Aureo 15,5% proteína',why:'MTHFR TT segura. A mais proteica das pastas clássicas.',qty:{g:'80g seca',visual:'1 punhado seco',raw:'80g seca ≈ 60g carbo + 12g prot'},tags:['✅ sem folic acid','alta proteína'],cat:'carbo'},
+  {name:'Pasta De Cecco',meal:'Almoço / Janta',mealTime:'16:30 ou 20:30',detail:'✅ SEM ácido fólico · semola pura',why:'MTHFR TT segura. Qualidade premium.',qty:{g:'80g seca',visual:'1 punhado seco',raw:'80g seca'},tags:['✅ sem folic acid'],cat:'carbo'},
+  {name:'Pasta La Molisana',meal:'Almoço / Janta',mealTime:'16:30 ou 20:30',detail:'✅ SEM ácido fólico · semola + acqua',why:'MTHFR TT segura. Boa qualidade e preço.',qty:{g:'80g seca',visual:'1 punhado seco',raw:'80g seca'},tags:['✅ sem folic acid'],cat:'carbo'},
+  {name:'Aveia',meal:'Café da Manhã',mealTime:'12:45',detail:'Beta-glucana · fibra + liberação lenta',why:'Liberação lenta de energia. Beta-glucana reduz colesterol. Base do café da manhã.',qty:{g:'60g',visual:'6 colheres de sopa rasas',raw:'60g seca ≈ 45g carbo'},tags:['fibra','beta-glucana'],cat:'carbo'},
+  {name:'Batata inglesa',meal:'Almoço / Janta',mealTime:'16:30 ou 20:30',detail:'Potássio + vitamina C · carboload',why:'Potássio natural anti-câimbra. Carboload alternativo.',qty:{g:'200g',visual:'1 batata média',raw:'200g ≈ 35g carbo'},tags:['potássio','vitamina C'],cat:'carbo'},
+  {name:'Maltodextrina',meal:'Pré-treino / Pós-treino / Carboload',mealTime:'14:00–14:30 / 15:30',detail:'Reposição rápida de glicogênio · D.E. 19',why:'Carbo de rápida absorção. Ideal na janela pós-treino de 30 min.',qty:{g:'36g',visual:'2 colheres de sopa rasas',raw:'36g = ~34g carbo'},tags:['pós-treino','carboload'],cat:'carbo'},
+  {name:'Pão sourdough',meal:'Café da Manhã / Lanche',mealTime:'12:45 / qualquer',detail:'Menor IG · probiótico leve · fermentação natural',why:'Menor IG que pão comum. Fermentação melhora digestão. Verificar ingredientes.',qty:{g:'~80–100g',visual:'2 fatias',raw:'2 fatias ≈ 30g carbo'},tags:['fermentado','menor IG'],cat:'carbo'},
+  // ── FRUTAS ──
+  {name:'Banana',meal:'Café da Manhã / Pré-treino / Lanche',mealTime:'12:45 / 14:00 / qualquer',detail:'Potássio · energia rápida · anti-câimbra',why:'Potássio previne câimbras. Energia rápida pré-treino. Sempre ter em casa.',qty:{g:'~120g',visual:'1 banana média',raw:'1 un ≈ 27g carbo + 422mg potássio'},tags:['potássio','anti-câimbra','pré-treino'],cat:'fruta'},
+  {name:'Mirtilo',meal:'Café da Manhã / Pós-treino / Pré-sono',mealTime:'12:45 / 15:30 / 04:30',detail:'Antioxidante top · BDNF · reduz dor muscular',why:'O antiinflamatório mais potente em forma de fruta. BDNF protege o cérebro.',qty:{g:'80–100g',visual:'1 xícara cheia',raw:'80g ≈ 1 punhado generoso'},tags:['antioxidante','BDNF','SOD2'],cat:'fruta'},
+  {name:'Cereja ácida',meal:'Pré-sono / Pós-treino',mealTime:'04:30 / 15:30',detail:'Melatonina natural · antiinflamatório · sono',why:'Melatonina natural para CLOCK AG. Antiinflamatório pós-treino comprovado.',qty:{g:'80g fresca / 30–50ml suco concentrado',visual:'10–12 cerejas / 2–3 colheres de sopa de suco',raw:'30–50ml suco concentrado'},tags:['melatonina','sono','antiinflamatório'],cat:'fruta'},
+  {name:'Romã',meal:'Pós-treino / Almoço',mealTime:'15:30 / 16:30',detail:'Punicalagins · reduz CRP 25% · VO2max',why:'Antiinflamatório sistêmico potente. Melhora VO2max — importante para o seu ACE.',qty:{g:'½ romã / 200ml suco',visual:'½ romã ou 1 copo de suco natural',raw:'200ml suco ≈ 35g carbo'},tags:['VO2max','antiinflamatório','CRP'],cat:'fruta'},
+  {name:'Melancia',meal:'Pós-treino',mealTime:'15:30',detail:'Citrulina → vasodilatação · recuperação',why:'Citrulina melhora fluxo sanguíneo e recuperação muscular pós Z4/Z5.',qty:{g:'300g',visual:'1 fatia grande',raw:'300g ≈ 22g carbo'},tags:['citrulina','recuperação'],cat:'fruta'},
+  {name:'Kiwi',meal:'Café da Manhã',mealTime:'12:45',detail:'Vitamina C alta · absorção de ferro · sono',why:'Vitamina C potencializa absorção do ferro do espinafre. Auxilia sono.',qty:{g:'~100g',visual:'2 kiwis médios',raw:'2 un ≈ 17g carbo + 136mg vit C'},tags:['vitamina C','ferro','sono'],cat:'fruta'},
+  {name:'Morango',meal:'Café da Manhã',mealTime:'12:45',detail:'Vitamina C + folato natural + antioxidante',why:'Folato natural para MTHFR TT. Alta vitamina C.',qty:{g:'150g',visual:'1 xícara cheia',raw:'150g ≈ 11g carbo + folato natural'},tags:['folato natural','vitamina C'],cat:'fruta'},
+  {name:'Tâmaras',meal:'Pré-treino / Longão',mealTime:'14:00–14:30 / corrida',detail:'Energia rápida · glicose + frutose · pré-longão',why:'Energia concentrada de absorção rápida. Levar no bolso durante o longão.',qty:{g:'40g',visual:'3–4 tâmaras',raw:'3–4 un ≈ 30g carbo'},tags:['energia rápida','longão'],cat:'fruta'},
+  {name:'Laranja',meal:'Café da Manhã',mealTime:'12:45',detail:'Vitamina C · absorção ferro não-heme',why:'Vitamina C potencializa absorção do ferro do espinafre/rúcula.',qty:{g:'~180g',visual:'1 laranja grande',raw:'1 un ≈ 21g carbo + 70mg vit C'},tags:['vitamina C','ferro'],cat:'fruta'},
+  // ── GORDURAS ──
+  {name:'Abacate',meal:'Café da Manhã / Almoço',mealTime:'12:45 / 16:30',detail:'Oleico + potássio + folato natural · câimbras',why:'Folato natural para MTHFR TT. Potássio anti-câimbra. Gordura oleica antiinflamatória.',qty:{g:'~80g',visual:'½ abacate médio',raw:'½ un ≈ 15g gordura + folato'},tags:['folato natural','potássio','oleico'],cat:'gordura'},
+  {name:'Azeite extra virgem',meal:'Todas as refeições',mealTime:'qualquer',detail:'Oleocanthal = ibuprofeno natural · usar a frio',why:'Antiinflamatório mais potente da dieta mediterrânea. Usar cru sobre os pratos.',qty:{g:'15–20ml',visual:'1 colher de sopa',raw:'1 col sopa ≈ 14g gordura'},tags:['oleocanthal','antiinflamatório'],cat:'gordura'},
+  {name:'Castanha-do-pará',meal:'Lanche / Pré-sono',mealTime:'qualquer',detail:'100% selênio diário em 2 unidades · SOD2 GG',why:'SOD2 GG: você precisa de selênio para compensar a deficiência antioxidante. 2 un = 100% da dose.',qty:{g:'~10g',visual:'2 castanhas-do-pará',raw:'2 un = ~200mcg selênio (dose total diária)'},tags:['selênio SOD2','antioxidante'],cat:'gordura'},
+  {name:'Nozes',meal:'Café da Manhã / Lanche / Pré-sono',mealTime:'qualquer',detail:'ALA ômega-3 + magnésio · sono + IL6',why:'Ômega-3 vegetal. Magnésio para sono e câimbras. IL6: antiinflamatório.',qty:{g:'25–30g',visual:'5–6 metades de nozes',raw:'25g ≈ 17g gordura + 2.5g ALA'},tags:['ômega-3','magnésio','sono'],cat:'gordura'},
+  {name:'Amêndoas',meal:'Café da Manhã / Lanche',mealTime:'qualquer',detail:'Vitamina E + magnésio · lanche ideal',why:'Vitamina E antioxidante. Magnésio para sono e músculo.',qty:{g:'25–30g',visual:'20–22 amêndoas',raw:'25g ≈ 14g gordura + 6g proteína'},tags:['vitamina E','magnésio'],cat:'gordura'},
+  {name:'Pasta de amendoim',meal:'Café da Manhã / Lanche',mealTime:'12:45 / qualquer',detail:'Proteína + gordura boa · calórico · saboroso',why:'Calórico e prático. Proteína + gordura boa. Usar sem açúcar.',qty:{g:'30g',visual:'2 colheres de sopa rasas',raw:'30g ≈ 8g proteína + 16g gordura'},tags:['proteína','gordura boa'],cat:'gordura'},
+  {name:'Chia',meal:'Café da Manhã / qualquer',mealTime:'12:45 / qualquer',detail:'ALA ômega-3 + cálcio + fibra · adicionar ao iogurte',why:'ALA ômega-3 vegetal. Fibra que expande no estômago. Adicionar ao iogurte.',qty:{g:'10–15g',visual:'1 colher de sopa',raw:'1 col sopa ≈ 5g ALA'},tags:['ômega-3','fibra','cálcio'],cat:'gordura'},
+  {name:'Mel',meal:'Café da Manhã / Pré-treino',mealTime:'12:45 / 14:00',detail:'Energia rápida · antibacteriano · antioxidante',why:'Energia imediata. Pré-treino em jejum. Adoçar iogurte e aveia.',qty:{g:'15g',visual:'1 colher de sopa rasa',raw:'1 col sopa ≈ 12g carbo'},tags:['energia rápida','pré-treino'],cat:'gordura'},
+  {name:'Chocolate amargo 85%',meal:'antes das 20h apenas',mealTime:'máx até 20h',detail:'Flavonoides + magnésio + ferro · antes das 20h',why:'Teobromina estimulante — após 20h prejudica sono (CLOCK AG). Magnésio.',qty:{g:'20–30g',visual:'2–3 quadradinhos',raw:'25g ≈ 14g gordura + magnésio'},tags:['flavonoides','magnésio','até 20h'],cat:'gordura'},
+  // ── VEGETAIS ──
+  {name:'Espinafre',meal:'Café da Manhã / Almoço / Janta',mealTime:'qualquer',detail:'Folato natural + ferro não-heme + nitrato',why:'Folato natural #1 para MTHFR TT. Sempre com vitamina C para absorver ferro.',qty:{g:'60–80g cru / 30g cozido',visual:'2 punhados generosos cru',raw:'60g cru = 30g cozido · sempre com limão'},tags:['folato natural','ferro','nitrato'],cat:'vegetal'},
+  {name:'Rúcula',meal:'Almoço / Janta',mealTime:'16:30 ou 20:30',detail:'Folato natural + nitrato + glucosinolatos',why:'Folato natural. Nitrato potencializa VO2max para o ACE. Típica italiana.',qty:{g:'60–80g',visual:'1 punhado grande',raw:'60g cru ≈ 1 sacola pequena'},tags:['folato natural','nitrato','VO2max'],cat:'vegetal'},
+  {name:'Aspargo',meal:'Almoço / Janta',mealTime:'16:30 ou 20:30',detail:'Folato natural MAIOR concentração por 100g',why:'A fonte de folato natural com maior concentração. Essencial para MTHFR TT.',qty:{g:'100–150g',visual:'6–8 aspargos',raw:'100g ≈ 52mcg folato natural'},tags:['folato natural #1','MTHFR'],cat:'vegetal'},
+  {name:'Brócolis',meal:'Almoço / Janta',mealTime:'16:30 ou 20:30',detail:'Sulforafano + folato natural + vitamina C',why:'Sulforafano: antiinflamatório + suporte hormonal. Não comer cru 48h antes da prova.',qty:{g:'150–200g',visual:'1 ramo médio',raw:'150g ≈ cozido no vapor 5 min'},tags:['sulforafano','folato natural','imunidade'],cat:'vegetal'},
+  {name:'Beterraba',meal:'Pré-treino / Almoço',mealTime:'14:00 (2–3h antes treino) / 16:30',detail:'Nitrato → VO2max · tomar 2–3h antes do longão',why:'Nitrato converte em óxido nítrico e potencializa VO2max. Seu ACE aproveita muito.',qty:{g:'2 beterrabas médias / 200ml suco',visual:'2 beterrabas ou 1 copo de suco',raw:'200ml suco = ~400mg nitrato'},tags:['VO2max','nitrato','ACE'],cat:'vegetal'},
+  {name:'Cenoura',meal:'Almoço / Lanche',mealTime:'16:30 / qualquer',detail:'Beta-caroteno · visão noturna · imunidade',why:'Beta-caroteno para visão noturna (trabalho noturno). Imunidade.',qty:{g:'~80g',visual:'1 cenoura média',raw:'1 un ≈ 80g'},tags:['beta-caroteno','visão'],cat:'vegetal'},
+  {name:'Tomate',meal:'Almoço / Janta / Lanche',mealTime:'qualquer',detail:'Licopeno antiinflamatório · cozido libera mais',why:'Licopeno: mais biodisponível cozido. Antiinflamatório SOD2/IL6.',qty:{g:'150g',visual:'1 tomate grande ou 8–10 tomatinhos',raw:'150g'},tags:['licopeno','antiinflamatório'],cat:'vegetal'},
+  {name:'Alho',meal:'Almoço / Janta',mealTime:'16:30 ou 20:30',detail:'Alicina · imunidade + pressão arterial · ADRB2',why:'Alicina reduz pressão arterial — importante para ADRB2. Imunidade.',qty:{g:'~10g',visual:'2–3 dentes',raw:'2–3 dentes = ~10g'},tags:['alicina','ADRB2','imunidade'],cat:'vegetal'},
+  {name:'Gengibre',meal:'Qualquer / Chá pós-treino',mealTime:'qualquer',detail:'Gingerol = antiinflamatório potente · câimbras',why:'Gingerol: antiinflamatório comparável ao ibuprofeno. Câimbras e dor muscular.',qty:{g:'10–20g',visual:'fatia de 2–3cm',raw:'2cm ≈ 10g · ou 1 col chá em pó'},tags:['gingerol','antiinflamatório','câimbras'],cat:'vegetal'},
+  {name:'Cúrcuma',meal:'Almoço / Janta / Suplemento',mealTime:'20:30 com janta',detail:'Curcumina + piperina · IL6/TNF · articulações',why:'SEMPRE com pimenta preta — aumenta absorção 2000%. IL6/TNF.',qty:{g:'3–5g',visual:'1 colher de chá',raw:'1 col chá = ~200mg curcumina ativo'},tags:['curcumina','IL6/TNF','pimenta preta'],cat:'vegetal'},
+  {name:'Limão',meal:'Qualquer',mealTime:'qualquer',detail:'Vitamina C · absorção ferro não-heme',why:'Usar junto com espinafre/rúcula para absorver o ferro. Alcalinizante.',qty:{g:'½ limão espremido',visual:'½ limão siciliano ou taiti',raw:'½ un ≈ 20ml suco ≈ 20mg vit C'},tags:['vitamina C','ferro'],cat:'vegetal'},
+  // ── BEBIDAS ──
+  {name:'Café espresso',meal:'Café da Manhã / Pré-treino',mealTime:'máx até 15h',detail:'Cafeína 3–4mg/kg · pré-treino 45 min antes',why:'3–4mg/kg = ~225–300mg cafeína para 75kg. Tomar 45 min antes. NUNCA após 15h (CLOCK AG).',qty:{g:'1–2 xícaras',visual:'1–2 expressos ou 1 americano',raw:'1 expresso ≈ 60–80mg cafeína'},tags:['cafeína','pré-treino','máx 15h'],cat:'bebida'},
+  {name:'Suco de beterraba',meal:'Pré-treino / Café da manhã',mealTime:'12:45 / 2–3h antes do longão',detail:'Nitrato → VO2max · ACE genótipo',why:'Tomar 2–3h antes do longão para pico de nitrato. ACE: você aproveita muito.',qty:{g:'200ml',visual:'1 copo',raw:'200ml ≈ 300–500mg nitrato'},tags:['VO2max','nitrato','longão'],cat:'bebida'},
+  {name:'Leite de amêndoas',meal:'Café da Manhã',mealTime:'12:45',detail:'Alternativa vegetal · vitamina E · sem lactose',why:'Alternativa vegetal ao leite. Vitamina E antioxidante.',qty:{g:'200–250ml',visual:'1 copo grande',raw:'200ml ≈ 30kcal · verificar: sem açúcar'},tags:['vitamina E','sem lactose'],cat:'bebida'},
+  {name:'Água de coco',meal:'Pós-treino / Qualquer',mealTime:'15:30 / qualquer',detail:'Potássio + sódio · eletrólito natural',why:'Reposição de eletrólitos pós-treino. Potássio anti-câimbra natural.',qty:{g:'300–500ml',visual:'1–1,5 caixinhas',raw:'300ml ≈ 600mg potássio'},tags:['eletrólito','potássio','pós-treino'],cat:'bebida'},
+  {name:'Chá de camomila',meal:'Pré-sono',mealTime:'04:30',detail:'Apigenina → GABA · sono · CLOCK AG',why:'Apigenina ativa receptores GABA — relaxamento sem dependência. CLOCK AG.',qty:{g:'250ml',visual:'1 xícara grande',raw:'1–2 sachês em 250ml'},tags:['GABA','sono','CLOCK AG'],cat:'bebida'},
+  {name:'Chá de melissa',meal:'Pré-sono',mealTime:'04:30',detail:'GABA natural · ansiedade · turno noturno',why:'GABA natural. Reduz cortisol do turno noturno. Combinar com camomila.',qty:{g:'250ml',visual:'1 xícara',raw:'1 sachê em 250ml'},tags:['GABA','cortisol','turno noturno'],cat:'bebida'},
+  {name:'Golden milk',meal:'Pré-sono',mealTime:'04:30',detail:'Cúrcuma + piperina + canela · antiinflamatório',why:'Antiinflamatório líquido pré-sono. Curcumina com absorção máxima (leite gorduroso).',qty:{g:'250ml',visual:'1 xícara',raw:'1 col chá cúrcuma + pitada pimenta + 250ml leite'},tags:['curcumina','antiinflamatório','sono'],cat:'bebida'},
+  {name:'Kefir de água',meal:'Café da Manhã',mealTime:'12:45',detail:'Probiótico leve · microbioma · refrescante',why:'Probiótico. Microbioma saudável para MTHFR absorver folato e B12.',qty:{g:'200ml',visual:'1 copo',raw:'200ml'},tags:['probiótico','microbioma'],cat:'bebida'},
+  // ── FERMENTADOS ──
+  {name:'Chucrute',meal:'Almoço / Janta',mealTime:'16:30 ou 20:30',detail:'Vitamina K2 + probiótico · não pasteurizado',why:'K2 direciona cálcio para ossos (não artérias). Probiótico potente.',qty:{g:'2–3 colheres de sopa',visual:'2–3 col sopa = ~30–40g',raw:'30g · não pasteurizado = mais probióticos'},tags:['K2','probiótico'],cat:'fermentado'},
+  {name:'Kimchi',meal:'Almoço / Janta',mealTime:'16:30 ou 20:30',detail:'Probiótico + capsaicina + vitamina C',why:'Probiótico potente. Capsaicina antiinflamatória.',qty:{g:'2–3 colheres de sopa',visual:'2–3 col sopa',raw:'30–40g'},tags:['probiótico','capsaicina'],cat:'fermentado'},
+  {name:'Kombucha',meal:'Qualquer',mealTime:'qualquer',detail:'Probiótico · gut health · MTHFR',why:'Microbioma saudável para absorção de folato e B12. Sem açúcar residual.',qty:{g:'200ml',visual:'1 copo',raw:'200ml · verificar: sem açúcar residual'},tags:['probiótico','microbioma','MTHFR'],cat:'fermentado'},
+  {name:'Missô',meal:'Janta / Pré-sono',mealTime:'20:30 / 04:30',detail:'Probiótico + proteína + zinco · sopa ideal',why:'Probiótico fermentado. Zinco para imunidade e testosterona.',qty:{g:'1 colher de sopa (15g)',visual:'1 col sopa dissolvida em 250ml água quente',raw:'15g ≈ 2g proteína + zinco'},tags:['probiótico','zinco'],cat:'fermentado'},
+  // ── SUPLEMENTOS ──
+  {name:'NAC',meal:'Em jejum antes do café',mealTime:'12:30',detail:'N-Acetil-Cisteína · precursor de glutationa · SOD2',why:'SOD2 GG: menor defesa antioxidante. NAC aumenta glutationa intracelular. Em jejum.',qty:{g:'600mg',visual:'1 cápsula',raw:'600mg · esperar 15–20 min antes de comer'},tags:['SOD2','antioxidante','glutationa'],cat:'suplemento'},
+  {name:'Vitamina D3',meal:'Café da manhã + Almoço',mealTime:'12:45 + 16:30',detail:'VDR + turno noturno · 4000 UI/dia divididos',why:'VDR: eficiência reduzida. Turno noturno = sem sol. Dividir em 2 doses para melhor absorção.',qty:{g:'2000 UI manhã + 2000 UI almoço = 4000 UI/dia',visual:'1 cápsula no café + 1 cápsula no almoço',raw:'Bandini 2000UI: 1 cápsula cada vez'},tags:['VDR','turno noturno','absorção'],cat:'suplemento'},
+  {name:'K2',meal:'Com refeição gordurosa',mealTime:'12:45 ou 16:30',detail:'Direciona cálcio para ossos · junto com D3',why:'Sempre com D3. K2 garante que o cálcio absorvido vá para os ossos e não artérias.',qty:{g:'100–200mcg',visual:'1 cápsula junto com D3',raw:'Tomar junto com D3 e gordura'},tags:['D3','cálcio','ossos'],cat:'suplemento'},
+  {name:'Ômega-3',meal:'Com refeição',mealTime:'12:45',detail:'EPA+DHA · 2–3g/dia · IL6/TNF',why:'IL6/TNF pró-inflamatório: antiinflamatório sistêmico essencial. 2 cápsulas/dia.',qty:{g:'2–3g EPA+DHA',visual:'2 cápsulas',raw:'2 cápsulas com refeição gordurosa'},tags:['EPA','DHA','IL6/TNF'],cat:'suplemento'},
+  {name:'Complexo B metilado',meal:'Com café da manhã',mealTime:'12:45',detail:'Metilfolato 5-MTHF + Metilcobalamina · MTHFR TT',why:'MTHFR TT: NUNCA ácido fólico sintético. Apenas forma metilada (5-MTHF + metilcobalamina).',qty:{g:'1 cápsula',visual:'1 cápsula com a refeição',raw:'Igennus Super B ou similar com 5-MTHF'},tags:['MTHFR TT','metilfolato','B12 ativa'],cat:'suplemento'},
+  {name:'Creatina',meal:'Pós-treino',mealTime:'15:30',detail:'5g/dia · ACTN3 CT · síntese muscular',why:'ACTN3 CT: híbrido força/endurance. Creatina preserva músculo em alto volume.',qty:{g:'5g',visual:'1 colher de medida ou 1 col chá bem cheia',raw:'5g = ~1 col chá · misturar no shake'},tags:['ACTN3','músculo','força'],cat:'suplemento'},
+  {name:'Colágeno hidrolisado',meal:'Pré-treino',mealTime:'14:00–14:30',detail:'10–15g + vitamina C · tendões · 30 min antes',why:'Com vitamina C 30 min antes do treino para síntese de colágeno nos tendões. Alto volume = stress tendinoso.',qty:{g:'10–15g + 200mg vit C',visual:'1 scoop (10g) + ½ limão espremido',raw:'10–15g pó + suco de limão em água'},tags:['tendões','vitamina C','30min pré-treino'],cat:'suplemento'},
+  {name:'Magnésio',meal:'Almoço + Pré-sono',mealTime:'16:30 + 04:30',detail:'Bisglicinato · câimbras + sono + músculo',why:'GABRA2 + CLOCK AG: magnésio para sono e câimbras. Dividir: 1 cápsula no almoço + 1 antes de dormir.',qty:{g:'1 cápsula no almoço + 1 antes de dormir',visual:'1 cápsula às 16:30 + 1 cápsula às 04:30',raw:'Total: 300–400mg/dia de magnésio elementar'},tags:['sono','câimbras','GABRA2'],cat:'suplemento'},
+  {name:'Ashwagandha',meal:'Pré-sono',mealTime:'04:30',detail:'KSM-66 600mg · reduz cortisol · turno noturno',why:'Cortisol crônico do turno noturno. Ashwagandha KSM-66 reduz cortisol e melhora qualidade do sono.',qty:{g:'600mg',visual:'1 cápsula',raw:'Tomar com magnésio antes de dormir'},tags:['cortisol','sono','adaptógeno'],cat:'suplemento'},
+  {name:'Maltodextrina',meal:'Pré/Pós-treino',mealTime:'14:00 / 15:30',detail:'36g por dose · D.E. 19 · carboload',why:'Carbo de absorção programada. Pré: energia. Pós: reposição glicogênio na janela de 30 min.',qty:{g:'36g',visual:'2 colheres de sopa rasas',raw:'36g = ~34g carbo · misturar em 300ml água'},tags:['carboload','glicogênio','pré e pós treino'],cat:'suplemento'},
+  {name:'Whey protein',meal:'Pós-treino',mealTime:'15:30',detail:'25–30g · absorção rápida · janela 30 min',why:'Janela anabólica de 30 min pós-treino. Absorção mais rápida que frango.',qty:{g:'25–30g',visual:'1 scoop (30g)',raw:'1 scoop em 250–300ml água ou leite de amêndoas'},tags:['janela pós-treino','síntese muscular'],cat:'suplemento'},
+  {name:'Géis SiS Beta Fuel',meal:'Durante o longão',mealTime:'corrida — km 5, 10, 15–17',detail:'1:0.8 glicose:frutose · menor stress GI',why:'Ratio ideal glicose:frutose minimiza problemas intestinais. 3 géis por longão/prova.',qty:{g:'1 gel a cada 5–6 km',visual:'km 5: gel 1 · km 10: gel 2 · km 15–17: gel 3',raw:'Cada gel = ~40g carbo'},tags:['longão','prova','stress GI mínimo'],cat:'suplemento'},
+];
+
+function runBusca(query){
+  const q = query.trim().toLowerCase();
+  const clear = document.getElementById('busca-clear');
+  const results = document.getElementById('busca-results');
+  
+  if(clear) clear.style.display = q ? 'block' : 'none';
+  
+  if(!q){
+    results.innerHTML = `<div class="busca-empty">
+      <div class="busca-empty-icon"><svg width="32" height="32" viewBox="0 0 256 256" fill="currentColor" style="color:var(--muted)"><path d="M229.66,218.34l-50.07-50.07a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.31ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/></svg></div>
+      <div class="busca-empty-text">Digite o nome de um alimento</div>
+      <div class="busca-empty-sub">Ex: cereja, salmão, magnésio, aveia...</div>
+    </div>`;
+    return;
+  }
+  
+  // Search with scoring
+  const found = BUSCA_DB.filter(item => {
+    const searchStr = (item.name + ' ' + item.detail + ' ' + item.tags.join(' ') + ' ' + item.cat + ' ' + (item.why||'')).toLowerCase();
+    return searchStr.includes(q);
+  }).sort((a,b) => {
+    // Prioritize name matches over detail matches
+    const aName = a.name.toLowerCase().includes(q) ? 0 : 1;
+    const bName = b.name.toLowerCase().includes(q) ? 0 : 1;
+    return aName - bName;
+  });
+  
+  if(found.length === 0){
+    results.innerHTML = `<div class="busca-no-result">Nenhum resultado para "${query}"<br><span style="opacity:.5">Tente: banana, salmão, magnésio, cereja...</span></div>`;
+    return;
+  }
+  
+  const CAT_COLORS = {
+    'proteína':'var(--orange)','ovos':'var(--gold)','laticínio':'var(--gold)',
+    'vegetal proteico':'var(--green)','carbo':'var(--gold)','fruta':'var(--purple)',
+    'gordura':'var(--green)','vegetal':'var(--green)','bebida':'var(--blue)',
+    'fermentado':'var(--green)','suplemento':'var(--red)',
+  };
+  
+  function highlight(text, q){
+    const re = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
+    return text.replace(re, '<mark>$1</mark>');
+  }
+
+  results.innerHTML = found.map(item => {
+    const color = CAT_COLORS[item.cat] || 'var(--orange)';
+    const tagsHtml = item.tags.map(t=>`<span class="ftag ft-anti" style="font-size:9px">${t}</span>`).join('');
+    
+    return `<div class="br-card">
+      <div class="br-top">
+        <div class="br-emoji" style="background:${color}18;color:${color}">
+          <svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor"><path d="M229.66,218.34l-50.07-50.07a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.31ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/></svg>
+        </div>
+        <div class="br-body">
+          <div class="br-meal">${item.meal} · ${item.mealTime}</div>
+          <div class="br-name">${highlight(item.name, q)}</div>
+          <div class="br-detail">${item.detail}</div>
+          ${tagsHtml ? `<div class="br-tags">${tagsHtml}</div>` : ''}
+        </div>
+      </div>
+      <div class="br-qty-box">
+        <div class="br-qty-title">Quantidade ideal para você (~75kg)</div>
+        <div class="br-qty-item"><div class="br-qty-val">${item.qty.g}</div><div class="br-qty-lbl">EM GRAMAS</div></div>
+        <div class="br-qty-item"><div class="br-qty-val" style="color:var(--blue)">${item.qty.visual}</div><div class="br-qty-lbl">VISUAL</div></div>
+        ${item.qty.raw ? `<div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);width:100%">${item.qty.raw}</div>` : ''}
+      </div>
+      ${item.why ? `<div class="br-why">💡 ${item.why}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function clearBusca(){
+  const inp = document.getElementById('busca-input');
+  if(inp){ inp.value = ''; inp.focus(); }
+  runBusca('');
+}
+
+
 let lastNotifKey = null;
 let notifDismissed = {};
 
